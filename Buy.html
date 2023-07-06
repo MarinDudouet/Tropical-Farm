@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Buy - Tropical farm</title>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<script src="java.js"></script>
+
+</head>
+
+<body>
+
+<!--Header-->
+
+<header>
+    <div class="logo">
+      <img src="image\logo.png" alt="Logo">
+    </div>
+    <div class="titre"><a href="index.html" class="titre">Tropical Farm</a></div>
+    <div class="dropdown">
+      <button class="dropdown-btn"><img src="image\user.png" width="50px" height="50px"></button>
+      <div class="dropdown-content">
+        <a href="#">Costumer</a>
+        <a href="#">Seller</a>
+        <a href="#">Administrator</a>
+      </div>
+    </div>
+  </header>
+  
+<!--Navbar-->
+
+<nav>
+<ul class="categories">
+<li>
+  <a href="#">Reptiles</a>
+  <div class="dropdown2">
+    <a href="snakes.html">Snakes<img class="dropdown2-image" src="image\snake.png"></a>
+    <a href="lizards.html">Lizards<img class="dropdown2-image" src="image\lézards.png"></a>
+    <a href="turtles.html">Turtles<img class="dropdown2-image" src="image\tortues.png"></a>
+    <a href="amphibians.html">Amphibians<img class="dropdown2-image" src="image\amphibiens.png"></a>
+    <a href="chameleons.html">Chameleons<img class="dropdown2-image" src="image\chamaeleo.jpg"></a>
+  </div>
+</li>
+<li>
+  <a href="#">Food</a>
+  <div class="dropdown2">
+    <a href="#">Living food<img class="dropdown2-image" src="image\insects.png"></a>
+    <a href="#">Frozen food<img class="dropdown2-image" src="image\mouse.png"></a>
+    <a href="#">Dry food<img class="dropdown2-image" src="image\granule.png"></a>
+  </div>
+</li>
+<li>
+  <a href="#">Materials</a>
+  <div class="dropdown2">
+    <a href="#">Terrarium<img class="dropdown2-image" src="image\terarium.png"></a>
+    <a href="#">Aquarium<img class="dropdown2-image" src="image\aquarium.png"></a>
+    <a href="#">Decoration<img class="dropdown2-image" src="image\deco.png"></a>
+  </div>
+</li>
+<li>
+  <a href="#">Promotions</a>
+  <div class="dropdown2">
+  </div>
+</li>
+</ul>
+</nav>
+
+<br><br>
+
+<!--Buy-->
+
+<div class="container">
+    <div class="item-recap">
+        <center><img src="image\lézards.png">
+        <h5>Nom truc</h5></center>
+    </div>
+    <div class="info-buyer">
+        <div class="container">
+            <div class="step">
+                <p>1. Number of product</p> 
+            </div>
+            <div class="info">
+                <p>Please choose a number of product :
+                    <select name = "number" multiples>
+                    <option> 0 </option>
+                    <option> 1 </option>
+                    <option> 2 </option>
+                    <option> 3 </option>
+                    <option> 4 </option>
+                    <option> 5 </option>
+                    </select></p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="step">
+                <p>2. Delivery Adress</p> 
+            </div>
+            <div class="info">
+                <p>Full name (first name and surname) :<br>
+                <input type="text"></p>
+                <p>Street Name :<br>
+                <input type="text" placeholder="Street adress"><br>
+                <input type="text" placeholder="Flat, building, floor, etc."></p>
+                <p>City :<br>
+                <input type="text"></p>
+                <p>State/Province/Region :<br>
+                <input type="text"></p>
+                <p>Postcode :<br>
+                <input type="text"></p>
+                <p>Phone number :<br>
+                <input type="text"></p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="step">
+                <p>3. Card informations</p> 
+            </div>
+            <div class="info">
+                <p>Type of card :<br>
+                    <input type="radio" name="card">Visa <img src="image/visa.png" width="25px" height="20px"><br>
+                    <input type="radio" name="card">Mastercard <img src="image/mastercard.png" width="25px" height="15px"><br>
+                </p>
+                <p>Name on card :<br>
+                <input type="text"></p>
+                <p>Card number :<br>
+                <input type="text"><br>
+                <p>Expiration date :<br>
+                    <select name = "month" multiples>
+                        <option> 1 </option>
+                        <option> 2 </option>
+                        <option> 3 </option>
+                        <option> 4 </option>
+                        <option> 5 </option>
+                        <option> 6 </option>
+                        <option> 7 </option>
+                        <option> 8 </option>
+                        <option> 9 </option>
+                        <option> 10 </option>
+                        <option> 11 </option>
+                        <option> 12 </option>
+                        </select>
+                    <select name = "year" multiples>
+                        <option> 2023 </option>
+                        <option> 2024 </option>
+                        <option> 2025 </option>
+                        <option> 2026 </option>
+                        <option> 2027 </option>
+                        <option> 2028 </option>
+                        <option> 2029 </option>
+                        <option> 2030 </option>
+                        <option> 2031 </option>
+                        <option> 2032 </option>
+                        <option> 2033 </option>
+                        <option> 2034 </option>
+                        </select></p>
+                <p>Security Code (CVV:CVC) :<br>
+                <input type="text"></p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="step">
+                <p>4. Recap</p> 
+            </div>
+            <div class="info">
+                <p>Price : </p>
+                <p>Adress :</p>
+                <p>Card : </p>
+            </div>
+        </div>
+        <button onclick="">Buy it now</button>
+    </div>
+</div>
+
+
+<!--Footer-->
+
+<footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h5>Contacts :</h5>
+        <p><img src="image\telephone.png" width="20px" height="20px">   Phone : +44 0345 671 9655</p>
+        <p><img src="image\email.png" width="20px" height="20px">   Email : contacts@tropicalfarm.com</p>
+      </div>
+      <div class="footer-section">
+        <h5>Liens utiles</h5>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Term of use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2023 | Tropical Farm</p>
+    </div>
+  </footer>
+</body>
+</html>

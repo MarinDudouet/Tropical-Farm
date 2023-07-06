@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../../Documents/GitHub/Tropical-Farm"
+		},
+		{
+			"path": "../../../../Documents/Dynamic_Web/Tropical_Farm/bootstrap-5.3.0-dist/css"
+		},
+		{
+			"path": "../../../../Documents/Dynamic_Web/Tropical_Farm/bootstrap-5.3.0-dist/js"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Tropical-Farm"
+	}
+}
