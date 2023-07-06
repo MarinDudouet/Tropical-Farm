@@ -382,4 +382,28 @@ nav {
 
   /*Seller home page*/
 
+  .containerseller{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    justify-content: space-between;
+  }
+
+  .containerseller a{
+    border: none;
+    border-radius: 55px;
+    background-color: rgb(14, 132, 67);
+    margin: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color:rgb(255, 255, 255);
+    font-weight: bold;
+    height: 30px;
+    width: 120px;
+    text-decoration:none ;
+  }
+
+  .containerseller a:hover{
+    background-color: rgb(12, 113, 57);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
   
