@@ -158,36 +158,6 @@ nav {
     color: white;
   }
 
-/*Carroussel*/
-
-.carousel {
-  width: 650px;
-  height: 450px;
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel-inner {
-  width: 1950px;
-  height: 450px;
-  position: absolute;
-  transition: left 0.5s;
-}
-
-.carousel-inner img {
-  float: left;
-  width: 650px;
-  height: 450px;
-}
-
-.carousel-nav {
-  margin-top: 10px;
-}
-
-.carousel-nav button {
-  margin: 0 5px;
-}
-
   /*Container*/
 
   .container {
