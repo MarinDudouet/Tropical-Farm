@@ -64,12 +64,22 @@
     </div>
     <div class="item-car-div">
         <br>
-        <center><input type="text" placeholder="Name of the item"><br><br>
-        <input type="text" placeholder="Description of the item"><br><br>
-        <input type="text" placeholder="Price"><br><br>
-        <button onclick="">Propose to sell</button><br>
-        <button onclick="">Propose to auction</button><br>
-        <button onclick="">Propose to trade</button></center>
+        <center>
+        <form method="post" action="http://localhost:80/additem.php"></form>
+        <input type="text" name="name" placeholder="Name of the item"><br><br>
+        <input type="radio" name="category"> Reptiles &nbsp
+        <input type="radio" name="category"> Food &nbsp
+        <input type="radio" name="category"> Materials <br><br>
+        <input type="text" name="description" placeholder="Description of the item"><br><br>
+        <input type="text" name="price" placeholder="Price"><br><br>
+        <input type="text" name="stock" placeholder="Number item"><br><br>
+        <input type="checkbox" name="sell"> Sell &nbsp
+        <input type="checkbox" name="auction"> Auction &nbsp 
+        <input type="checkbox" name="trade"> Trade <br><br>
+        <input class="item-submit" type="submit" value="Add Item">
+        <input class="item-submit"  type="reset" value="Reset Values">
+        </form>
+        </center>
 
 
     </div>
