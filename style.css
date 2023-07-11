@@ -433,6 +433,25 @@ nav {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   }
 
+  .item button{
+    border: none;
+    border-radius: 55px;
+    background-color: rgb(14, 132, 67);
+    margin: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color:rgb(255, 255, 255);
+    font-weight: bold;
+    height: 30px;
+    width: auto;
+    text-decoration:none ;
+  }
+
+  .item button:hover{
+    background-color: rgb(12, 113, 57);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  }
+
   /*Seller home page*/
 
   .containerseller{
@@ -494,4 +513,21 @@ nav {
 .basketa:hover{
   background-color: rgb(12, 113, 57);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/*Admin Home page*/
+
+.containeradmin{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  justify-content: space-between;
+  border: 1px solid black;
+  padding: 2%;
+  background-color: rgb(237, 242, 237);
+  height: auto;}
+
+.containeradmin img:hover{
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
