@@ -158,6 +158,35 @@ nav {
     color: white;
   }
 
+/*Carroussel*/
+
+.carousel {
+  width: 650px;
+  height: 450px;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-inner {
+  width: 1950px;
+  height: 450px;
+  position: absolute;
+  transition: left 0.5s;
+}
+
+.carousel-inner img {
+  float: left;
+  width: 650px;
+  height: 450px;
+}
+
+.carousel-nav {
+  margin-top: 10px;
+}
+
+.carousel-nav button {
+  margin: 0 5px;
+}
 
   /*Container*/
 
@@ -332,12 +361,18 @@ nav {
   flex-basis: 20%;
   color: black;
   font-weight: bold;
+  margin-left: 15px;
 }
 
 .info{
   flex-basis: 80%;
+}
+
+.all{
+  flex-basis: 80%;
   padding: 20px;
   display: inline-block;
+  background-color: red;
 }
 
 .info-buyer button {
@@ -386,6 +421,9 @@ nav {
     display: grid;
     grid-template-columns: repeat(4,1fr);
     justify-content: space-between;
+    border: 1px solid black;
+    padding: 2%;
+    background-color: rgb(237, 242, 237);
   }
 
   .containerseller a{
@@ -398,7 +436,7 @@ nav {
     color:rgb(255, 255, 255);
     font-weight: bold;
     height: 30px;
-    width: 120px;
+    width: 140px;
     text-decoration:none ;
   }
 
@@ -406,4 +444,36 @@ nav {
     background-color: rgb(12, 113, 57);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
+
+/*Basket*/
   
+.basket{
+  border: 1px solid black;
+  padding: 2%;
+  background-color: rgb(237, 242, 237);
+  margin-top: 2% ;
+  margin-bottom: 2%;
+}
+
+.basketa{
+  border: none;
+  border-radius: 55px;
+  background-color: rgb(14, 132, 67);
+  margin: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color:rgb(255, 255, 255);
+  font-weight: bold;
+  height: 30px;
+  width: auto;
+  text-decoration:none ;
+  right: 0;
+  left: auto;
+  position: absolute;
+  margin-right: 6%;
+}
+
+.basketa:hover{
+  background-color: rgb(12, 113, 57);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
