@@ -14,6 +14,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
 <script src="java.js"></script>
+<script>
+  function afficherImage(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        document.getElementById('imagePreview').src = e.target.result;
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
 
 </head>
 
@@ -60,22 +73,23 @@
 
 <div class="container">
     <div class="item-img-div">
-        <center><img src="image\.png"></center>
+        <center><img id="imagePreview" src="#" alt="Aperçu de l'image" /></center>
     </div>
     <div class="item-car-div">
         <br>
         <center>
-        <form method="post" action="http://localhost:80/additem.php"></form>
+        <form method="post" action="http://localhost:80/Tropical-Farm/additem.php">
         <input type="text" name="name" placeholder="Name of the item"><br><br>
-        <input type="radio" name="category"> Reptiles &nbsp
-        <input type="radio" name="category"> Food &nbsp
-        <input type="radio" name="category"> Materials <br><br>
+        <input type="file" name="photo" onchange="afficherImage(this)">
+        <input type="radio" name="category" value="reptiles"> Reptiles &nbsp
+        <input type="radio" name="category" value="food"> Food &nbsp
+        <input type="radio" name="category" value="materials"> Materials <br><br>
         <input type="text" name="description" placeholder="Description of the item"><br><br>
         <input type="text" name="price" placeholder="Price"><br><br>
         <input type="text" name="stock" placeholder="Number item"><br><br>
-        <input type="checkbox" name="sell"> Sell &nbsp
-        <input type="checkbox" name="auction"> Auction &nbsp 
-        <input type="checkbox" name="trade"> Trade <br><br>
+        <input type="checkbox" name="sell" value="sell"> Sell &nbsp
+        <input type="checkbox" name="auction" value="auction"> Auction &nbsp 
+        <input type="checkbox" name="trade" value="trade"> Trade <br><br>
         <input class="item-submit" type="submit" value="Add Item">
         <input class="item-submit"  type="reset" value="Reset Values">
         </form>

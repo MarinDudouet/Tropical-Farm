@@ -5,6 +5,7 @@
     $pass = "";
     
     $name = $_POST["name"];
+    $photo = $_POST["photo"];
     $category = $_POST["category"];
     $description = $_POST["description"];
     $price = $_POST["price"];
@@ -21,14 +22,16 @@
 
                 //On insère les données reçues
         $sth = $dbco->prepare("
-            INSERT INTO item(name, category, description, price, stock, sell, auction, trade)
-            VALUES(:name, :category, :description, :price, :stock, :sell, :auction, :trade)");
+            INSERT INTO item(name, photo, category, description, price, stock, sell, auction, trade)
+            VALUES(:name, :photo, :category, :description, :price, :stock, :sell, :auction, :trade)");
         $sth->bindParam(':name',$name);
+        $sth->bindParam(':photo',$photo);
         $sth->bindParam(':category',$category);
         $sth->bindParam(':description',$description);
         $sth->bindParam(':price',$price);
         $sth->bindParam(':stock',$stock);
-        $sth->bindParam(':sell',$auction);
+        $sth->bindParam(':sell',$sell);
+        $sth->bindParam(':auction',$auction);
         $sth->bindParam(':trade',$trade);
 
         $sth->execute();
