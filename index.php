@@ -17,10 +17,10 @@
 
 </head>
 
+
 <body>
 
   <audio autostart="true" loop controls src="foret.mp3"></audio>
-  
 
 <div class="headnav">
   
@@ -32,7 +32,7 @@
         </div>
         <div class="titre"><a href="index.html" class="titre">Tropical Farm</a></div>
         <div class="dropdown">
-          <button class="dropdown-btn"><img src="image\user.png" width="50px" height="50px"></button>
+          <button class="dropdown-btn"><img src="<?php echo $imageURL; ?>" width="50px" height="50px"></button>
           <div class="dropdown-content">
             <a href="#">Costumer</a>
             <a href="seller.html">Seller</a>

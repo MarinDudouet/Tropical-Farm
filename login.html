@@ -62,39 +62,7 @@
             text-decoration: none;
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#loginForm').submit(function(e) {
-                e.preventDefault(); // Empêche la soumission normale du formulaire
 
-                // Récupérer les valeurs du formulaire
-                var username = $('#username').val();
-                var password = $('#password').val();
-
-                // Envoyer la requête AJAX
-                $.ajax({
-                    url: 'login.php', // URL du script PHP pour la validation du login
-                    type: 'POST',
-                    data: {
-                        username: username,
-                        password: password
-                    },
-                    success: function(response) {
-                        // Traiter la réponse du serveur
-                        if (response === 'success') {
-                            // Connexion réussie, rediriger vers une autre page
-                            window.location.href = 'form-merci';
-                        } else {
-                            // Afficher un message d'erreur
-                            $('#message').text('Identifiants invalides.');
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-</head>
 <body>
     <div class="container">
         <div class="login-form">
@@ -105,7 +73,7 @@
                 <input type="submit" value="Login">
             </form>
             <div class="message">
-                not yet registered ? <a href="signup.html">Sign up</a>
+                Not yet registered ? <a href="signup.html">Sign up</a>
             </div>
         </div>
     </div>
