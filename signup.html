@@ -63,13 +63,24 @@
         }
     </style>
 </head>
+
+  
 <body>
     <div class="container">
         <div class="login-form">
             <h2>Sign up</h2>
             <form method="post" action="http://localhost:80/Tropical-Farm/signup.php">
+                <p>Choose the type of account :</p>
+                <center><input type="radio" name="account" value="user" required>User
+                <input type="radio" name="account" value="seller">Seller</center><br>
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
+                <p>Choose a profil pictures : </p>
+                <input type="file" name="photo" value="Select an Image" onchange="showImage(this)" required><br><br>
+                <p>Choose the color of your background :</p>
+                <center><input type="radio" name="color" value="red" required>Red
+                <input type="radio" name="color" value="blue">Blue
+                <input type="radio" name="color" value="grey">Grey</center><br>
                 <input type="submit" value="Sign up">
             </form>
             <div class="message">

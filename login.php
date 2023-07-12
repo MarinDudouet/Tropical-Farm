@@ -9,8 +9,6 @@ session_start();
     
     $username = $_POST["username"];
     $password = $_POST["password"];
-
-
     
     try{
         //On se connecte à la BDD
@@ -27,7 +25,8 @@ session_start();
         
         if ($stmt->rowCount() > 0) {
         // Connexion réussie
-        header('Location: index.html');
+        
+        $row = $stmt->fetch();
         $_SESSION["role"]="seller";
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];
@@ -41,13 +40,13 @@ session_start();
         $_SESSION["expirationmonth"]=$row['monthexpiration'];
         $_SESSION["expirationyear"]=$row['yearexpiration'];
         $_SESSION["cvc"]=$row['cvc'];
-
+        header('Location: seller.html');
         exit();
         } 
 
         //Buyer
 
-        $query = "SELECT * FROM seller WHERE username = :username AND password = :password";
+        $query = "SELECT * FROM buyer WHERE username = :username AND password = :password";
         $stmt = $dbco->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
@@ -55,7 +54,7 @@ session_start();
         
         if ($stmt->rowCount() > 0) {
         // Connexion réussie
-        header('Location: index.html');
+        $row = $stmt->fetch();
         $_SESSION["role"]="buyer";
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];
@@ -69,13 +68,13 @@ session_start();
         $_SESSION["expirationmonth"]=$row['monthexpiration'];
         $_SESSION["expirationyear"]=$row['yearexpiration'];
         $_SESSION["cvc"]=$row['cvc'];
-
+        header('Location: index.html');
         exit();
         } 
 
         //Admin
 
-        $query = "SELECT * FROM seller WHERE username = :username AND password = :password";
+        $query = "SELECT * FROM admin WHERE username = :username AND password = :password";
         $stmt = $dbco->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
@@ -83,7 +82,7 @@ session_start();
         
         if ($stmt->rowCount() > 0) {
         // Connexion réussie
-        header('Location: index.html');
+        $row = $stmt->fetch();
         $_SESSION["role"]="admin";
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];
@@ -97,8 +96,8 @@ session_start();
         $_SESSION["expirationmonth"]=$row['monthexpiration'];
         $_SESSION["expirationyear"]=$row['yearexpiration'];
         $_SESSION["cvc"]=$row['cvc'];
+        echo '<p>message : ' . $_SESSION["phone"] . '</p>';
 
-        exit();
         } 
 
         else {
