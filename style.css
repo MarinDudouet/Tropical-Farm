@@ -26,6 +26,7 @@ header {
   margin-left: 15px;
 }
 
+
 .titre {
   color: #ffffff;
   font-size: 30px;
@@ -41,6 +42,7 @@ header {
   position: relative;  
   z-index: 1;
 }
+
 
 .dropdown-btn {
   background-color: #245033;

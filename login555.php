@@ -40,6 +40,7 @@ session_start();
         $_SESSION["expirationmonth"]=$row['monthexpiration'];
         $_SESSION["expirationyear"]=$row['yearexpiration'];
         $_SESSION["cvc"]=$row['cvc'];
+        $_SESSION["photo"]=$row['photo'];
         header('Location: http://localhost:80/Tropical-Farm/seller.php');
         exit();
         } 
@@ -68,6 +69,7 @@ session_start();
         $_SESSION["expirationmonth"]=$row['monthexpiration'];
         $_SESSION["expirationyear"]=$row['yearexpiration'];
         $_SESSION["cvc"]=$row['cvc'];
+        $_SESSION["photo"]=$row['photo'];
         header('Location: http://localhost:80/Tropical-Farm/index.php');
         exit();
         } 
@@ -96,6 +98,7 @@ session_start();
         $_SESSION["expirationmonth"]=$row['monthexpiration'];
         $_SESSION["expirationyear"]=$row['yearexpiration'];
         $_SESSION["cvc"]=$row['cvc'];
+        $_SESSION["photo"]=$row['photo'];
         echo '<p>message : ' . $_SESSION["phone"] . '</p>';
 
         } 

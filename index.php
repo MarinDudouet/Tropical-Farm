@@ -31,19 +31,27 @@
 session_start();
 
 if(!isset($_SESSION["photo"])){
-    //redirection page erreur
+  $imageURL = "image/user.png";
 }
-
-$imageURL = "image/accroche.jpg";
+else{
+$imageURL = "image/" . $_SESSION["photo"];
+}
 ?>
 
-    <header>
-        <div class="logo">
-          <img src="image\logo.png" alt="Logo">
-        </div>
-        <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>>
-          <a href="login.php"><img src="<?php echo $imageURL; ?>" width="50px" height="50px"></a>
-      </header>
+      <header>
+            <div class="logo">
+              <img src="image\logo.png" alt="Logo">
+            </div>
+            <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>
+            <div class="dropdown">
+              <a href="http://localhost:80/Tropical-Farm/login.php" class="dropdown-btn"><img src="<?php echo $imageURL; ?>" width="50px" height="50px"></a>
+              <?php
+                if(isset($_SESSION["role"])){
+                  echo '<a href="http://localhost:80/Tropical-Farm/logout.php">Logout</a>';
+                }
+              ?>
+            </div>
+          </header>
       
 <!--Navbar-->
 
