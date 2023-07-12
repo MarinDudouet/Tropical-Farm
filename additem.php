@@ -60,7 +60,7 @@
               <div class="logo">
                 <img src="image\logo.png" alt="Logo">
               </div>
-              <div class="titre"><a href="index.html" class="titre">Tropical Farm</a></div>
+              <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>
               <div class="dropdown">
                 <button class="dropdown-btn"><img src="image\user.png" width="50px" height="50px"></button>
                 <div class="dropdown-content">
@@ -76,13 +76,13 @@
   <nav>
       <ul class="categories">
         <li>
-          <a href="itemseller.html">My items</a>
+          <a href="http://localhost:80/Tropical-Farm/itemseller.php">My items</a>
         </li>
         <li>
-          <a href="auctionseller.html">Auction</a>
+          <a href="http://localhost:80/Tropical-Farm/auctionseller.php">Auction</a>
         </li>
         <li>
-          <a href="tradeseller.html">Trade</a>
+          <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Trade</a>
         </li>
       </ul>
     </nav>
