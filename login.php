@@ -74,7 +74,7 @@
                 <input type="submit" value="Login">
             </form>
             <div class="message">
-                Not yet registered ? <a href="signup.html">Sign up</a>
+                Not yet registered ? <a href="http://localhost:80/Tropical-Farm/signup.html">Sign up</a>
             </div>
         </div>
     </div>

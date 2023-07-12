@@ -30,7 +30,7 @@
         <div class="logo">
           <img src="image\logo.png" alt="Logo">
         </div>
-        <div class="titre"><a href="index.html" class="titre">Tropical Farm</a></div>
+        <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>
         <div class="dropdown">
           <button class="dropdown-btn"><img src="image\user.png" width="50px" height="50px"></button>
           <div class="dropdown-content">
@@ -46,10 +46,10 @@
 <nav>
   <ul class="categories">
     <li>
-      <a href="manageitem.html">Manage items</a>
+      <a href="http://localhost:80/Tropical-Farm/manageitem.php">Manage items</a>
     </li>
     <li>
-      <a href="manageusers.html">Manage costumers/seller</a>
+      <a href="http://localhost:80/Tropical-Farm/manageusers.php">Manage costumers/seller</a>
     </li>
   </ul>
 </nav>
@@ -62,12 +62,12 @@
 <div class="containeradmin">
 <h3>&nbsp; Manage the users :</h3><br>
 
-<a href="manageusers.html"><img src="image/management.png" height="100px" width="100px"></a>
+<a href="http://localhost:80/Tropical-Farm/manageusers.php"><img src="image/management.png" height="100px" width="100px"></a>
 </div><br><br>
 <div class="containeradmin">
 <h3>&nbsp; Manage the items :</h3><br>
 
-<a href="manageitem.html"><img src="image/cost (1).png" height="100px" width="100px"></a>
+<a href="http://localhost:80/Tropical-Farm/manageitem.php"><img src="image/cost (1).png" height="100px" width="100px"></a>
 </div>
 <br><br><br><br>
 <!--Footer-->

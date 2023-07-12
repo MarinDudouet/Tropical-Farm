@@ -30,7 +30,7 @@
         <div class="logo">
           <img src="image\logo.png" alt="Logo">
         </div>
-        <div class="titre"><a href="index.html" class="titre">Tropical Farm</a></div>
+        <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>
         <div class="dropdown">
           <button class="dropdown-btn"><img src="image\user.png" width="50px" height="50px"></button>
           <div class="dropdown-content">
@@ -46,13 +46,13 @@
 <nav>
   <ul class="categories">
     <li>
-      <a href="itemseller.html">My items</a>
+      <a href="http://localhost:80/Tropical-Farm/itemseller.php">My items</a>
     </li>
     <li>
-      <a href="auctionseller.html">Auction</a>
+      <a href="http://localhost:80/Tropical-Farm/auctionseller.php">Auction</a>
     </li>
     <li>
-      <a href="tradeseller.html">Trade</a>
+      <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Trade</a>
     </li>
   </ul>
 </nav>
@@ -85,7 +85,7 @@
 <div class="info">
     <img src="image/price-tag.png" width="100px" height="100px">
 </div>
-<a href="itemseller.html"><center>See my item</center></a><br>
+<a href="http://localhost:80/Tropical-Farm/itemseller.php"><center>See my item</center></a><br>
 
 </div>
 <br>
@@ -113,7 +113,7 @@
 <div class="info">
     <img src="image/best-price (1).png" width="100px" height="100px">
 </div>
-<a href="auctionseller.html"><center>See my auction</center></a><br>
+<a href="http://localhost:80/Tropical-Farm/auctionseller.php"><center>See my auction</center></a><br>
 
 </div>
 <br>
@@ -141,7 +141,7 @@
 <div class="info">
     <img src="image/cost.png" width="100px" height="100px">
 </div>
-<a href="tradeseller.html"><center>See my trade</center></a><br>
+<a href="http://localhost:80/Tropical-Farm/tradeseller.php"><center>See my trade</center></a><br>
 
 </div>
 <br>

@@ -51,7 +51,7 @@ session_start();
             }
 
         //On renvoie l'utilisateur vers la page de remerciement
-        header("Location: http://localhost:80/Tropical-Farm/login.html");
+        header("Location: http://localhost:80/Tropical-Farm/login.php");
 
 
         }
