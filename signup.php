@@ -5,11 +5,13 @@ session_start();
     $dbname = "tropicalfarm";
     $user = "root";
     $pass = "";
-    
+
     $username = $_POST["username"];
     $password = $_POST["password"];
     $photo = $_POST["photo"];
     $background = $_POST["color"];
+
+    $_SESSION["photo"]=$photo;
 
     
     try{
