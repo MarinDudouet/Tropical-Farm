@@ -34,7 +34,7 @@
         $sth->execute();
         
         //On renvoie l'utilisateur vers la page de remerciement
-        header("Location: http://localhost:80/Tropical-Farm/form-merci.html");
+        header("Location: http://localhost:80/Tropical-Farm/form-merci.php");
 
         }
     catch(PDOException $e){

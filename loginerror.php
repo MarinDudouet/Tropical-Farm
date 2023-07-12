@@ -74,7 +74,7 @@
             </form>
             <center><p style="color: red; font-size: 12px;">Username or Password incorrect</p></center>
             <div class="message">
-                Not yet registered ? <a href="http://localhost:80/Tropical-Farm/signup.html">Sign up</a>
+                Not yet registered ? <a href="http://localhost:80/Tropical-Farm/signup.php">Sign up</a>
             </div>
         </div>
     </div>
