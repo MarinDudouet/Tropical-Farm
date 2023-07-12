@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 11 juil. 2023 à 16:40
+-- Généré le : mer. 12 juil. 2023 à 12:01
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -36,11 +36,19 @@ CREATE TABLE IF NOT EXISTS `item` (
   `photo` varchar(50) NOT NULL,
   `price` varchar(50) NOT NULL,
   `stock` varchar(50) NOT NULL,
-  `sell` varchar(50) NOT NULL,
-  `auction` varchar(50) NOT NULL,
-  `trade` varchar(50) NOT NULL,
+  `sell` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `auction` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `trade` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`iditem`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `item`
+--
+
+INSERT INTO `item` (`iditem`, `name`, `category`, `description`, `photo`, `price`, `stock`, `sell`, `auction`, `trade`) VALUES
+(5, 'cameleon', 'reptiles', 'bgsg', 'accroche.jpg', '50', '2', 'sell', NULL, NULL),
+(4, 'asticots', 'food', 'un oiseau', '', '50', '2', 'sell', 'auction', NULL);
 
 -- --------------------------------------------------------
 
