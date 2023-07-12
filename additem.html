@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
@@ -13,6 +13,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
+<style>
+  .hidden {
+    display: none;
+  }
+</style>
 <script src="java.js"></script>
 <script>
   function showImage(input) {
@@ -27,6 +32,22 @@
     }
   }
 </script>
+
+<script>
+  function afficherOptions() {
+    var valeurBoutonRadio = document.querySelector('input[name="category"]:checked').value;
+    var optionsSupplementaires = document.getElementById('optionsSupplementaires');
+
+    if (valeurBoutonRadio === 'reptiles') {
+      optionsSupplementaires.classList.remove('hidden');
+    } else {
+      optionsSupplementaires.classList.add('hidden');
+    }
+  }
+</script>
+
+
+
 
 </head>
 
@@ -79,14 +100,21 @@
         <br>
         <center>
         <form method="post" action="http://localhost:80/Tropical-Farm/additem.php">
-        <input type="text" name="name" placeholder="Name of the item"><br><br>
-        <input type="file" name="photo" value="Select an Image" onchange="showImage(this)"> <br><br>
-        <input type="radio" name="category" value="reptiles"> Reptiles &nbsp
-        <input type="radio" name="category" value="food"> Food &nbsp
-        <input type="radio" name="category" value="materials"> Materials <br><br>
-        <input type="text" name="description" placeholder="Description of the item"><br><br>
-        <input type="text" name="price" placeholder="Price"><br><br>
-        <input type="text" name="stock" placeholder="Number item"><br><br>
+        <input type="text" name="name" placeholder="Name of the item" required><br><br>
+        <input type="file" name="photo" value="Select an Image" onchange="showImage(this)" required> <br><br>
+        <input type="radio" name="category" value="reptiles" onchange="afficherOptions()" required> Reptiles &nbsp
+        <input type="radio" name="category" value="food" onchange="afficherOptions()" required> Food &nbsp
+        <input type="radio" name="category" value="materials" onchange="afficherOptions()" required> Materials <br><br>
+        <div id="optionsSupplementaires" class="hidden">
+        <input type="radio" name="second_category" value="snakes"> Snakes &nbsp <br>
+        <input type="radio" name="second_category" value="lizards"> Lizards &nbsp 
+        <input type="radio" name="second_category" value="turtles"> Turtles &nbsp <br>
+        <input type="radio" name="second_category" value="amphibians"> Amphibians &nbsp
+        <input type="radio" name="second_category" value="chameleons"> Chameleons &nbsp <br><br>
+        </div>
+        <input type="text" name="description" placeholder="Description of the item" required><br><br>
+        <input type="text" name="price" placeholder="Price" required><br><br>
+        <input type="text" name="stock" placeholder="Number item" required><br><br>
         <input type="checkbox" name="sell" value="sell"> Sell &nbsp
         <input type="checkbox" name="auction" value="auction"> Auction &nbsp 
         <input type="checkbox" name="trade" value="trade"> Trade <br><br>
