@@ -26,19 +26,23 @@
   
 <!--Header-->
 
+<?php
+
+session_start();
+
+if(!isset($_SESSION["photo"])){
+    //redirection page erreur
+}
+
+$imageURL = "image/accroche.jpg";
+?>
+
     <header>
         <div class="logo">
           <img src="image\logo.png" alt="Logo">
         </div>
-        <div class="titre"><a href="index.html" class="titre">Tropical Farm</a></div>
-        <div class="dropdown">
-          <button class="dropdown-btn"><img src="<?php echo $imageURL; ?>" width="50px" height="50px"></button>
-          <div class="dropdown-content">
-            <a href="#">Costumer</a>
-            <a href="seller.html">Seller</a>
-            <a href="admin.html">Administrator</a>
-          </div>
-        </div>
+        <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>>
+          <a href="login.php"><img src="<?php echo $imageURL; ?>" width="50px" height="50px"></a>
       </header>
       
 <!--Navbar-->
@@ -48,33 +52,33 @@
     <li>
       <a href="#">Reptiles</a>
       <div class="dropdown2">
-        <a href="snakes.html">Snakes<img class="dropdown2-image" src="image\snake.png"></a>
-        <a href="lizards.html">Lizards<img class="dropdown2-image" src="image\lézards.png"></a>
-        <a href="turtles.html">Turtles<img class="dropdown2-image" src="image\tortues.png"></a>
-        <a href="amphibians.html">Amphibians<img class="dropdown2-image" src="image\amphibiens.png"></a>
-        <a href="chameleons.html">Chameleons<img class="dropdown2-image" src="image\chamaeleo.jpg"></a>
+        <a href="http://localhost:80/Tropical-Farm/snakes.php">Snakes<img class="dropdown2-image" src="image\snake.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/lizards.php">Lizards<img class="dropdown2-image" src="image\lézards.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/turtles.php">Turtles<img class="dropdown2-image" src="image\tortues.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/ambibians.php">Amphibians<img class="dropdown2-image" src="image\amphibiens.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/chameleons.php">Chameleons<img class="dropdown2-image" src="image\chamaeleo.jpg"></a>
       </div>
     </li>
     <li>
       <a href="#">Food</a>
       <div class="dropdown2">
-        <a href="livingfood.html">Living food<img class="dropdown2-image" src="image\insects.png"></a>
-        <a href="frozenfood.html">Frozen food<img class="dropdown2-image" src="image\mouse.png"></a>
-        <a href="dryfood.html">Dry food<img class="dropdown2-image" src="image\granule.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/livingfood.php">Living food<img class="dropdown2-image" src="image\insects.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/frozenfood.php">Frozen food<img class="dropdown2-image" src="image\mouse.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/dryfood.php">Dry food<img class="dropdown2-image" src="image\granule.png"></a>
       </div>
     </li>
     <li>
       <a href="#">Materials</a>
       <div class="dropdown2">
-        <a href="terrarium.html">Terrarium<img class="dropdown2-image" src="image\terarium.png"></a>
-        <a href="aquarium.html">Aquarium<img class="dropdown2-image" src="image\aquarium.png"></a>
-        <a href="decoration.html">Decoration<img class="dropdown2-image" src="image\deco.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/terrarium.php">Terrarium<img class="dropdown2-image" src="image\terarium.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/aquarium.php">Aquarium<img class="dropdown2-image" src="image\aquarium.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/decoration.php">Decoration<img class="dropdown2-image" src="image\deco.png"></a>
       </div>
     </li>
   </ul>
 
   <div class="panier">
-    <a href="basket.html"><b>Basket &nbsp</b><img src="image/shopping-bag.png"></a>
+    <a href="http://localhost:80/Tropical-Farm/basket.php"><b>Basket &nbsp</b><img src="image/shopping-bag.png"></a>
   </div>
 </nav>
 </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sign up</title>
+    <title>Formulaire de connexion</title>
     <style>
         body {
             margin: 0;
@@ -62,28 +62,19 @@
             text-decoration: none;
         }
     </style>
-</head>
 
-  
 <body>
     <div class="container">
         <div class="login-form">
-            <h2>Sign up</h2>
-            <form method="post" action="http://localhost:80/Tropical-Farm/signup.php">
-                <p>Choose the type of account :</p>
-                <center><input type="radio" name="account" value="user" required>User
-                <input type="radio" name="account" value="seller">Seller</center><br>
+            <h2>Login</h2>
+            <form method="post" action="http://localhost:80/Tropical-Farm/login555.php">
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
-                <p>Choose a profil pictures : </p>
-                <input type="file" name="photo" value="Select an Image" onchange="showImage(this)" required><br><br>
-                <p>Choose the color of your background :</p>
-                <center><input type="radio" name="color" value="red" required>Red
-                <input type="radio" name="color" value="blue">Blue
-                <input type="radio" name="color" value="grey">Grey</center><br>
-                <input type="submit" value="Sign up">
+                <input type="submit" value="Login">
             </form>
+            <center><p style="color: red; font-size: 12px;">Username or Password incorrect</p></center>
             <div class="message">
+                Not yet registered ? <a href="signup.html">Sign up</a>
             </div>
         </div>
     </div>

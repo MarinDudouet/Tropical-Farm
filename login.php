@@ -1,113 +1,82 @@
-<?php
-
-session_start();
-
-    $serveur = "localhost";
-    $dbname = "tropicalfarm";
-    $user = "root";
-    $pass = "";
-    
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    
-    try{
-        //On se connecte à la BDD
-        $dbco = new PDO("mysql:host=$serveur;dbname=$dbname",$user,$pass);
-        $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        //Seller
-
-        $query = "SELECT * FROM seller WHERE username = :username AND password = :password";
-        $stmt = $dbco->prepare($query);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
-        $stmt->execute();
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulaire de connexion</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
         
-        if ($stmt->rowCount() > 0) {
-        // Connexion réussie
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
         
-        $row = $stmt->fetch();
-        $_SESSION["role"]="seller";
-        $_SESSION["name"]=$row['name'];
-        $_SESSION["street"]=$row['street'];
-        $_SESSION["flat"]=$row['flat'];
-        $_SESSION["city"]=$row['city'];
-        $_SESSION["state"]=$row['state'];
-        $_SESSION["postcode"]=$row['postcode'];
-        $_SESSION["phone"]=$row['phone'];
-        $_SESSION["typecard"]=$row['card'];
-        $_SESSION["cardnumber"]=$row['cardnumber'];
-        $_SESSION["expirationmonth"]=$row['monthexpiration'];
-        $_SESSION["expirationyear"]=$row['yearexpiration'];
-        $_SESSION["cvc"]=$row['cvc'];
-        header('Location: seller.html');
-        exit();
-        } 
-
-        //Buyer
-
-        $query = "SELECT * FROM buyer WHERE username = :username AND password = :password";
-        $stmt = $dbco->prepare($query);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
-        $stmt->execute();
+        .login-form {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+        }
         
-        if ($stmt->rowCount() > 0) {
-        // Connexion réussie
-        $row = $stmt->fetch();
-        $_SESSION["role"]="buyer";
-        $_SESSION["name"]=$row['name'];
-        $_SESSION["street"]=$row['street'];
-        $_SESSION["flat"]=$row['flat'];
-        $_SESSION["city"]=$row['city'];
-        $_SESSION["state"]=$row['state'];
-        $_SESSION["postcode"]=$row['postcode'];
-        $_SESSION["phone"]=$row['phone'];
-        $_SESSION["typecard"]=$row['card'];
-        $_SESSION["cardnumber"]=$row['cardnumber'];
-        $_SESSION["expirationmonth"]=$row['monthexpiration'];
-        $_SESSION["expirationyear"]=$row['yearexpiration'];
-        $_SESSION["cvc"]=$row['cvc'];
-        header('Location: index.html');
-        exit();
-        } 
-
-        //Admin
-
-        $query = "SELECT * FROM admin WHERE username = :username AND password = :password";
-        $stmt = $dbco->prepare($query);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
-        $stmt->execute();
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
         
-        if ($stmt->rowCount() > 0) {
-        // Connexion réussie
-        $row = $stmt->fetch();
-        $_SESSION["role"]="admin";
-        $_SESSION["name"]=$row['name'];
-        $_SESSION["street"]=$row['street'];
-        $_SESSION["flat"]=$row['flat'];
-        $_SESSION["city"]=$row['city'];
-        $_SESSION["state"]=$row['state'];
-        $_SESSION["postcode"]=$row['postcode'];
-        $_SESSION["phone"]=$row['phone'];
-        $_SESSION["typecard"]=$row['card'];
-        $_SESSION["cardnumber"]=$row['cardnumber'];
-        $_SESSION["expirationmonth"]=$row['monthexpiration'];
-        $_SESSION["expirationyear"]=$row['yearexpiration'];
-        $_SESSION["cvc"]=$row['cvc'];
-        echo '<p>message : ' . $_SESSION["phone"] . '</p>';
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 93%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
+        .login-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .login-form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        .login-form .message {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .login-form .message a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
 
-        } 
+<body>
 
-        else {
-            // Identifiants invalides
-            header('Location: loginerror.html');
-            exit();
-            }
-
-}
-    catch(PDOException $e){
-        echo 'Impossible de traiter les données. Erreur : '.$e->getMessage();
-    }
-?>
+    <div class="container">
+        <div class="login-form">
+            <h2>Login</h2>
+            <form method="post" action="http://localhost:80/Tropical-Farm/login555.php">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="submit" value="Login">
+            </form>
+            <div class="message">
+                Not yet registered ? <a href="signup.html">Sign up</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
