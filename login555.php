@@ -102,7 +102,8 @@ session_start();
         $_SESSION["cvc"]=$row['cvc'];
         $_SESSION["photo"]=$row['photo'];
         $_SESSION["background"]=$row['background'];
-        echo '<p>message : ' . $_SESSION["phone"] . '</p>';
+        header('Location: http://localhost:80/Tropical-Farm/index.php');
+        exit();
 
         } 
 
