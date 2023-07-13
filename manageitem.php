@@ -120,8 +120,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
   echo "<img src= image/". $row['photo'] ." alt='Image' /><br>";
   echo "<center><h5><b>" . $row['name'] . "</b></h5>";
   echo "<p>" .$row['price'] . "  £</p></center>";
-  echo '<center><button onclick="deleteItem(' . $row['iditem'] . ')">Delete</button>';
-  echo '  <a href="http://localhost:80/Tropical-Farm/manageinfo.php"><button>Manage informations</button></a></center></div>';
+  echo '<center><button onclick="deleteItem(' . $row['iditem'] . ')">Delete</button></div>';
  }
 
 ?>

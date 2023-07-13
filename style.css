@@ -46,49 +46,6 @@ header {
   color: #dbdada;
 }
 
-.dropdown {
-  position: relative;  
-  z-index: 1;
-}
-
-
-.dropdown-btn {
-  background-color: #245033;
-  border: none;
-  cursor: pointer;
-  margin-right: 20px;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  right: 0;
-  left: auto;
-}
-
-.dropdown-content a {
-  color: #0d2410;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #e3e9e1;
-}
-
-.dropdown a{
-  margin-right: 15px;
-  color: white;
-  text-decoration: none;
-}
-
 /* Nav bar */
 
 nav {
@@ -172,6 +129,60 @@ nav {
 
   nav .panier a:hover{
     color: white;
+  }
+
+
+  /*Dropdown*/
+
+  .categorie {
+    list-style-type: none;
+    display: flex;
+    gap: 40px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    margin-left: 5Px;
+  }
+  
+  .categorie li a {
+    color: #0d2410;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .categorie li a:hover {
+    color: #ffffff;
+  }
+  
+  .categorie li {
+    position: relative;
+  }
+  
+  .categorie li .dropdown {
+    display: none;
+    position: absolute;
+    left: 0; 
+    background-color: #f9f9f9;
+    z-index: 1;
+  }
+
+  .categorie li .dropdown a {
+    font-weight: normal;
+    color: #0d2410;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .categorie li .dropdown a img {
+    width: 90px;
+    height: 60px;
+  }
+  
+  .categories li:hover .dropdown {
+    display: block;
   }
 
   /*Container*/
@@ -469,6 +480,29 @@ nav {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
 
+  .bo{
+    border: none;
+    border-radius: 55px;
+    background-color: rgb(14, 132, 67);
+    margin: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color:rgb(255, 255, 255);
+    font-weight: bold;
+    height: 30px;
+    width: 140px;
+    text-decoration:none ;
+  }
+
+  .bo{
+    background-color: rgb(12, 113, 57);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .boo{
+    all: unset;
+  }
+
 /*Basket*/
   
 .basket{
@@ -501,6 +535,7 @@ nav {
   background-color: rgb(12, 113, 57);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
+
 
 /*Admin Home page*/
 
@@ -559,4 +594,13 @@ nav {
 .optionfiltre {
   background-color: #ffffff;
   color: #000000;
+}
+
+.item-car-div-persoPage{
+  margin-top: 45px;
+  padding: 20px;
+  flex-basis: 50%;
+  display: inline-block;
+  background-color: rgb(244, 240, 240);
+  left: 50%;
 }

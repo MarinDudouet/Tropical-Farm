@@ -141,6 +141,10 @@ elseif($filter == 'desc'){
   $query = "SELECT * FROM item WHERE $condition1 and $condition2 ORDER BY price DESC";
   $resultat = mysqli_query($connexion, $query);
 }
+elseif($filter == 'null'){
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2";
+  $resultat = mysqli_query($connexion, $query);
+}
 }
 
 else{
