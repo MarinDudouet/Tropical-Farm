@@ -106,6 +106,14 @@ $imageURL = "image/" . $_SESSION["photo"];
         <li>
           <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Trade</a>
         </li>
+        <?php if($_SESSION["role"]=='seller' || $_SESSION["role"]=='admin'){ echo '
+        <li>
+          <a href="http://localhost:80/Tropical-Farm/seller.php">Sell</a>
+        </li>'; } ?>
+        <?php if($_SESSION["role"]=='admin'){ echo '
+        <li>
+          <a href="http://localhost:80/Tropical-Farm/admin.php">Administrator</a>
+        </li>'; } ?>
       </ul>
     </nav>
     </div>

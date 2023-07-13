@@ -26,20 +26,30 @@
   
 <!--Header-->
 
-    <header>
-        <div class="logo">
-          <img src="image\logo.png" alt="Logo">
-        </div>
-        <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>
-        <div class="dropdown">
-          <button class="dropdown-btn"><img src="image\user.png" width="50px" height="50px"></button>
-          <div class="dropdown-content">
-            <a href="#">Costumer</a>
-            <a href="http://localhost:80/Tropical-Farm/seller.php">Seller</a>
-            <a href="#">Administrator</a>
-          </div>
-        </div>
-      </header>
+<?php
+
+session_start();
+
+if(!isset($_SESSION["photo"])){
+  $imageURL = "image/user.png";
+}
+else{
+$imageURL = "image/" . $_SESSION["photo"];
+}
+?>
+
+      <?php if(isset($_SESSION["role"])){ echo '<header style="background-color: ' . $_SESSION["background"] . ';">'; } 
+            else{echo '<header>';}?>
+            <div class="logo">
+              <img src="image\logo.png" alt="Logo">
+            </div>
+            <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>
+            <div class="dropdown">
+              <a href="http://localhost:80/Tropical-Farm/login.php" class="dropdown-btn"><img src="<?php echo $imageURL; ?>" width="50px" height="50px"></a>
+              <?php if(isset($_SESSION["role"])){ echo '<a href="http://localhost:80/Tropical-Farm/logout.php" style="color: white; text-decoration: none; margin-right: 15px;"><b>Logout</b></a>'; } ?>
+
+            </div>
+          </header>
       
 <!--Navbar-->
 
@@ -71,6 +81,14 @@
         <a href="http://localhost:80/Tropical-Farm/decoration.php">Decoration<img class="dropdown2-image" src="image\deco.png"></a>
       </div>
     </li>
+    <?php if($_SESSION["role"]=='seller' || $_SESSION["role"]=='admin'){ echo '
+        <li>
+          <a href="http://localhost:80/Tropical-Farm/seller.php">Sell</a>
+        </li>'; } ?>
+        <?php if($_SESSION["role"]=='admin'){ echo '
+        <li>
+          <a href="http://localhost:80/Tropical-Farm/admin.php">Administrator</a>
+        </li>'; } ?>
   </ul>
 
   <div class="panier">
