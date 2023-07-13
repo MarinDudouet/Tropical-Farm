@@ -97,15 +97,17 @@ $imageURL = "image/" . $_SESSION["photo"];
 
 <!--Filtre-->
 
-<form method="GET">
+<form class="formfiltre" method="GET">
   <label for="filter">&nbsp;Filter by :</label>
   <select name="filter" id="filter">
-    <option>Select an option</option>
-    <option value="asc">Rising price</option>
-    <option value="desc">Decreasing price</option>
+    <option class="optionfiltre" value="null">Select an option</option>
+    <option class="optionfiltre" value="asc">Rising price</option>
+    <option class="optionfiltre" value="desc">Decreasing price</option>
   </select>
   <input class="filtre" type="submit" value="Apply">
 </form>
+<br>
+
 
 <!--Item-->
 
