@@ -89,7 +89,7 @@ $imageURL = "image/" . $_SESSION["photo"];
       </ul>
     
       <div class="panier">
-        <a href="#"><b>Basket &nbsp</b><img src="image/shopping-bag.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/basket.php"><b>Basket &nbsp</b><img src="image/shopping-bag.png"></a>
       </div>
     </nav>
     </div>

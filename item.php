@@ -88,7 +88,7 @@ $imageURL = "image/" . $_SESSION["photo"];
       </ul>
     
       <div class="panier">
-        <a href="#"><b>Basket &nbsp</b><img src="image/shopping-bag.png"></a>
+        <a href="http://localhost:80/Tropical-Farm/basket.php"><b>Basket &nbsp</b><img src="image/shopping-bag.png"></a>
       </div>
     </nav>
     </div>
@@ -113,16 +113,17 @@ if (!$connexion) {
     die("La connexion à la base de données a échoué : " . mysqli_connect_error());
 }
 
-    // Affichage de la ligne spécifique
-    $iditem = $_GET['iditem'];
+// Affichage de la ligne spécifique
+$iditem = $_GET['iditem'];
 
-    // Récupération des détails de l'élément
-    $query = "SELECT * FROM item WHERE iditem = $iditem";
-    $resultat = mysqli_query($connexion, $query);
+// Récupération des détails de l'élément
+$query = "SELECT * FROM item WHERE iditem = $iditem";
 
-    if (!$resultat) {
-        die("La requête a échoué : " . mysqli_error($connexion));
-    }
+$resultat = mysqli_query($connexion, $query);
+
+if (!$resultat) {
+    die("La requête a échoué : " . mysqli_error($connexion));
+}
 
     // Affichage des détails de l'élément
     if (mysqli_num_rows($resultat) > 0) {
@@ -146,9 +147,46 @@ if (!$connexion) {
         echo "L'élément n'a pas été trouvé.";
     }
 
-    // Fermeture de la connexion à la base de données
-    mysqli_close($connexion);
-    ?>
+// Vérifier si l'ID de l'élément a été envoyé dans l'URL
+if (isset($_GET['iditem'])) {
+    $iditem = $_GET['iditem'];
+
+    // Insérer l'ID de l'élément dans la table "basket"
+    $query = "INSERT INTO basket (id_item) VALUES ($iditem)";
+    $resultat = mysqli_query($connexion, $query);
+
+    
+
+    if($_SESSION["role"]=='admin')
+{
+  $query = "SELECT * FROM admin WHERE idadmin = $idadmin";
+  $resultat = mysqli_query($connexion, $query);
+
+  $query = "INSERT INTO basket (id_admin) VALUES ($idadmin)";
+  $resultat = mysqli_query($connexion, $query);
+
+}
+if($_SESSION["role"]=='seller')
+{
+  $query = "SELECT * FROM seller WHERE idseller = $idseller";
+  $resultat = mysqli_query($connexion, $query);
+  $query = "INSERT INTO basket (id_seller) VALUES ($idseller)";
+  $resultat = mysqli_query($connexion, $query);
+}
+if($_SESSION["role"]=='buyer')
+{
+  $query = "SELECT * FROM buyer WHERE idbuyer = $idbuyer";
+  $resultat = mysqli_query($connexion, $query);
+  $query = "INSERT INTO basket (id_buyer) VALUES ($idbuyer)";
+  $resultat = mysqli_query($connexion, $query);
+}
+
+    if (!$resultat) {
+        die("Erreur lors de l'ajout de l'élément au panier : " . mysqli_error($connexion));
+    }
+}
+
+?>
 </div>
 <!--Footer-->
 
