@@ -62,7 +62,7 @@ $imageURL = "image/" . $_SESSION["photo"];
       <a href="http://localhost:80/Tropical-Farm/auctionseller.php">Auction</a>
     </li>
     <li>
-      <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Trade</a>
+      <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Best offer</a>
     </li>
     <li>
         <a href="http://localhost:80/Tropical-Farm/index.php">Home page</a>

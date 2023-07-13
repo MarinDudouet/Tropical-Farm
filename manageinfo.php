@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Seller - Tropical farm</title>
+	<title>Manage item admin - Tropical farm</title>
 
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -19,11 +19,8 @@
 
 <body>
 
-  <audio autostart="true" loop controls src="foret.mp3"></audio>
-  
 
-<div class="headnav">
-  
+  <div class="headnav">
 <!--Header-->
 
 <?php
@@ -50,114 +47,33 @@ $imageURL = "image/" . $_SESSION["photo"];
 
             </div>
           </header>
-      
+          
 <!--Navbar-->
 
 <nav>
-  <ul class="categories">
-    <li>
-      <a href="http://localhost:80/Tropical-Farm/itemseller.php">My items</a>
-    </li>
-    <li>
-      <a href="http://localhost:80/Tropical-Farm/auctionseller.php">Auction</a>
-    </li>
-    <li>
-      <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Best offer</a>
-    </li>
-    <li>
+    <ul class="categories">
+      <li>
+        <a href="http://localhost:80/Tropical-Farm/manageitem.php">Manage items</a>
+      </li>
+      <li>
+        <a href="http://localhost:80/Tropical-Farm/manageusers.php">Manage costumers/seller</a>
+      </li>
+      <li>
         <a href="http://localhost:80/Tropical-Farm/index.php">Home page</a>
-    </li>
-  </ul>
-</nav>
-</div>
+      </li>
+      <li>
+        <a href="http://localhost:80/Tropical-Farm/seller.php">Sell</a>
+      </li>
+    </ul>
+  </nav>
+  </div>
+  
+  <br><br><br><br><br><br>
 
-<br><br><br><br><br>
+<!--Manage info item-->
 
-<!-- Explain -->
 
-<h3>&nbsp; How to sell ?</h3><br>
 
-<div class="containerseller">
-<div class="step">
-    <p>1. Add a picture</p> 
-</div>
-<div class="info">
-    <img src="image/pictures.png" width="100px" height="100px">
-</div>
-
-<div class="step">
-    <p>2. Add a name and a description :</p> 
-</div>
-<div class="info">
-    <img src="image/text.png" width="100px" height="100px">
-</div>
-
-<div class="step">
-    <p>3. Add your price</p> 
-</div>
-<div class="info">
-    <img src="image/price-tag.png" width="100px" height="100px">
-</div>
-<a href="http://localhost:80/Tropical-Farm/itemseller.php"><center>See my item</center></a><br>
-
-</div>
-<br>
-
-<h3>&nbsp; How to auction ?</h3><br>
-
-<div class="containerseller">
-<div class="step">
-    <p>1. Add your item</p> 
-</div>
-<div class="info">
-    <img src="image/new-product.png" width="100px" height="100px">
-</div>
-
-<div class="step">
-    <p>2. Follow the auctions :</p> 
-</div>
-<div class="info">
-    <img src="image/volatility (1).png" width="100px" height="100px">
-</div>
-
-<div class="step">
-    <p>3. Sell your item</p> 
-</div>
-<div class="info">
-    <img src="image/best-price (1).png" width="100px" height="100px">
-</div>
-<a href="http://localhost:80/Tropical-Farm/auctionseller.php"><center>See my auction</center></a><br>
-
-</div>
-<br>
-
-<h3>&nbsp; How to use best offer ?</h3><br>
-
-<div class="containerseller">
-<div class="step">
-    <p>1. Add your item</p> 
-</div>
-<div class="info">
-    <img src="image/new-product.png" width="100px" height="100px">
-</div>
-
-<div class="step">
-    <p>2. Accept or decline the offers :</p> 
-</div>
-<div class="info">
-    <img src="image/yes.png" width="100px" height="100px">
-</div>
-
-<div class="step">
-    <p>3. Make a deal</p> 
-</div>
-<div class="info">
-    <img src="image/cost.png" width="100px" height="100px">
-</div>
-<a href="http://localhost:80/Tropical-Farm/tradeseller.php"><center>See my trade</center></a><br>
-
-</div>
-<br>
 <!--Footer-->
 
 <footer>
