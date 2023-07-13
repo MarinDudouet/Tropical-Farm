@@ -25,13 +25,14 @@
       if (input.files && input.files[0]) {
         var reader = new FileReader();
   
-        reader.onload = function (e) {
-          document.getElementById('imagePreview').src = e.target.result;
-        };
-  
-        reader.readAsDataURL(input.files[0]);
-      }
+        reader.onload = function(e) {
+      imagePreview.setAttribute('src', e.target.result);
+      imagePreview.parentNode.parentNode.classList.remove('hidden');
+    };
+
+    reader.readAsDataURL(input.files[0]);
     }
+  }
   </script>
   
   <script>
@@ -56,6 +57,7 @@
       } else {
         optionsSupplementaires3.classList.add('hidden');
       }
+      
     }
   </script>
   
@@ -123,9 +125,11 @@ $imageURL = "image/" . $_SESSION["photo"];
   <!--Item-->
   
   <div class="container">
-      <div class="item-img-div">
+          <div>
+      <div class="item-img-div hidden">
           <center><img id="imagePreview" src="#" alt="Image Preview" /></center>
       </div>
+        </div>
       <div class="item-car-div">
           <br>
           <center>
