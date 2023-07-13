@@ -412,6 +412,8 @@ nav {
     display: block;
     max-width: 100%;
     padding: 20px;
+    width: 400px;
+    height: 250px;
   }
 
   .item img:hover{

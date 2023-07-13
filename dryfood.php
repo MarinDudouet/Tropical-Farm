@@ -98,6 +98,39 @@ $imageURL = "image/" . $_SESSION["photo"];
 <!--Item-->
 
 <div class="container">
+<?php
+// Connexion à la base de données
+$serveur = "localhost";
+$utilisateur = "root";
+$motDePasse = "";
+$baseDeDonnees = "tropicalfarm";
+
+$connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
+
+if (!$connexion) {
+    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+}
+
+// Récupération des données de la base de données
+$condition1 = "category = 'food'";
+$condition2 = "second_category = 'dry_food'";
+
+$query = "SELECT * FROM item WHERE $condition1 and $condition2";
+$resultat = mysqli_query($connexion, $query);
+
+if (!$resultat) {
+    die("La requête a échoué : " . mysqli_error($connexion));
+}
+
+while ($row = mysqli_fetch_assoc($resultat)) {
+  echo '<div class="item">';
+  echo "<img src= image/". $row['photo'] ." alt='Image' /><br>";
+  echo "<center><h5><b>" . $row['name'] . "</b></h5>";
+  echo "<p>" .$row['price'] . "  £</p></center>";
+  echo "</div>";
+}
+
+?>
     <div class="item">
         <img src="image/Aquatic Turtle Food - Maintenance.jpg"><br>
         <center><h5>Aquatic Turtle Food - Maintenance</h5>

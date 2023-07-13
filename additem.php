@@ -143,14 +143,14 @@ $imageURL = "image/" . $_SESSION["photo"];
           <input type="radio" name="second_category" value="chameleons"> Chameleons &nbsp <br><br>
           </div>
           <div id="optionsSupplementaires2" class="hidden">
-          <input type="radio" name="second_category" value="snakes"> Living food &nbsp <br>
-          <input type="radio" name="second_category" value="lizards"> Frozen food &nbsp 
-          <input type="radio" name="second_category" value="chameleons"> Dry food &nbsp <br><br>
+          <input type="radio" name="second_category" value="living_food"> Living food &nbsp <br>
+          <input type="radio" name="second_category" value="frozen_food"> Frozen food &nbsp 
+          <input type="radio" name="second_category" value="dry_food"> Dry food &nbsp <br><br>
           </div>
           <div id="optionsSupplementaires3" class="hidden">
-          <input type="radio" name="second_category" value="snakes"> Terrarium &nbsp <br>
-          <input type="radio" name="second_category" value="lizards"> Aquarium &nbsp 
-          <input type="radio" name="second_category" value="chameleons"> Decoration &nbsp <br><br>
+          <input type="radio   x " name="second_category" value="terrarium"> Terrarium &nbsp <br>
+          <input type="radio" name="second_category" value="aquarium"> Aquarium &nbsp 
+          <input type="radio" name="second_category" value="decoration"> Decoration &nbsp <br><br>
           </div>
           <input type="text" name="description" placeholder="Description of the item" required><br><br>
           <input type="text" name="price" placeholder="Price" required><br><br>
