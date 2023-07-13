@@ -518,3 +518,24 @@ nav {
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
+
+/*Filtre*/
+
+.filtre{
+  border: none;
+  border-radius: 55px;
+  background-color: rgb(14, 132, 67);
+  margin: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  color:rgb(255, 255, 255);
+  font-weight: bold;
+  height: 30px;
+  width: auto;
+  text-decoration:none ;
+}
+
+.filtre:hover{
+  background-color: rgb(12, 113, 57);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}

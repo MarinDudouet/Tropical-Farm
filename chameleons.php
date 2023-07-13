@@ -95,6 +95,18 @@ $imageURL = "image/" . $_SESSION["photo"];
   
   <br><br><br><br><br><br>
 
+<!--Filtre-->
+
+<form method="GET">
+  <label for="filter">&nbsp;Filter by :</label>
+  <select name="filter" id="filter">
+    <option>Select an option</option>
+    <option value="asc">Rising price</option>
+    <option value="desc">Decreasing price</option>
+  </select>
+  <input class="filtre" type="submit" value="Apply">
+</form>
+
 <!--Item-->
 
 <div class="container">
@@ -114,9 +126,24 @@ if (!$connexion) {
 // Récupération des données de la base de données
 $condition1 = "category = 'reptiles'";
 $condition2 = "second_category = 'chameleons'";
+if (isset($_GET['filter'])) {
+  $filter = $_GET['filter'];
 
-$query = "SELECT * FROM item WHERE $condition1 and $condition2";
-$resultat = mysqli_query($connexion, $query);
+if($filter == 'asc'){
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2 ORDER BY price ASC";
+  $resultat = mysqli_query($connexion, $query);
+}
+
+elseif($filter == 'desc'){
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2 ORDER BY price DESC";
+  $resultat = mysqli_query($connexion, $query);
+}
+}
+
+else{
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2";
+  $resultat = mysqli_query($connexion, $query);
+}
 
 if (!$resultat) {
     die("La requête a échoué : " . mysqli_error($connexion));
@@ -129,24 +156,10 @@ while ($row = mysqli_fetch_assoc($resultat)) {
   echo "<p>" .$row['price'] . "  £</p></center>";
   echo "</div>";
 }
-
 ?>
-    <div class="item">
-        <img src="image/Chamaeleo calyptratus, juvénile.jpg"><br>
-        <center><h5>Chamaeleo calyptratus, juvénile</h5>
-        <p>69,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Chamaeleo calyptratus, mâle adulte.jpg"><br>
-        <center><h5>Chamaeleo calyptratus, mâle adulte</h5>
-        <p>145,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Chamaeleo calyptratus, piebald.jpg"><br>
-        <center><h5>Chamaeleo calyptratus, piebald</h5>
-        <p>95,00 £</p></center>
-    </div>
+
 </div>
+
 
 <!--Footer-->
 
