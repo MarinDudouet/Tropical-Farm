@@ -69,51 +69,41 @@ $imageURL = "image/" . $_SESSION["photo"];
   
   <br><br><br><br><br><br>
 
-<!--Manage users-->
+<!--Manage item-->
+
 
 <div class="container">
-    <div class="item">
-        <img src="image/Boa c. constrictor, Guyana.jpg"><br>
-        <center><h5>Boa c. constrictor, Guyana</h5>
-        <p>295,00 £</p>
-        <button>Delete</button>
-        <button>Manage informations</button></center>
-    </div>
-    <div class="item">
-        <img src="image/Ahaetulla nasuta.jpg"><br>
-        <center><h5>Ahaetulla nasuta</h5>
-        <p>49,00 £</p>
-        <button>Delete</button>
-        <button>Manage informations</button></center>
-    </div>
-    <div class="item">
-        <img src="image/Boaedon (Lamprophis) fuliginosus, albinos.jpg"><br>
-        <center><h5>Boaedon fuliginosus, albinos</h5>
-        <p>99,00 £</p>
-        <button>Delete</button>
-        <button>Manage informations</button></center>
-    </div>
-  <div class="item">
-    <img src="image/elaphe-carinata-albinos.jpg"><br>
-    <center><h5>Elaphe-carinata-albinos</h5>
-    <p>550,00 £</p>
-    <button>Delete</button>
-    <button>Manage informations</button></center>
-</div>
-  <div class="item">
-      <img src="image/Boa c. imperator, Nicaragua, ghost.jpg"><br>
-      <center><h5>Boa c. imperator, Nicaragua, ghost</h5>
-      <p>145,00 £</p>
-      <button>Delete</button>
-    <button>Manage informations</button></center>
-  </div>
-  <div class="item">
-      <img src="image/Boaedon (Lamprophis) fuliginosus, Black.jpg"><br>
-      <center><h5>Boaedon fuliginosus, Black</h5>
-      <p>89,00 £</p>
-      <button>Delete</button>
-    <button>Manage informations</button></center>
-  </div>
+
+<?php
+// Connexion à la base de données
+$serveur = "localhost";
+$utilisateur = "root";
+$motDePasse = "";
+$baseDeDonnees = "tropicalfarm";
+
+$connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
+
+if (!$connexion) {
+    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+}
+
+$query = "SELECT * FROM item";
+$resultat = mysqli_query($connexion, $query);
+
+if (!$resultat) {
+    die("La requête a échoué : " . mysqli_error($connexion));
+}
+
+while ($row = mysqli_fetch_assoc($resultat)) {
+  echo '<div class="item">';
+  echo "<img src= image/". $row['photo'] ." alt='Image' /><br>";
+  echo "<center><h5><b>" . $row['name'] . "</b></h5>";
+  echo "<p>" .$row['price'] . "  £</p></center>";
+  echo "<center><button>Delete</button>
+  <button>Manage informations</button></center></div>";
+}
+
+?>
 </div>
 
 
