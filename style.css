@@ -20,6 +20,14 @@ header {
   padding: 5px;
 }
 
+.header2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #798ce6;
+  padding: 5px;
+}
+
 .logo img {
   width: 80px;
   height: 80px;
@@ -75,10 +83,16 @@ header {
   background-color: #e3e9e1;
 }
 
+.dropdown a{
+  margin-right: 15px;
+  color: white;
+  text-decoration: none;
+}
+
 /* Nav bar */
 
 nav {
-    background-color: #8EC75C;
+    background-color: #245033;
     padding: 5px;
     display: flex;
     align-items: center;

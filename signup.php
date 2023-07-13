@@ -78,8 +78,8 @@
                 <p>Choose a profil pictures : </p>
                 <input type="file" name="photo" value="Select an Image" onchange="showImage(this)" required><br><br>
                 <p>Choose the color of your background :</p>
-                <center><input type="radio" name="color" value="red" required>Red
-                <input type="radio" name="color" value="blue">Blue
+                <center><input type="radio" name="color" value="black" required>Black
+                <input type="radio" name="color" value="darkslategray">darkslategray
                 <input type="radio" name="color" value="grey">Grey</center><br>
                 <input type="submit" value="Sign up">
             </form>
