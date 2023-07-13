@@ -89,21 +89,33 @@ $imageURL = "image/" . $_SESSION["photo"];
 
 <!--Item-->
 
-?php
-    $serveur = "localhost";
-    $dbname = "tropicalfarm";
-    $user = "root";
-    $pass = "";
+<?php
+    // Établir une connexion avec la base de données
+    $conn = mysqli_connect("localhost", "root", "", "tropicalfarm");
 
-    try{
-        //On se connecte à la BDD
-        $dbco = new PDO("mysql:host=$serveur;dbname=$dbname",$user,$pass);
-        $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      }
-    catch(PDOException $e){
-        echo 'Impossible de traiter les données. Erreur : '.$e->getMessage();
+    // Vérifier la connexion
+    if (!$conn) {
+      die("Échec de la connexion à la base de données : " . mysqli_connect_error());
     }
+        
+        $sql = "SELECT * FROM item";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+          // Parcourir les résultats et afficher les informations dans des div
+          while ($row = mysqli_fetch_assoc($result)) {
+            echo '<div class="container">';
+            echo "<p>name : " . $row["name"] . "</p>";
+            echo "<p>price : " . $row["price"] . "</p>";
+            echo "</div>";
+          }
+        } else {
+          echo "Aucun utilisateur trouvé dans la base de données.";
+        }
+
+    // Fermer la connexion à la base de données
+    mysqli_close($conn);
+  ?>
 
 <div class="container">
     <div class="item-img-div">
@@ -112,7 +124,7 @@ $imageURL = "image/" . $_SESSION["photo"];
     <div class="item-car-div">
         <h3 id="item-name">Leazrd</h3><br>
         <p id="item-car">nhcbzelndilehdnuailhzdnlkad</p>
-        <p id="price">45 £</p>
+        <p id="price">40</p>
         <button onclick="">Add to basket</button>
         <button onclick="">Buy it now</button>
 
