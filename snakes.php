@@ -19,6 +19,37 @@
 
 <body>
 
+<?php
+// Connexion à la base de données
+$serveur = "localhost";
+$utilisateur = "root";
+$motDePasse = "";
+$baseDeDonnees = "tropicalfarm";
+
+$connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
+
+if (!$connexion) {
+    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+}
+
+// Récupération des données de la base de données
+$query = "SELECT * FROM item";
+$resultat = mysqli_query($connexion, $query);
+
+if (!$resultat) {
+    die("La requête a échoué : " . mysqli_error($connexion));
+}
+
+while ($row = mysqli_fetch_assoc($resultat)) {
+  echo "<div>";
+  echo "<h3>" . $row['name'] . "</h3>";
+  echo "<p>" . $row['colonne2'] . "</p>";
+  // Ajoutez d'autres colonnes si nécessaire
+  echo "</div>";
+}
+
+?>
+
   <div class="headnav">
     <!--Header-->
     

@@ -37,12 +37,24 @@
   <script>
     function afficherOptions() {
       var valeurBoutonRadio = document.querySelector('input[name="category"]:checked').value;
-      var optionsSupplementaires = document.getElementById('optionsSupplementaires');
+      var optionsSupplementaires1 = document.getElementById('optionsSupplementaires1');
+      var optionsSupplementaires2 = document.getElementById('optionsSupplementaires2');
+      var optionsSupplementaire3 = document.getElementById('optionsSupplementaires3');
   
       if (valeurBoutonRadio === 'reptiles') {
-        optionsSupplementaires.classList.remove('hidden');
+        optionsSupplementaires1.classList.remove('hidden');
       } else {
-        optionsSupplementaires.classList.add('hidden');
+        optionsSupplementaires1.classList.add('hidden');
+      }
+      if (valeurBoutonRadio === 'food') {
+        optionsSupplementaires2.classList.remove('hidden');
+      } else {
+        optionsSupplementaires2.classList.add('hidden');
+      }
+      if (valeurBoutonRadio === 'materials') {
+        optionsSupplementaires3.classList.remove('hidden');
+      } else {
+        optionsSupplementaires3.classList.add('hidden');
       }
     }
   </script>
@@ -105,12 +117,22 @@
           <input type="radio" name="category" value="reptiles" onchange="afficherOptions()" required> Reptiles &nbsp
           <input type="radio" name="category" value="food" onchange="afficherOptions()" required> Food &nbsp
           <input type="radio" name="category" value="materials" onchange="afficherOptions()" required> Materials <br><br>
-          <div id="optionsSupplementaires" class="hidden">
+          <div id="optionsSupplementaires1" class="hidden">
           <input type="radio" name="second_category" value="snakes"> Snakes &nbsp <br>
           <input type="radio" name="second_category" value="lizards"> Lizards &nbsp 
           <input type="radio" name="second_category" value="turtles"> Turtles &nbsp <br>
           <input type="radio" name="second_category" value="amphibians"> Amphibians &nbsp
           <input type="radio" name="second_category" value="chameleons"> Chameleons &nbsp <br><br>
+          </div>
+          <div id="optionsSupplementaires2" class="hidden">
+          <input type="radio" name="second_category" value="snakes"> Living food &nbsp <br>
+          <input type="radio" name="second_category" value="lizards"> Frozen food &nbsp 
+          <input type="radio" name="second_category" value="chameleons"> Dry food &nbsp <br><br>
+          </div>
+          <div id="optionsSupplementaires3" class="hidden">
+          <input type="radio" name="second_category" value="snakes"> Terrarium &nbsp <br>
+          <input type="radio" name="second_category" value="lizards"> Aquarium &nbsp 
+          <input type="radio" name="second_category" value="chameleons"> Decoration &nbsp <br><br>
           </div>
           <input type="text" name="description" placeholder="Description of the item" required><br><br>
           <input type="text" name="price" placeholder="Price" required><br><br>
