@@ -289,6 +289,8 @@ nav {
     flex-basis: 50%;
     display: inline-block;
     background-color: rgb(244, 240, 240);
+    left: 50%;
+ 
   }
 
   .item-car-div button{
