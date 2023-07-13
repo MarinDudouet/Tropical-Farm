@@ -97,50 +97,57 @@ $imageURL = "image/" . $_SESSION["photo"];
 
 <!--Item-->
 
-<?php
-    // Établir une connexion avec la base de données
-    $conn = mysqli_connect("localhost", "root", "", "tropicalfarm");
-
-    // Vérifier la connexion
-    if (!$conn) {
-      die("Échec de la connexion à la base de données : " . mysqli_connect_error());
-    }
-        
-        $sql = "SELECT * FROM item";
-        $result = mysqli_query($conn, $sql);
-
-        if (mysqli_num_rows($result) > 0) {
-          // Parcourir les résultats et afficher les informations dans des div
-          while ($row = mysqli_fetch_assoc($result)) {
-            echo '<div class="container">';
-            echo "<p>name : " . $row["name"] . "</p>";
-            echo "<p>price : " . $row["price"] . "</p>";
-            echo "</div>";
-          }
-        } else {
-          echo "Aucun utilisateur trouvé dans la base de données.";
-        }
-
-    // Fermer la connexion à la base de données
-    mysqli_close($conn);
-  ?>
 
 <div class="container">
-    <div class="item-img-div">
-        <center><img src="image\lézards.png"></center>
-    </div>
-    <div class="item-car-div">
-        <h3 id="item-name">Leazrd</h3><br>
-        <p id="item-car">nhcbzelndilehdnuailhzdnlkad</p>
-        <p id="price">40</p>
-        <button onclick="">Add to basket</button>
-        <button onclick="">Buy it now</button>
 
+<?php
+// Connexion à la base de données
+$serveur = "localhost";
+$utilisateur = "root";
+$motDePasse = "";
+$baseDeDonnees = "tropicalfarm";
 
-    </div>
+$connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
+
+if (!$connexion) {
+    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+}
+
+    // Affichage de la ligne spécifique
+    $iditem = $_GET['iditem'];
+
+    // Récupération des détails de l'élément
+    $query = "SELECT * FROM item WHERE iditem = $iditem";
+    $resultat = mysqli_query($connexion, $query);
+
+    if (!$resultat) {
+        die("La requête a échoué : " . mysqli_error($connexion));
+    }
+
+    // Affichage des détails de l'élément
+    if (mysqli_num_rows($resultat) > 0) {
+        $row = mysqli_fetch_assoc($resultat);
+        $name = $row['name'];
+        $price = $row['price'];
+        $photo = $row['photo'];
+        echo '<div class="item-img-div">';
+        echo "<center><img src=image/". $row['photo'] ."></center>";
+        echo "</div>";
+        echo '<div class="item-car-div">';
+        echo '<h3 id="item-name">'. $row['name'] ."</h3><br>";
+        echo '<p id="item-car">'. $row['description'] ."</p>";
+        echo '<p id="price">'. $row['price'] ."  £</p>";
+        echo '<button onclick="">Add to basket</button>';
+        echo '<button onclick="">Buy it now</button>';
+        echo '</div>';
+    } else {
+        echo "L'élément n'a pas été trouvé.";
+    }
+
+    // Fermeture de la connexion à la base de données
+    mysqli_close($connexion);
+    ?>
 </div>
-
-
 <!--Footer-->
 
 <footer>
