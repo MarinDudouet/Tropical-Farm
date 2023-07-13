@@ -20,6 +20,26 @@
 
 <body>
 
+<script>
+  function afficherMotDePasse() {
+    var champMotDePasse = document.getElementById("cardnumber");
+    if (champMotDePasse.type === "password") {
+      champMotDePasse.type = "text";
+    } else {
+      champMotDePasse.type = "password";
+    }
+  }
+
+  function afficherMotDePasse2() {
+    var champMotDePasse = document.getElementById("cvc");
+    if (champMotDePasse.type === "password") {
+      champMotDePasse.type = "text";
+    } else {
+      champMotDePasse.type = "password";
+    }
+  }
+</script>
+
   <audio autostart="true" loop controls src="foret.mp3"></audio>
 
 <div class="headnav">
@@ -141,7 +161,7 @@ if (!$connexion) {
         echo '<div class="item-img-div">';
         echo "<center><img src=image/". $row['photo'] ."></center>";
         echo "</div>";
-        echo '<div class="item-car-div">';
+        echo '<div class="item-car-div-persoPage">';
         echo '<h3>' . $row['name'] . "</h3><br>";
     } else {
         echo "L'élément n'a pas été trouvé.";
@@ -164,13 +184,16 @@ if (!$connexion) {
         <label for="card">Card :</label>
         <input type="text" name="card" id="card" value="<?php echo $row['card']; ?>"><br><br>
         <label for="cardnumber">Card numbers :</label>
-        <input type="text" name="cardnumber" id="cardnumber" value="<?php echo $row['cardnumber']; ?>"><br><br>
-        <label for="expiration">Month of expiration :</label>
-        <input type="text" name="month" id="month" value="<?php echo $row['monthexpiration']; ?>"><br><br>
-        <label for="expiration">Year of expiration :</label>
-        <input type="text" name="year" id="year" value="<?php echo $row['yearexpiration']; ?>"><br><br>
+        <input type="password" name="cardnumber" id="cardnumber" value="<?php echo $row['cardnumber']; ?>">
+        <center><button type="button" class="boo" onclick="afficherMotDePasse()">👀</button><br><br></center>
+
         <label for="cvc">CVC :</label>
-        <input type="text" name="cvc" id="cvc" value="<?php echo $row['cvc']; ?>"><br><br>
+        <input type="password" name="cvc" id="cvc" value="<?php echo $row['cvc']; ?>"><br>
+        <center><button type="button" class="boo" onclick="afficherMotDePasse2()">👀</button><br><br></center>
+
+        <label for="expiration">Month of expiration :</label>
+        <input type="month" name="month" id="month" value="<?php echo $row['monthexpiration']; ?>">
+
         <center><input class="bo" type="submit" value="Modified"></center><br><br>
     </form>
 

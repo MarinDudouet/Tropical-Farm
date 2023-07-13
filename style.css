@@ -499,6 +499,10 @@ nav {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
 
+  .boo{
+    all: unset;
+  }
+
 /*Basket*/
   
 .basket{
@@ -590,4 +594,13 @@ nav {
 .optionfiltre {
   background-color: #ffffff;
   color: #000000;
+}
+
+.item-car-div-persoPage{
+  margin-top: 45px;
+  padding: 20px;
+  flex-basis: 50%;
+  display: inline-block;
+  background-color: rgb(244, 240, 240);
+  left: 50%;
 }
