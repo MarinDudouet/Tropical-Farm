@@ -57,6 +57,8 @@ session_start();
         if ($stmt->rowCount() > 0) {
         // Connexion réussie
         $row = $stmt->fetch();
+        $_SESSION["username"]=$row["username"];
+        $_SESSION["password"]=$row['password'];
         $_SESSION["role"]="buyer";
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];

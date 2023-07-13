@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Home page - Tropical farm</title>
+	<title>My account - Tropical farm</title>
 
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -47,6 +47,8 @@ else{
             <div class="titre"><a href="http://localhost:80/Tropical-Farm/index.php" class="titre">Tropical Farm</a></div>
             <div class="dropdown">
               <?php if(!isset($_SESSION["role"])){ echo '<a href="http://localhost:80/Tropical-Farm/login.php" class="dropdown-btn">';}
+                elseif(isset($_SESSION["role"]) && $_SESSION["role"]=="buyer"){
+                  echo '<a href="http://localhost:80/Tropical-Farm/myaccount.php">';}
                 else{echo '<a class="dropdown-btn">';}?><img src="<?php echo $imageURL; ?>" width="50px" height="50px"></a>
               <?php if(isset($_SESSION["role"])){echo '<a href="http://localhost:80/Tropical-Farm/logout.php" style="color: white; text-decoration: none; margin-right: 15px;"><b>Logout</b></a>'; } ?>
 
@@ -91,10 +93,9 @@ else{
         <li>
           <a href="http://localhost:80/Tropical-Farm/admin.php">Administrator</a>
         </li>'; } ?>
-        <?php if(isset($_SESSION["role"]) && $_SESSION["role"]=='buyer'){ echo '
-        <li>
-          <a href="http://localhost:80/Tropical-Farm/myaccount.php">My account</a>
-        </li>';} ?>
+      <li>
+        <a href="http://localhost:80/Tropical-Farm/myaccount.php">My account</a>
+      </li>
   </ul>
 
   <div class="panier">
@@ -105,54 +106,81 @@ else{
 
 <br><br><br><br><br>
 
-<!-- Carroussel + promotions -->
+<div class="container">
 
-<div class="containerhome">
+<?php
+// Connexion à la base de données
+$serveur = "localhost";
+$utilisateur = "root";
+$motDePasse = "";
+$baseDeDonnees = "tropicalfarm";
 
-  <div class="left-div">
-    <center> <div id="carouselExampleCaptions" class="carousel slide">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="image/accroche3.jpg" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="image/accroche1.jpg" class="d-block w-100">
-          <div class="carousel-caption d-none d-md-block">
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="image/accroche4.jpg" class="d-block w-100">
-          <div class="carousel-caption d-none d-md-block">
-          </div>
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div></center>
-  </div>
+$connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
-  <div class="right-div">
-    <b><p>The Tropical Farm website is an online destination specialized in the sale of exotic reptiles and turtles, as well as the necessary accessories for their well-being. With a vast selection of fascinating species from around the world, ReptiLand offers reptile enthusiasts a unique opportunity to find and purchase scaly companions.</p>
-    <br>
-    <p>Tropical Farm's catalog includes an impressive variety of reptiles, ranging from snakes to lizards to turtles. Each species is carefully selected and bred under optimal conditions to ensure their health and quality. From beginner-friendly reptiles to rarer and more exotic specimens, customers can choose from a diverse range of cold-blooded companions.</p></b>
+if (!$connexion) {
+    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+}
+    $user = $_SESSION["username"];
+    $password = $_SESSION["password"];
 
-  </div>
-</div>
+    // Récupération des détails de l'élément
+    $query = "SELECT * FROM buyer WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
 
-<br>
+    $resultat = mysqli_query($connexion, $query);
+
+    if (!$resultat) {
+        die("La requête a échoué : " . mysqli_error($connexion));
+    }
+
+    // Affichage des détails de l'élément
+    if (mysqli_num_rows($resultat) > 0) {
+        $row = mysqli_fetch_assoc($resultat);
+        $name = $row['name'];
+        $photo = $row['photo'];
+
+        echo '<div class="item-img-div">';
+        echo "<center><img src=image/". $row['photo'] ."></center>";
+        echo "</div>";
+        echo '<div class="item-car-div">';
+        echo '<h3>' . $row['name'] . "</h3><br>";
+    } else {
+        echo "L'élément n'a pas été trouvé.";
+    }
+    ?>
+        
+    <form action="traitment_account.php"  method="POST">
+        <label for="name">Name :</label>
+        <input type="text" name="name" id="name" value="<?php echo $name; ?>"><br><br>
+        <label for="street">Street :</label>
+        <input type="text" name="street" id="street" value="<?php echo $row['street']; ?>"><br><br>
+        <label for="flat">Flat :</label>
+        <input type="text" name="flat" id="flat" value="<?php echo $row['flat']; ?>"><br><br>
+        <label for="city">City :</label>
+        <input type="text" name="city" id="city" value="<?php echo $row['city']; ?>"><br><br>
+        <label for="state">State :</label>
+        <input type="text" name="state" id="state" value="<?php echo $row['state']; ?>"><br><br>
+        <label for="postcode">Postcode :</label>
+        <input type="text" name="postcode" id="postcode" value="<?php echo $row['postcode']; ?>"><br><br>
+        <label for="card">Card :</label>
+        <input type="text" name="card" id="card" value="<?php echo $row['card']; ?>"><br><br>
+        <label for="cardnumber">Card numbers :</label>
+        <input type="text" name="cardnumber" id="cardnumber" value="<?php echo $row['cardnumber']; ?>"><br><br>
+        <label for="expiration">Month of expiration :</label>
+        <input type="text" name="month" id="month" value="<?php echo $row['monthexpiration']; ?>"><br><br>
+        <label for="expiration">Year of expiration :</label>
+        <input type="text" name="year" id="year" value="<?php echo $row['yearexpiration']; ?>"><br><br>
+        <label for="cvc">CVC :</label>
+        <input type="text" name="cvc" id="cvc" value="<?php echo $row['cvc']; ?>"><br><br>
+        <center><input class="bo" type="submit" value="Modified"></center><br><br>
+    </form>
+
+</div></div>
+
+<?php     
+
+    // Fermeture de la connexion à la base de données
+    mysqli_close($connexion);
+    ?>
 
 <!--Footer-->
 
