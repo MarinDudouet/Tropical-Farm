@@ -127,7 +127,7 @@ if (!$resultat) {
 
 while ($row = mysqli_fetch_assoc($resultat)) {
   echo '<div class="item">';
-  echo "<img src= image/". $row['photo'] ." alt='Image' /><br>";
+  echo "<a href='http://localhost:80/Tropical-Farm/item.php'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";
   echo "<center><h5><b>" . $row['name'] . "</b></h5>";
   echo "<p>" .$row['price'] . "  £</p></center>";
   echo "</div>";

@@ -148,7 +148,7 @@ $imageURL = "image/" . $_SESSION["photo"];
           <input type="radio" name="second_category" value="dry_food"> Dry food &nbsp <br><br>
           </div>
           <div id="optionsSupplementaires3" class="hidden">
-          <input type="radio   x " name="second_category" value="terrarium"> Terrarium &nbsp <br>
+          <input type="radio" name="second_category" value="terrarium"> Terrarium &nbsp <br>
           <input type="radio" name="second_category" value="aquarium"> Aquarium &nbsp 
           <input type="radio" name="second_category" value="decoration"> Decoration &nbsp <br><br>
           </div>
