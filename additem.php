@@ -104,7 +104,7 @@ $imageURL = "image/" . $_SESSION["photo"];
           <a href="http://localhost:80/Tropical-Farm/auctionseller.php">Auction</a>
         </li>
         <li>
-          <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Trade</a>
+          <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Best offer</a>
         </li>
         <?php if(isset($_SESSION["role"]) && ($_SESSION["role"]=='seller' || $_SESSION["role"]=='admin')){ echo '
         <li>

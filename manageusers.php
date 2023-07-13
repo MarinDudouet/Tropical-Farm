@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Manage users admin - Tropical farm</title>
+	<title>Manage user admin - Tropical farm</title>
 
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -18,6 +18,45 @@
 </head>
 
 <body>
+
+<script>
+function deleteUser(itemId) {
+  if (confirm("Are you sure you want to delete this user?")) {
+    // Envoyer une requête AJAX pour supprimer l'élément
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "delete_user.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // Afficher un message de succès ou effectuer une action supplémentaire si nécessaire
+        alert("User deleted successfully");
+        // Recharger la page pour mettre à jour la liste des éléments
+        location.reload();
+      }
+    };
+    xhr.send("itemId=" + itemId);
+  }
+}
+
+function deleteSeller(itemId) {
+  if (confirm("Are you sure you want to delete this user?")) {
+    // Envoyer une requête AJAX pour supprimer l'élément
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "delete_seller.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // Afficher un message de succès ou effectuer une action supplémentaire si nécessaire
+        alert("User deleted successfully");
+        // Recharger la page pour mettre à jour la liste des éléments
+        location.reload();
+      }
+    };
+    xhr.send("itemId=" + itemId);
+  }
+}
+</script>
+
 
   <div class="headnav">
 <!--Header-->
@@ -69,27 +108,55 @@ $imageURL = "image/" . $_SESSION["photo"];
   
   <br><br><br><br><br><br>
 
-<!--Manage users-->
+<!--Manage item-->
+
 
 <div class="container">
-    <div class="item">
-        <img src="image/Boa c. constrictor, Guyana.jpg"><br>
-        <center><h5>Boa c. constrictor, Guyana</h5>
-        <p>295,00 £</p>
-        <button>Delete user</button></center>
-    </div>
-    <div class="item">
-        <img src="image/Ahaetulla nasuta.jpg"><br>
-        <center><h5>Ahaetulla nasuta</h5>
-        <p>49,00 £</p>
-        <button>Delete user</button></center>
-    </div>
-    <div class="item">
-        <img src="image/Boaedon (Lamprophis) fuliginosus, albinos.jpg"><br>
-        <center><h5>Boaedon fuliginosus, albinos</h5>
-        <p>99,00 £</p>
-        <button>Delete user</button></center>
-    </div>
+
+<?php
+// Connexion à la base de données
+$serveur = "localhost";
+$utilisateur = "root";
+$motDePasse = "";
+$baseDeDonnees = "tropicalfarm";
+
+$connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
+
+if (!$connexion) {
+    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+}
+
+$query = "SELECT * FROM buyer";
+$resultat = mysqli_query($connexion, $query);
+
+if (!$resultat) {
+    die("La requête a échoué : " . mysqli_error($connexion));
+}
+
+while ($row = mysqli_fetch_assoc($resultat)) {
+  echo '<div class="item">';
+  echo "<img src= image/". $row['photo'] ." alt='Image' /><br>";
+  echo "<center><h5><b>" . $row['name'] . "</b></h5>";
+  echo "<p>" .$row['username'] . " - Buyer </p></center>";
+  echo '<center><button onclick="deleteUser(' . $row['idbuyer'] . ')">Delete</button></div>';
+ }
+
+ $query = "SELECT * FROM seller";
+$resultat = mysqli_query($connexion, $query);
+
+if (!$resultat) {
+    die("La requête a échoué : " . mysqli_error($connexion));
+}
+
+while ($row = mysqli_fetch_assoc($resultat)) {
+  echo '<div class="item">';
+  echo "<img src= image/". $row['photo'] ." alt='Image' /><br>";
+  echo "<center><h5><b>" . $row['name'] . "</b></h5>";
+  echo "<p>" .$row['username'] . " - Seller </p></center>";
+  echo '<center><button onclick="deleteSeller(' . $row['idseller'] . ')">Delete</button></div>';
+ }
+
+?>
 </div>
 
 
