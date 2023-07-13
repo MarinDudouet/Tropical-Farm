@@ -137,8 +137,10 @@ if (!$connexion) {
         echo '<h3 id="item-name">'. $row['name'] ."</h3><br>";
         echo '<p id="item-car">'. $row['description'] ."</p>";
         echo '<p id="price">'. $row['price'] ."  £</p>";
-        echo '<button onclick="">Add to basket</button>';
-        echo '<button onclick="">Buy it now</button>';
+        if(!empty($row["sell"])){echo '<button onclick="">Add to basket</button>';}
+        if(!empty($row["auction"])){echo '<button onclick="">Buy by auction</button>';}
+        //au click sur le bouton auction un truc apparait pour donner son prix etc
+        if(!empty($row["trade"])){echo '<button onclick="">Make a best offer</button>';}
         echo '</div>';
     } else {
         echo "L'élément n'a pas été trouvé.";
