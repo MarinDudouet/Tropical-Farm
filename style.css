@@ -519,21 +519,42 @@ nav {
 
 /*Filtre*/
 
-.filtre{
-  border: none;
-  border-radius: 55px;
-  background-color: rgb(14, 132, 67);
-  margin: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  color:rgb(255, 255, 255);
-  font-weight: bold;
-  height: 30px;
-  width: auto;
-  text-decoration:none ;
+.formfiltre {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
 }
 
-.filtre:hover{
-  background-color: rgb(12, 113, 57);
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+.formfiltre label {
+  color: #ffffff;
+  background-color: rgb(14, 132, 67);
+  padding: 8px 12px;
+  border-radius: 4px 0 0 4px;
+}
+
+.formfiltre select {
+  padding: 8px;
+  border-radius: 0 4px 4px 0;
+  border: none;
+}
+
+.filtre {
+  margin-left: 8px;
+  padding: 8px 16px;
+  background-color: rgb(14, 132, 67);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filtre:hover {
+  background-color: rgb(17, 126, 66);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.optionfiltre {
+  background-color: #ffffff;
+  color: #000000;
 }

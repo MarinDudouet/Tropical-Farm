@@ -95,6 +95,19 @@ $imageURL = "image/" . $_SESSION["photo"];
   
   <br><br><br><br><br><br>
 
+<!--Filtre-->
+
+<form class="formfiltre" method="GET">
+  <label for="filter">&nbsp;Filter by :</label>
+  <select name="filter" id="filter">
+    <option class="optionfiltre" value="null">Select an option</option>
+    <option class="optionfiltre" value="asc">Rising price</option>
+    <option class="optionfiltre" value="desc">Decreasing price</option>
+  </select>
+  <input class="filtre" type="submit" value="Apply">
+</form>
+<br>
+
 <!--Item-->
 
 <div class="container">
@@ -115,8 +128,24 @@ if (!$connexion) {
 $condition1 = "category = 'materials'";
 $condition2 = "second_category = 'decoration'";
 
-$query = "SELECT * FROM item WHERE $condition1 and $condition2";
-$resultat = mysqli_query($connexion, $query);
+if (isset($_GET['filter'])) {
+  $filter = $_GET['filter'];
+
+if($filter == 'asc'){
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2 ORDER BY price ASC";
+  $resultat = mysqli_query($connexion, $query);
+}
+
+elseif($filter == 'desc'){
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2 ORDER BY price DESC";
+  $resultat = mysqli_query($connexion, $query);
+}
+}
+
+else{
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2";
+  $resultat = mysqli_query($connexion, $query);
+}
 
 if (!$resultat) {
     die("La requête a échoué : " . mysqli_error($connexion));

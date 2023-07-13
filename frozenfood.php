@@ -95,6 +95,19 @@ $imageURL = "image/" . $_SESSION["photo"];
   
   <br><br><br><br><br><br>
 
+<!--Filtre-->
+
+<form class="formfiltre" method="GET">
+  <label for="filter">&nbsp;Filter by :</label>
+  <select name="filter" id="filter">
+    <option class="optionfiltre" value="null">Select an option</option>
+    <option class="optionfiltre" value="asc">Rising price</option>
+    <option class="optionfiltre" value="desc">Decreasing price</option>
+  </select>
+  <input class="filtre" type="submit" value="Apply">
+</form>
+<br>
+
 <!--Item-->
 
 <div class="container">
@@ -115,24 +128,27 @@ if (!$connexion) {
 $condition1 = "category = 'food'";
 $condition2 = "second_category = 'frozen_food'";
 
-$query = "SELECT * FROM item WHERE $condition1 and $condition2";
-$resultat = mysqli_query($connexion, $query);
+if (isset($_GET['filter'])) {
+  $filter = $_GET['filter'];
+
+if($filter == 'asc'){
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2 ORDER BY price ASC";
+  $resultat = mysqli_query($connexion, $query);
+}
+
+elseif($filter == 'desc'){
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2 ORDER BY price DESC";
+  $resultat = mysqli_query($connexion, $query);
+}
+}
+
+else{
+  $query = "SELECT * FROM item WHERE $condition1 and $condition2";
+  $resultat = mysqli_query($connexion, $query);
+}
 
 if (!$resultat) {
     die("La requête a échoué : " . mysqli_error($connexion));
-}
-
-while ($row = mysqli_fetch_assoc($resultat)) {
-
-  $iditem = $row['iditem'];
-  $name = $row['name'];
-  echo '<div class="item">';
-  echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";
-  echo "<center><h5><b>" . $row['name'] . "</b></h5>";
-  echo "<p>" .$row['price'] . "  £</p></center>";
-  echo "</div>";
-  
-
 }
 
 ?>
