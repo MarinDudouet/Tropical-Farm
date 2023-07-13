@@ -92,7 +92,7 @@ header {
 /* Nav bar */
 
 nav {
-    background-color: #245033;
+    background-color: #448e5d;
     padding: 5px;
     display: flex;
     align-items: center;
@@ -412,6 +412,8 @@ nav {
     display: block;
     max-width: 100%;
     padding: 20px;
+    width: 400px;
+    height: 250px;
   }
 
   .item img:hover{
