@@ -77,11 +77,11 @@ $imageURL = "image/" . $_SESSION["photo"];
           <a href="http://localhost:80/Tropical-Farm/decoration.php">Decoration<img class="dropdown2-image" src="image\deco.png"></a>
         </div>
       </li>
-      <?php if($_SESSION["role"]=='seller' || $_SESSION["role"]=='admin'){ echo '
+      <?php if(isset($_SESSION["role"]) && ($_SESSION["role"]=='seller' || $_SESSION["role"]=='admin')){ echo '
         <li>
           <a href="http://localhost:80/Tropical-Farm/seller.php">Sell</a>
         </li>'; } ?>
-        <?php if($_SESSION["role"]=='admin'){ echo '
+        <?php if(isset($_SESSION["role"]) && $_SESSION["role"]=='admin'){ echo '
         <li>
           <a href="http://localhost:80/Tropical-Farm/admin.php">Administrator</a>
         </li>'; } ?>
