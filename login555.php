@@ -27,7 +27,7 @@ session_start();
         // Connexion réussie
         
         $row = $stmt->fetch();
-        $_SESSION["id"]="idseller";
+        $_SESSION["idseller"]=$row['idseller'];
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];
         $_SESSION["flat"]=$row['flat'];
@@ -59,7 +59,7 @@ session_start();
         $row = $stmt->fetch();
         $_SESSION["username"]=$row["username"];
         $_SESSION["password"]=$row['password'];
-        $_SESSION["id"]="idbuyer";
+        $_SESSION["idbuyer"]=$row['idbuyer'];
         $_SESSION["role"]="buyer";
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];
@@ -90,7 +90,7 @@ session_start();
         if ($stmt->rowCount() > 0) {
         // Connexion réussie
         $row = $stmt->fetch();
-        $_SESSION["id"]="idadmin";
+        $_SESSION["idadmin"]=$row['idadmin'];
         $_SESSION["role"]="admin";
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];

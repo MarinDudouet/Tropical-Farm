@@ -101,6 +101,7 @@ $imageURL = "image/" . $_SESSION["photo"];
 <div class="container">
 
 <?php
+
 // Connexion à la base de données
 $serveur = "localhost";
 $utilisateur = "root";
@@ -116,9 +117,19 @@ if (!$connexion) {
 // Affichage de la ligne spécifique
 $iditem = $_GET['iditem'];
 
+if (isset($_SESSION["role"]) && $_SESSION["role"] == 'admin') {
+    $idsession = $_SESSION["id"];
+} elseif (isset($_SESSION["role"]) && $_SESSION["role"] == 'seller') {
+    $idsession = $_SESSION["id"];
+} elseif (isset($_SESSION["role"]) && $_SESSION["role"] == 'buyer') {
+    $idsession = $_SESSION["id"];
+} else {
+    // Gérer le cas où l'ID de session n'est pas défini
+    // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
+}
+
 // Récupération des détails de l'élément
 $query = "SELECT * FROM item WHERE iditem = $iditem";
-
 $resultat = mysqli_query($connexion, $query);
 
 if (!$resultat) {
@@ -138,7 +149,7 @@ if (mysqli_num_rows($resultat) > 0) {
     echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
     echo '<p id="item-car">' . $row['description'] . "</p>";
     echo '<p id="price">' . $row['price'] . "  £</p>";
-    echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] . "'><button>Add to basket</button></a>";
+    echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $_SESSION["id"]  . "'><button>Add to basket</button></a>";
     echo '</div>';
 } else {
     echo "L'élément n'a pas été trouvé.";
@@ -146,44 +157,21 @@ if (mysqli_num_rows($resultat) > 0) {
 
 // Vérifier si l'ID de l'élément a été envoyé dans l'URL
 if (isset($_GET['iditem'])) {
-    $iditem = $_GET['iditem'];
+  $iditem = $_GET['iditem'];
 
-    // Insérer l'ID de l'élément dans la table "basket"
-    $query = "INSERT INTO basket (id_item) VALUES ($iditem)";
-    $resultat = mysqli_query($connexion, $query);
-
-    
-
-    if($_SESSION["role"]=='admin')
-{
-  $query = "SELECT * FROM admin WHERE idadmin = $idadmin";
+  // Insérer l'ID de l'élément et l'ID de session dans la table "basket"
+  $query = "INSERT INTO basket (id_item, id_session) VALUES ($iditem, $idsession)";
   $resultat = mysqli_query($connexion, $query);
 
-  $query = "INSERT INTO basket (id_admin) VALUES ($idadmin)";
-  $resultat = mysqli_query($connexion, $query);
-
-}
-if($_SESSION["role"]=='seller')
-{
-  $query = "SELECT * FROM seller WHERE idseller = $idseller";
-  $resultat = mysqli_query($connexion, $query);
-  $query = "INSERT INTO basket (id_seller) VALUES ($idseller)";
-  $resultat = mysqli_query($connexion, $query);
-}
-if($_SESSION["role"]=='buyer')
-{
-  $query = "SELECT * FROM buyer WHERE idbuyer = $idbuyer";
-  $resultat = mysqli_query($connexion, $query);
-  $query = "INSERT INTO basket (id_buyer) VALUES ($idbuyer)";
-  $resultat = mysqli_query($connexion, $query);
+  if (!$resultat) {
+      die("Erreur lors de l'ajout de l'élément au panier : " . mysqli_error($connexion));
+  }
 }
 
-    if (!$resultat) {
-        die("Erreur lors de l'ajout de l'élément au panier : " . mysqli_error($connexion));
-    }
-}
 
 ?>
+</div>
+
 </div>
 <!--Footer-->
 
