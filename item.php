@@ -149,7 +149,11 @@ if (mysqli_num_rows($resultat) > 0) {
     echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
     echo '<p id="item-car">' . $row['description'] . "</p>";
     echo '<p id="price">' . $row['price'] . "  £</p>";
-    echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $_SESSION["id"]  . "'><button>Add to basket</button></a>";
+    if(!empty($row["sell"])){echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] . "'><button>Add to basket</button></a>";}
+        if(!empty($row["auction"])){echo '<button onclick="">Buy by auction</button>';}
+        //au click sur le bouton auction un truc apparait pour donner son prix etc
+        if(!empty($row["trade"])){echo '<button onclick="">Make a best offer</button>';}
+    
     echo '</div>';
 } else {
     echo "L'élément n'a pas été trouvé.";
