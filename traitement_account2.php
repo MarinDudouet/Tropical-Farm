@@ -27,7 +27,7 @@ $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees)
         mysqli_query($connexion, $updateQuery);
       }
 
-      header('Location: http://localhost:80/Tropical-Farm/index.php');
+      header('Location: http://localhost:80/Tropical-Farm/myaccount.php');
       
 
     // Fermeture de la connexion à la base de données
