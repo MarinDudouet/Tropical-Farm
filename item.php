@@ -163,7 +163,7 @@ if (isset($_GET['iditem'])) {
         if ($idsession !== null) {
             echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession  . "'><button>Add to basket</button></a>";
         } else {
-            echo "Connectez-vous pour ajouter cet élément au panier.";
+            echo "Log in to add this item to your basket.";
         }
 
         echo '</div>';
