@@ -155,22 +155,93 @@ if (isset($_GET['iditem'])) {
         die("La requête a échoué : " . mysqli_error($connexion));
     }
 
-    echo "L'élément a été ajouté au panier avec succès.";
+    header("Location: basket.php?added=true");
+    exit;
+} 
+
+if (!isset($_SESSION['role'])) {
+  echo "Veuillez vous connecter pour afficher le contenu du panier.";
+  exit;
+}
+
+if (isset($_SESSION['role']) && isset($_GET['added']) && $_GET['added'] === 'true') {
+  echo "L'élément a été ajouté au panier avec succès.";
+  // Redirection vers la page du panier sans la variable GET
+  header("Location: basket.php");
+  exit;
+}
+
+
+// Récupérer l'ID de session en fonction du rôle de l'utilisateur
+$idsession = null;
+$role = $_SESSION['role'];
+
+if ($role == 'admin' && isset($_SESSION['idadmin'])) {
+  $idsession = $_SESSION['idadmin'];
+} elseif ($role == 'seller' && isset($_SESSION['idseller'])) {
+  $idsession = $_SESSION['idseller'];
+} elseif ($role == 'buyer' && isset($_SESSION['idbuyer'])) {
+  $idsession = $_SESSION['idbuyer'];
 } else {
-    echo "L'ID de l'élément n'a pas été spécifié dans l'URL.";
+  echo "Vous n'avez pas les autorisations nécessaires pour afficher le contenu du panier.";
+  exit;
+}
+
+// Récupérer les éléments du panier en fonction de l'ID du vendeur, de l'acheteur et de l'administrateur
+$query = "SELECT * FROM basket WHERE ";
+if ($role == 'admin') {
+  $query .= "id_admin = $idsession";
+} elseif ($role == 'seller') {
+  $query .= "id_seller = $idsession";
+} elseif ($role == 'buyer') {
+  $query .= "id_buyer = $idsession";
+}
+
+$resultat = mysqli_query($connexion, $query);
+
+if (!$resultat) {
+  die("La requête a échoué : " . mysqli_error($connexion));
+}
+
+// Affichage des éléments du panier
+if (mysqli_num_rows($resultat) > 0) {
+  while ($row = mysqli_fetch_assoc($resultat)) {
+      $iditem = $row['id_item'];
+
+      // Récupération des détails de l'élément
+      $queryItem = "SELECT * FROM item WHERE iditem = $iditem";
+      $resultatItem = mysqli_query($connexion, $queryItem);
+
+      if (!$resultatItem) {
+          die("La requête a échoué : " . mysqli_error($connexion));
+      }
+
+      // Affichage des détails de l'élément
+      if (mysqli_num_rows($resultatItem) > 0) {
+          $rowItem = mysqli_fetch_assoc($resultatItem);
+          $name = $rowItem['name'];
+          $price = $rowItem['price'];
+          $photo = $rowItem['photo'];
+
+          echo '<div class="basket">';
+          echo '<div>';
+          echo "<img src='image/" . $rowItem['photo'] . "'>";
+          echo '</div>';
+          echo '<div class="item-details">';
+          echo '<h5>' . $rowItem['name'] . "</h5><br>";
+          echo '<p><b>' . $rowItem['price'] . "£</b></p>";
+          echo '<button class="basketa">Delete this item</button>';
+          echo '</div>';
+          echo '</div>';
+          
+      } else {
+          echo "Les détails de l'élément avec ID $iditem n'ont pas été trouvés.";
+      }
+  }
+} else {
+  echo "Le panier est vide.";
 }
 ?>
-
-
-
-<div class="basket">
-    <img src="" width="50px" height="50px">&nbsp; Name + Price + Quantity &nbsp;
-    <button class="basketa">Delete this item</button>
-</div>
-<div class="basket">
-    <img src="" width="50px" height="50px">&nbsp; Name + Price + Quantity &nbsp;
-    <button class="basketa">Delete this item</button>
-</div>
 
 <br>
 <a href="http://localhost:80/Tropical-Farm/Buy.php" class="basketa"><center>Proceed to payment</center><a><br><br>
