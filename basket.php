@@ -100,6 +100,68 @@ $imageURL = "image/" . $_SESSION["photo"];
 <br><br><br><br><br>
 
 <!-- Basket -->
+<?php
+
+// Connexion à la base de données
+$serveur = "localhost";
+$utilisateur = "root";
+$motDePasse = "";
+$baseDeDonnees = "tropicalfarm";
+
+$connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
+
+if (!$connexion) {
+    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+}
+
+// Vérifier si l'ID de l'élément a été envoyé dans l'URL
+if (isset($_GET['iditem'])) {
+    $iditem = $_GET['iditem'];
+
+    // Vérifier si l'utilisateur est connecté
+    if (!isset($_SESSION['role'])) {
+        echo "Veuillez vous connecter pour ajouter cet élément au panier.";
+        exit;
+    }
+
+    // Récupérer l'ID de session en fonction du rôle de l'utilisateur
+    $idsession = null;
+    $role = $_SESSION['role'];
+
+    if ($role == 'admin' && isset($_SESSION['idadmin'])) {
+        $idsession = $_SESSION['idadmin'];
+    } elseif ($role == 'seller' && isset($_SESSION['idseller'])) {
+        $idsession = $_SESSION['idseller'];
+    } elseif ($role == 'buyer' && isset($_SESSION['idbuyer'])) {
+        $idsession = $_SESSION['idbuyer'];
+    } else {
+        echo "Vous n'avez pas les autorisations nécessaires pour ajouter cet élément au panier.";
+        exit;
+    }
+
+    // Insérer l'ID de session et l'ID de l'élément dans la table basket
+    $query = "INSERT INTO basket (id_seller, id_buyer, id_admin, id_item) VALUES (";
+    if ($role == 'admin') {
+        $query .= "NULL, NULL, $idsession, $iditem)";
+    } elseif ($role == 'seller') {
+        $query .= "$idsession, NULL, NULL, $iditem)";
+    } elseif ($role == 'buyer') {
+        $query .= "NULL, $idsession, NULL, $iditem)";
+    }
+
+    $resultat = mysqli_query($connexion, $query);
+
+    if (!$resultat) {
+        die("La requête a échoué : " . mysqli_error($connexion));
+    }
+
+    echo "L'élément a été ajouté au panier avec succès.";
+} else {
+    echo "L'ID de l'élément n'a pas été spécifié dans l'URL.";
+}
+?>
+
+
 
 <div class="basket">
     <img src="" width="50px" height="50px">&nbsp; Name + Price + Quantity &nbsp;

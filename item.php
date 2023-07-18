@@ -114,66 +114,69 @@ if (!$connexion) {
     die("La connexion à la base de données a échoué : " . mysqli_connect_error());
 }
 
-// Affichage de la ligne spécifique
-$iditem = $_GET['iditem'];
-
-if (isset($_SESSION["role"]) && $_SESSION["role"] == 'admin') {
-    $idsession = $_SESSION["id"];
-} elseif (isset($_SESSION["role"]) && $_SESSION["role"] == 'seller') {
-    $idsession = $_SESSION["id"];
-} elseif (isset($_SESSION["role"]) && $_SESSION["role"] == 'buyer') {
-    $idsession = $_SESSION["id"];
-} else {
-    // Gérer le cas où l'ID de session n'est pas défini
-    // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
-}
-
-// Récupération des détails de l'élément
-$query = "SELECT * FROM item WHERE iditem = $iditem";
-$resultat = mysqli_query($connexion, $query);
-
-if (!$resultat) {
-    die("La requête a échoué : " . mysqli_error($connexion));
-}
-
-// Affichage des détails de l'élément
-if (mysqli_num_rows($resultat) > 0) {
-    $row = mysqli_fetch_assoc($resultat);
-    $name = $row['name'];
-    $price = $row['price'];
-    $photo = $row['photo'];
-    echo '<div class="item-img-div">';
-    echo "<center><img src=image/" . $row['photo'] . "></center>";
-    echo "</div>";
-    echo '<div class="item-car-div">';
-    echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
-    echo '<p id="item-car">' . $row['description'] . "</p>";
-    echo '<p id="price">' . $row['price'] . "  £</p>";
-    if(!empty($row["sell"])){echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] . "'><button>Add to basket</button></a>";}
-        if(!empty($row["auction"])){echo '<button onclick="">Buy by auction</button>';}
-        //au click sur le bouton auction un truc apparait pour donner son prix etc
-        if(!empty($row["trade"])){echo '<button onclick="">Make a best offer</button>';}
-    
-    echo '</div>';
-} else {
-    echo "L'élément n'a pas été trouvé.";
-}
-
 // Vérifier si l'ID de l'élément a été envoyé dans l'URL
 if (isset($_GET['iditem'])) {
-  $iditem = $_GET['iditem'];
+    $iditem = $_GET['iditem'];
 
-  // Insérer l'ID de l'élément et l'ID de session dans la table "basket"
-  $query = "INSERT INTO basket (id_item, id_session) VALUES ($iditem, $idsession)";
-  $resultat = mysqli_query($connexion, $query);
+    // Récupérer l'ID de session en fonction du rôle de l'utilisateur
+    $idsession = null;
 
-  if (!$resultat) {
-      die("Erreur lors de l'ajout de l'élément au panier : " . mysqli_error($connexion));
-  }
+    if (isset($_SESSION["role"])) {
+        if ($_SESSION["role"] == 'admin' && isset($_SESSION["idadmin"])) {
+            $idsession = $_SESSION["idadmin"];
+        } elseif ($_SESSION["role"] == 'seller' && isset($_SESSION["idseller"])) {
+            $idsession = $_SESSION["idseller"];
+        } elseif ($_SESSION["role"] == 'buyer' && isset($_SESSION["idbuyer"])) {
+            $idsession = $_SESSION["idbuyer"];
+        } else {
+            // Gérer le cas où l'ID de session n'est pas défini
+            // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
+        }
+    } else {
+        // Gérer le cas où le rôle n'est pas défini dans la session
+        // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
+    }
+
+    // Récupération des détails de l'élément
+    $query = "SELECT * FROM item WHERE iditem = $iditem";
+    $resultat = mysqli_query($connexion, $query);
+
+    if (!$resultat) {
+        die("La requête a échoué : " . mysqli_error($connexion));
+    }
+
+    // Affichage des détails de l'élément
+    if (mysqli_num_rows($resultat) > 0) {
+        $row = mysqli_fetch_assoc($resultat);
+        $name = $row['name'];
+        $price = $row['price'];
+        $photo = $row['photo'];
+        echo '<div class="item-img-div">';
+        echo "<center><img src='image/" . $row['photo'] . "'></center>";
+        echo "</div>";
+        echo '<div class="item-car-div">';
+        echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
+        echo '<p id="item-car">' . $row['description'] . "</p>";
+        echo '<p id="price">' . $row['price'] . " £</p>";
+
+        // Vérifier si l'ID de session est défini avant d'afficher le bouton "Add to basket"
+        if ($idsession !== null) {
+            echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession  . "'><button>Add to basket</button></a>";
+        } else {
+            echo "Connectez-vous pour ajouter cet élément au panier.";
+        }
+
+        echo '</div>';
+    } else {
+        echo "L'élément n'a pas été trouvé.";
+    }
+} else {
+    echo "L'ID de l'élément n'a pas été spécifié dans l'URL.";
 }
 
-
 ?>
+
+
 </div>
 
 </div>
