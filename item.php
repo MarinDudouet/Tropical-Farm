@@ -22,6 +22,44 @@
   <div class="headnav">
 <!--Header-->
 
+<script>
+  function showAuctionInputs() {
+    var auctionInputs = document.getElementById("auctionInputs");
+    auctionInputs.style.display = "block";
+  }
+
+  function submitAuction() {
+  var auctionPrice = document.getElementById("auctionPrice").value;
+
+  // Créer une instance de l'objet XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  // Définir la fonction de rappel pour la réponse AJAX
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        // La requête AJAX a été traitée avec succès
+        // Faire quelque chose en réponse à la réussite de l'insertion
+        console.log("L'enchère a été enregistrée avec succès !");
+      } else {
+        // La requête AJAX a échoué
+        console.error("Erreur lors de l'enregistrement de l'enchère : " + xhr.status);
+      }
+    }
+  };
+
+  // Préparer les données à envoyer
+  var data = new FormData();
+  data.append("auctionPrice", auctionPrice);
+
+  // Envoyer la requête AJAX POST
+  xhr.open("POST", "insert_auction.php");  // Remplacez "insert_auction.php" par le fichier PHP qui traitera l'insertion en base de données
+  xhr.send(data);
+}
+
+
+  </script>
+
 <?php
 
 session_start();

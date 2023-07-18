@@ -24,6 +24,15 @@ $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees)
         $newCVC = $_POST['cvc'];
       
         $updateQuery = "UPDATE buyer SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
+
+        if(!isset($updateQuery)){
+          $updateQuery = "UPDATE seller SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
+        }
+
+        if(!isset($updateQuery)){
+          $updateQuery = "UPDATE admin SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
+        }
+
         mysqli_query($connexion, $updateQuery);
       }
 

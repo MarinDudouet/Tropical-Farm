@@ -165,7 +165,12 @@ while ($row = mysqli_fetch_assoc($resultat)) {
   $iditem = $row['iditem'];
   $name = $row['name'];
   echo '<div class="item">';
-  echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";
+  if(isset($row["sell"])){
+    echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
+  else if(isset($row["auction"])){
+    echo "<a href='http://localhost:80/Tropical-Farm/itemauction.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
+  else{
+    echo "<a href='http://localhost:80/Tropical-Farm/itembestoffer.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
   echo "<center><h5><b>" . $row['name'] . "</b></h5>";
   echo "<p>" .$row['price'] . "  £</p></center>";
   echo "</div>";

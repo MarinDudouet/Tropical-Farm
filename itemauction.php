@@ -139,6 +139,7 @@ $imageURL = "image/" . $_SESSION["photo"];
 <div class="container">
 
 <?php
+
 // Connexion à la base de données
 $serveur = "localhost";
 $utilisateur = "root";
@@ -151,17 +152,36 @@ if (!$connexion) {
     die("La connexion à la base de données a échoué : " . mysqli_connect_error());
 }
 
-// Affichage de la ligne spécifique
-$iditem = $_GET['iditem'];
+// Vérifier si l'ID de l'élément a été envoyé dans l'URL
+if (isset($_GET['iditem'])) {
+    $iditem = $_GET['iditem'];
 
-// Récupération des détails de l'élément
-$query = "SELECT * FROM item WHERE iditem = $iditem";
+    // Récupérer l'ID de session en fonction du rôle de l'utilisateur
+    $idsession = null;
 
-$resultat = mysqli_query($connexion, $query);
+    if (isset($_SESSION["role"])) {
+        if ($_SESSION["role"] == 'admin' && isset($_SESSION["idadmin"])) {
+            $idsession = $_SESSION["idadmin"];
+        } elseif ($_SESSION["role"] == 'seller' && isset($_SESSION["idseller"])) {
+            $idsession = $_SESSION["idseller"];
+        } elseif ($_SESSION["role"] == 'buyer' && isset($_SESSION["idbuyer"])) {
+            $idsession = $_SESSION["idbuyer"];
+        } else {
+            // Gérer le cas où l'ID de session n'est pas défini
+            // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
+        }
+    } else {
+        // Gérer le cas où le rôle n'est pas défini dans la session
+        // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
+    }
 
-if (!$resultat) {
-    die("La requête a échoué : " . mysqli_error($connexion));
-}
+    // Récupération des détails de l'élément
+    $query = "SELECT * FROM item WHERE iditem = $iditem";
+    $resultat = mysqli_query($connexion, $query);
+
+    if (!$resultat) {
+        die("La requête a échoué : " . mysqli_error($connexion));
+    }
 
     // Affichage des détails de l'élément
     if (mysqli_num_rows($resultat) > 0) {
@@ -170,66 +190,39 @@ if (!$resultat) {
         $price = $row['price'];
         $photo = $row['photo'];
         echo '<div class="item-img-div">';
-        echo "<center><img src=image/". $row['photo'] ."></center>";
+        echo "<center><img src='image/" . $row['photo'] . "'></center>";
         echo "</div>";
         echo '<div class="item-car-div">';
-        echo '<h3 id="item-name">'. $row['name'] ."</h3><br>";
-        echo '<p id="item-car">'. $row['description'] ."</p>";
-        echo '<p id="price">'. $row['price'] ."  £</p>";
-        if(!empty($row["sell"])){echo '<button onclick="">Add to basket</button>';}
-        if(!empty($row["auction"])){echo '<button id="auctionButton" onclick="showAuctionInputs()">Buy by auction</button>
-          <div id="auctionInputs" style="display: none;">
-          <input type="number" id="auctionPrice" placeholder="Enter your max price">
-          <button onclick="submitAuction()">Submit bid</button>
-        </div>
-        ';}
-        //au click sur le bouton auction un truc apparait pour donner son prix etc
-        if(!empty($row["trade"])){echo '<button onclick="">Make a best offer</button>';}
+        echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
+        echo '<p id="item-car">' . $row['description'] . "</p>";
+        echo '<p id="price">' . $row['price'] . " £</p>";
+
+        // Vérifier si l'ID de session est défini avant d'afficher le bouton "Add to basket"
+        if ($idsession !== null) {
+          echo '<button id="auctionButton" onclick="showAuctionInputs()">Buy by auction</button> Auction 0/5
+              <div id="auctionInputs" style="display: none;">
+              <input type="number" id="auctionPrice" placeholder="Enter your max price">
+              <button onclick="submitAuction()">Submit bid</button>
+            </div>
+            ';
+            echo '</div>';
+        } else {
+            echo "Log in to add this item to your basket.";
+        }
+
         echo '</div>';
     } else {
         echo "L'élément n'a pas été trouvé.";
     }
-
-// Vérifier si l'ID de l'élément a été envoyé dans l'URL
-if (isset($_GET['iditem'])) {
-    $iditem = $_GET['iditem'];
-
-    // Insérer l'ID de l'élément dans la table "basket"
-    $query = "INSERT INTO basket (id_item) VALUES ($iditem)";
-    $resultat = mysqli_query($connexion, $query);
-
-    
-
-    if($_SESSION["role"]=='admin')
-{
-  $query = "SELECT * FROM admin WHERE idadmin = $idadmin";
-  $resultat = mysqli_query($connexion, $query);
-
-  $query = "INSERT INTO basket (id_admin) VALUES ($idadmin)";
-  $resultat = mysqli_query($connexion, $query);
-
-}
-if($_SESSION["role"]=='seller')
-{
-  $query = "SELECT * FROM seller WHERE idseller = $idseller";
-  $resultat = mysqli_query($connexion, $query);
-  $query = "INSERT INTO basket (id_seller) VALUES ($idseller)";
-  $resultat = mysqli_query($connexion, $query);
-}
-if($_SESSION["role"]=='buyer')
-{
-  $query = "SELECT * FROM buyer WHERE idbuyer = $idbuyer";
-  $resultat = mysqli_query($connexion, $query);
-  $query = "INSERT INTO basket (id_buyer) VALUES ($idbuyer)";
-  $resultat = mysqli_query($connexion, $query);
-}
-
-    if (!$resultat) {
-        die("Erreur lors de l'ajout de l'élément au panier : " . mysqli_error($connexion));
-    }
+} else {
+    echo "L'ID de l'élément n'a pas été spécifié dans l'URL.";
 }
 
 ?>
+
+
+</div>
+
 </div>
 <!--Footer-->
 
