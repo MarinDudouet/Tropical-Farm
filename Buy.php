@@ -24,6 +24,64 @@
 <?php
 
 session_start();
+$serveur = "localhost";
+    $dbname = "tropicalfarm";
+    $user = "root";
+    $pass = "";
+    
+
+    //On se connecte à la BDD
+        $dbco = new PDO("mysql:host=$serveur;dbname=$dbname",$user,$pass);
+        $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+$query = "SELECT * FROM buyer WHERE username = :username AND password = :password";
+        $stmt = $dbco->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() > 0) {
+        // Connexion réussie
+        $row = $stmt->fetch();
+        $_SESSION["name"]=$row['name'];
+        $_SESSION["street"]=$row['street'];
+        $_SESSION["flat"]=$row['flat'];
+        $_SESSION["city"]=$row['city'];
+        $_SESSION["state"]=$row['state'];
+        $_SESSION["postcode"]=$row['postcode'];
+        $_SESSION["phone"]=$row['phone'];
+        $_SESSION["typecard"]=$row['card'];
+        $_SESSION["cardnumber"]=$row['cardnumber'];
+        $_SESSION["expirationmonth"]=$row['monthexpiration'];
+        $_SESSION["expirationyear"]=$row['yearexpiration'];
+        $_SESSION["cvc"]=$row['cvc'];
+        $username=$row["username"];
+        $passwors=$row['password'];}
+
+        $query = "SELECT * FROM seller WHERE username = :username AND password = :password";
+        $stmt = $dbco->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() > 0) {
+        // Connexion réussie
+        $row = $stmt->fetch();
+        $_SESSION["name"]=$row['name'];
+        $_SESSION["street"]=$row['street'];
+        $_SESSION["flat"]=$row['flat'];
+        $_SESSION["city"]=$row['city'];
+        $_SESSION["state"]=$row['state'];
+        $_SESSION["postcode"]=$row['postcode'];
+        $_SESSION["phone"]=$row['phone'];
+        $_SESSION["typecard"]=$row['card'];
+        $_SESSION["cardnumber"]=$row['cardnumber'];
+        $_SESSION["expirationmonth"]=$row['monthexpiration'];
+        $_SESSION["expirationyear"]=$row['yearexpiration'];
+        $_SESSION["cvc"]=$row['cvc'];
+        $username=$row["username"];
+        $passwors=$row['password'];}
 
 if(!isset($_SESSION["photo"])){
   $imageURL = "image/user.png";
@@ -98,27 +156,27 @@ $imageURL = "image/" . $_SESSION["photo"];
 
 <div class="container">
     <div class="item-recap">
-        <center><img src="image\lézards.png">
-        <h5>Nom truc</h5></center>
+        
     </div>
     <div class="info-buyer">
             <div class="step">
+            <form action="traitment_account.php"  method="POST">
                 <p>1. Delivery Adress</p> 
             </div><br>
             <center><div class="info">
-                <p>Full name (first name and surname) :<br>
-                <input type="text"></p>
+                <p>Name :<br>
+                <input type="text" name="name" id="name" value=<?php echo $_SESSION["name"]?>></p>
                 <p>Street Name :<br>
-                <input type="text" placeholder="Street adress"><br>
-                <input type="text" placeholder="Flat, building, floor, etc."></p>
+                <input type="text" name="street" id="street" placeholder="Street adress" value=<?php echo $_SESSION["street"]?>><br>
+                <input type="text" name="flat" id="flat" placeholder="Flat, building, floor, etc." value=<?php echo $_SESSION["flat"]?>></p>
                 <p>City :<br>
-                <input type="text"></p>
+                <input type="text" name="city" id="city" value=<?php echo $_SESSION["city"]?>></p>
                 <p>State/Province/Region :<br>
-                <input type="text"></p>
+                <input type="text" name="state" id="state" value=<?php echo $_SESSION["state"]?>></p>
                 <p>Postcode :<br>
-                <input type="text"></p>
+                <input type="text" name="postcode" id="postcode" value=<?php echo $_SESSION["postcode"]?>></p>
                 <p>Phone number :<br>
-                <input type="text"></p>
+                <input type="text" value=<?php echo $_SESSION["phone"]?>></p>
             </div></center>
 <br>
             <div class="step">
@@ -127,47 +185,30 @@ $imageURL = "image/" . $_SESSION["photo"];
             <center>
             <div class="info">
                 <p>Type of card :<br>
-                    <input type="radio" name="card">Visa <img src="image/visa.png" width="25px" height="20px">&nbsp;
-                    <input type="radio" name="card">Mastercard <img src="image/mastercard.png" width="25px" height="15px">
+                <?php
+                  $selectedOption = $_SESSION["typecard"]; // Supposons que vous avez la valeur de l'option sélectionnée
+
+                  $option1 = "visa";
+                  $option2 = "master";
+                  ?>
+
+                  <input type="radio" name="card" value="<?php echo $option1; ?>" <?php echo ($selectedOption == $option1) ? 'checked' : ''; ?>> Visa <img src="image/visa.png" width="25px" height="20px">&nbsp;
+                  <input type="radio" name="card" value="<?php echo $option2; ?>" <?php echo ($selectedOption == $option2) ? 'checked' : ''; ?>> Mastercard <img src="image/mastercard.png" width="25px" height="15px">
+                                    
                 </p>
                 <p>Name on card :<br>
-                <input type="text"></p>
+                <input type="text" value=<?php echo $_SESSION["name"]?>></p>
                 <p>Card number :<br>
-                <input type="text"><br>
-                <p>Expiration date :<br>
-                    <select name = "month" multiples>
-                        <option> 1 </option>
-                        <option> 2 </option>
-                        <option> 3 </option>
-                        <option> 4 </option>
-                        <option> 5 </option>
-                        <option> 6 </option>
-                        <option> 7 </option>
-                        <option> 8 </option>
-                        <option> 9 </option>
-                        <option> 10 </option>
-                        <option> 11 </option>
-                        <option> 12 </option>
-                        </select>
-                    <select name = "year" multiples>
-                        <option> 2023 </option>
-                        <option> 2024 </option>
-                        <option> 2025 </option>
-                        <option> 2026 </option>
-                        <option> 2027 </option>
-                        <option> 2028 </option>
-                        <option> 2029 </option>
-                        <option> 2030 </option>
-                        <option> 2031 </option>
-                        <option> 2032 </option>
-                        <option> 2033 </option>
-                        <option> 2034 </option>
-                        </select></p>
+                <input type="text" name="cardnumber" id="cardnumber" value=<?php echo $_SESSION["cardnumber"]?>><br>
+                <p>Month of expiration :<br>
+                <input type="text" name="month" id="month" value=<?php echo $_SESSION["expirationmonth"]?>><br>
+                <p>Year of expiration :<br>
+                <input type="text" name="year" id="year" value=<?php echo $_SESSION["expirationyear"]?>><br>
                 <p>Security Code (CVV:CVC) :<br>
-                <input type="text"></p>
+                <input type="text" name="cvc" id="cvc" value=<?php echo $_SESSION["cvc"]?>></p>
             </div>
         <button onclick="">Buy it now</button></center>
-    </div>
+    </div></form>
 </div>
 
 

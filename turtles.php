@@ -155,37 +155,20 @@ if (!$resultat) {
     die("La requête a échoué : " . mysqli_error($connexion));
 }
 
+while ($row = mysqli_fetch_assoc($resultat)) {
+
+  $iditem = $row['iditem'];
+  $name = $row['name'];
+  echo '<div class="item">';
+  echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";
+  echo "<center><h5><b>" . $row['name'] . "</b></h5>";
+  echo "<p>" .$row['price'] . "  £</p></center>";
+  echo "</div>";
+  
+
+}
+
 ?>
-    <div class="item">
-        <img src="image/Geochelone elegans, 10-11 cm.jpg"><br>
-        <center><h5>Geochelone elegans</h5>
-        <p>19,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Kinosternon baurii.jpg"><br>
-        <center><h5>Kinosternon baurii</h5>
-        <p>125,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Kinosternon scorpioides cruentatum.jpg"><br>
-        <center><h5>Kinosternon scorpioides cruentatum</h5>
-        <p>99,00 £</p></center>
-    </div>
-  <div class="item">
-    <img src="image/Mauremys nigricans.jpg"><br>
-    <center><h5>Mauremys nigricans</h5>
-    <p>50,00 £</p></center>
-</div>
-  <div class="item">
-      <img src="image/Melanochelys trijuga thermalis.jpg"><br>
-      <center><h5>Melanochelys trijuga thermalis</h5>
-      <p>15,00 £</p></center>
-  </div>
-  <div class="item">
-      <img src="image/Pelusios castaneus, 10 cm.jpg"><br>
-      <center><h5>Pelusios castaneus, 10 cm</h5>
-      <p>85,00 £</p></center>
-  </div>
 </div>
 
 

@@ -169,36 +169,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
 }
 
 ?>
-    <div class="item">
-        <img src="image/Aquatic Turtle Food - Maintenance.jpg"><br>
-        <center><h5>Aquatic Turtle Food - Maintenance</h5>
-        <p>7,50 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Day Gecko Food - 71 g.jpg"><br>
-        <center><h5>Day Gecko Food - 71 g</h5>
-        <p>9,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/EarthPro Insect Fuel.jpg"><br>
-        <center><h5>EarthPro Insect Fuel</h5>
-        <p>17,50 £</p></center>
-    </div>
-  <div class="item">
-    <img src="image/Iguana Food - Adulte - 2,27 kg.jpg"><br>
-    <center><h5>Iguana Food - Adulte - 2,27 kg</h5>
-    <p>8,70 £</p></center>
-</div>
-  <div class="item">
-      <img src="image/Iguana Food - Juvénile - 567gr.jpg"><br>
-      <center><h5>Iguana Food - Juvénile - 567gr</h5>
-      <p>4,90 £</p></center>
-  </div>
-  <div class="item">
-      <img src="image/Natural Grassland Tortoise Food.jpg"><br>
-      <center><h5>Natural Grassland Tortoise Food</h5>
-      <p>9,00 £</p></center>
-  </div>
+
 </div>
 
 

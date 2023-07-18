@@ -170,21 +170,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
 }
 
 ?>
-    <div class="item">
-        <img src="image/Anolis carolinensis.jpg"><br>
-        <center><h5>Anolis carolinensis</h5>
-        <p>15,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Correlophus (Rhacodactylus) ciliatus, juvénile phasé.jpg"><br>
-        <center><h5>Correlophus (Rhacodactylus) ciliatus, juvénile phasé</h5>
-        <p>125,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Cyclodomorphus gerrardii.jpg"><br>
-        <center><h5>Cyclodomorphus gerrardii</h5>
-        <p>195,00 £</p></center>
-    </div>
+
 </div>
 
 <!--Footer-->

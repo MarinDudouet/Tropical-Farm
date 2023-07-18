@@ -155,12 +155,20 @@ if (!$resultat) {
     die("La requête a échoué : " . mysqli_error($connexion));
 }
 
+while ($row = mysqli_fetch_assoc($resultat)) {
+
+  $iditem = $row['iditem'];
+  $name = $row['name'];
+  echo '<div class="item">';
+  echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";
+  echo "<center><h5><b>" . $row['name'] . "</b></h5>";
+  echo "<p>" .$row['price'] . "  £</p></center>";
+  echo "</div>";
+  
+
+}
 ?>
-    <div class="item">
-        <img src="image/souris-rosees-3-a-4g-sac-de-25.jpg"><br>
-        <center><h5>Frozen mouse</h5>
-        <p>25,00 £</p></center>
-    </div>
+
 
 </div>
 

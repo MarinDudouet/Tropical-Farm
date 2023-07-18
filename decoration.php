@@ -169,21 +169,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
 }
 
 ?>
-    <div class="item">
-        <img src="image/Saururus.jpg"><br>
-        <center><h5>Saururus</h5>
-        <p>13,50 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Plante artificielle Fern-gold.jpg"><br>
-        <center><h5>Plante artificielle Fern-gold</h5>
-        <p>8,75 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Naturalistic Desert Flora - Tree Houseleek.jpg"><br>
-        <center><h5>Naturalistic Desert Flora - Tree Houseleek</h5>
-        <p>16,00 £</p></center>
-    </div>
+
 </div>
 
 

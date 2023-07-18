@@ -174,36 +174,6 @@ while ($row = mysqli_fetch_assoc($resultat)) {
 }
 
 ?>
-    <div class="item">
-        <img src="image/Boa c. constrictor, Guyana.jpg"><br>
-        <center><h5>Boa c. constrictor, Guyana</h5>
-        <p>295,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Ahaetulla nasuta.jpg"><br>
-        <center><h5>Ahaetulla nasuta</h5>
-        <p>49,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Boaedon (Lamprophis) fuliginosus, albinos.jpg"><br>
-        <center><h5>Boaedon (Lamprophis) fuliginosus, albinos</h5>
-        <p>99,00 £</p></center>
-    </div>
-  <div class="item">
-    <img src="image/elaphe-carinata-albinos.jpg"><br>
-    <center><h5>Elaphe-carinata-albinos</h5>
-    <p>550,00 £</p></center>
-</div>
-  <div class="item">
-      <img src="image/Boa c. imperator, Nicaragua, ghost.jpg"><br>
-      <center><h5>Boa c. imperator, Nicaragua, ghost</h5>
-      <p>145,00 £</p></center>
-  </div>
-  <div class="item">
-      <img src="image/Boaedon (Lamprophis) fuliginosus, Black.jpg"><br>
-      <center><h5>Boaedon (Lamprophis) fuliginosus, Black</h5>
-      <p>89,00 £</p></center>
-  </div>
 </div>
 
 <!--Footer-->

@@ -169,21 +169,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
 }
 
 ?>
-    <div class="item">
-        <img src="image/aquariums.jpg"><br>
-        <center><h5>aquariums</h5>
-        <p>135,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Karapas Terra.jpg"><br>
-        <center><h5>Karapas Terra</h5>
-        <p>169,00 £</p></center>
-    </div>
-    <div class="item">
-      <img src="image/Turtle-Tarrium black.jpg"><br>
-      <center><h5>Turtle-Tarrium black</h5>
-      <p>79,00 £</p></center>
-  </div>
+    
 </div>
 
 

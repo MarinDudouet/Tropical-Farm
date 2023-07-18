@@ -192,7 +192,10 @@ if (!$connexion) {
         <center><button type="button" class="boo" onclick="afficherMotDePasse2()">👀</button><br><br></center>
 
         <label for="expiration">Month of expiration :</label>
-        <input type="month" name="month" id="month" value="<?php echo $row['monthexpiration']; ?>"><br><br>
+        <input type="text" name="month" id="month" value="<?php echo $row['monthexpiration']; ?>"><br><br>
+
+        <label for="expiration2">Year of expiration :</label>
+        <input type="text" name="year" id="year" value="<?php echo $row['yearexpiration']; ?>"><br><br>
 
         <center><input class="bo" type="submit" value="Modified"></center><br><br>
     </form>

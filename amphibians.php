@@ -169,36 +169,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
 }
 
 ?>
-    <div class="item">
-        <img src="image/Ceratophrys cranwelli, albinos.jpg"><br>
-        <center><h5>Ceratophrys cranwelli, albinos</h5>
-        <p>39,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Ceratophrys ornata.jpg"><br>
-        <center><h5>Ceratophrys ornata</h5>
-        <p>49,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Dendrobates auratus, super blue.jpg"><br>
-        <center><h5>Dendrobates auratus, super blue</h5>
-        <p>69,00 £</p></center>
-    </div>
-  <div class="item">
-    <img src="image/Dendrobates leucomelas.jpg"><br>
-    <center><h5>Dendrobates leucomelas</h5>
-    <p>75,00 £</p></center>
-</div>
-  <div class="item">
-      <img src="image/Epipedobates anthonyi.jpg"><br>
-      <center><h5>Boa c. imperator, Nicaragua, ghost</h5>
-      <p>36,00 £</p></center>
-  </div>
-  <div class="item">
-      <img src="image/Hyperolius riggenbachi.jpg"><br>
-      <center><h5>Hyperolius riggenbachi</h5>
-      <p>29,00 £</p></center>
-  </div>
+  
 </div>
 
 

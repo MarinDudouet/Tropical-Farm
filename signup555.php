@@ -25,7 +25,7 @@ session_start();
        
         //On insère les données reçues
         $sth = $dbco->prepare("
-        INSERT INTO buyer(username, password,photo,background)
+        INSERT INTO seller(username, password,photo,background)
         VALUES(:username, :password, :photo, :background)");
         $sth->bindParam(':username',$username);
         $sth->bindParam(':password',$password);

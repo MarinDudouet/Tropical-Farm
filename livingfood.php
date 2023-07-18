@@ -166,31 +166,6 @@ while ($row = mysqli_fetch_assoc($resultat)) {
 }
 
 ?>
-    <div class="item">
-        <img src="image/Blattes M.jpg"><br>
-        <center><h5>Blattes M</h5>
-        <p>4,50 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Blattes Red Runners.jpg"><br>
-        <center><h5>Blattes Red Runners</h5>
-        <p>5,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Criquets migrateurs.jpg"><br>
-        <center><h5>Criquets migrateurs</h5>
-        <p>3,50 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Drosophiles.jpg"><br>
-        <center><h5>Drosophiles</h5>
-        <p>7,00 £</p></center>
-    </div>
-    <div class="item">
-        <img src="image/Larves de Dolas (Pachnoda marginata).jpg"><br>
-        <center><h5>Larves de Dolas (Pachnoda marginata)</h5>
-        <p>4,00 £</p></center>
-    </div>
 </div>
 
 
