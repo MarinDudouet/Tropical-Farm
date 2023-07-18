@@ -15,6 +15,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
 <script src="java.js"></script>
 
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var number = 1;
+            var numberInput = document.getElementById('numberInput');
+            var increaseButton = document.getElementById('increaseButton');
+            var decreaseButton = document.getElementById('decreaseButton');
+
+            // Fonction pour augmenter le nombre
+            increaseButton.addEventListener('click', function() {
+                number++;
+                if (number > 0) {
+                    numberInput.value = number;
+                } else {
+                    number = 1;
+                }
+            });
+
+            // Fonction pour diminuer le nombre
+            decreaseButton.addEventListener('click', function() {
+                number--;
+                if (number > 0) {
+                    numberInput.value = number;
+                } else {
+                    number = 1;
+                }
+            });
+        });
+    </script>
+
 </head>
 
 <body>
@@ -195,11 +224,20 @@ if (isset($_GET['iditem'])) {
         echo '<div class="item-car-div">';
         echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
         echo '<p id="item-car">' . $row['description'] . "</p>";
+        echo '<div class="container2">';
+        echo '<div class="arrow-wrapper">';
+        echo    '<div id="increaseButton" class="arrow">&#x25B2;</div>';
+        echo    '<div id="decreaseButton" class="arrow">&#x25BC;</div>';
+        echo '</div>';
+        echo '<div class="number-wrapper">';
+        echo    '<input type="text" id="numberInput" class="number-input" value="1" readonly />';
+        echo '</div>';
+        echo '</div><br>';
         echo '<p id="price">' . $row['price'] . " £</p>";
 
         // Vérifier si l'ID de session est défini avant d'afficher le bouton "Add to basket"
         if ($idsession !== null) {
-            echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession  . "'><button>Add to basket</button></a>";
+            echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession  . "&quantity=".$quantity. "'><button>Add to basket</button></a>";
         } else {
             echo "Log in to add this item to your basket.";
         }
