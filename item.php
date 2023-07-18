@@ -16,33 +16,45 @@
 <script src="java.js"></script>
 
 <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var number = 1;
-            var numberInput = document.getElementById('numberInput');
-            var increaseButton = document.getElementById('increaseButton');
-            var decreaseButton = document.getElementById('decreaseButton');
+document.addEventListener('DOMContentLoaded', function() {
+    var numberInput = document.getElementById('numberInput');
+    var increaseButton = document.getElementById('increaseButton');
+    var decreaseButton = document.getElementById('decreaseButton');
+    var stockInput = document.getElementById('stockInput');
+    var stock = parseInt(stockInput.value);
 
-            // Fonction pour augmenter le nombre
-            increaseButton.addEventListener('click', function() {
-                number++;
-                if (number > 0) {
-                    numberInput.value = number;
-                } else {
-                    number = 1;
-                }
-            });
+    // Fonction pour augmenter le nombre
+    increaseButton.addEventListener('click', function() {
+        var currentQuantity = parseInt(numberInput.value);
+        if (currentQuantity < stock) {
+            numberInput.value = currentQuantity + 1;
+        }
+    });
 
-            // Fonction pour diminuer le nombre
-            decreaseButton.addEventListener('click', function() {
-                number--;
-                if (number > 0) {
-                    numberInput.value = number;
-                } else {
-                    number = 1;
-                }
-            });
-        });
-    </script>
+    // Fonction pour diminuer le nombre
+    decreaseButton.addEventListener('click', function() {
+        var currentQuantity = parseInt(numberInput.value);
+        if (currentQuantity > 1) {
+            numberInput.value = currentQuantity - 1;
+        }
+    });
+
+    var addToBasketButton = document.getElementById('addToBasketButton');
+
+    addToBasketButton.addEventListener('click', function(e) {
+        var selectedQuantity = parseInt(numberInput.value);
+
+        if (selectedQuantity > stock) {
+            e.preventDefault(); // Empêche l'action par défaut du lien
+            return;
+        }
+
+        var href = addToBasketButton.href;
+        href += '&quantity=' + selectedQuantity;
+        addToBasketButton.href = href;
+    });
+});
+</script>
 
 </head>
 
@@ -183,71 +195,84 @@ if (!$connexion) {
 
 // Vérifier si l'ID de l'élément a été envoyé dans l'URL
 if (isset($_GET['iditem'])) {
-    $iditem = $_GET['iditem'];
+  $iditem = $_GET['iditem'];
 
-    // Récupérer l'ID de session en fonction du rôle de l'utilisateur
-    $idsession = null;
+  // Récupérer l'ID de session en fonction du rôle de l'utilisateur
+  $idsession = null;
 
-    if (isset($_SESSION["role"])) {
-        if ($_SESSION["role"] == 'admin' && isset($_SESSION["idadmin"])) {
-            $idsession = $_SESSION["idadmin"];
-        } elseif ($_SESSION["role"] == 'seller' && isset($_SESSION["idseller"])) {
-            $idsession = $_SESSION["idseller"];
-        } elseif ($_SESSION["role"] == 'buyer' && isset($_SESSION["idbuyer"])) {
-            $idsession = $_SESSION["idbuyer"];
-        } else {
-            // Gérer le cas où l'ID de session n'est pas défini
-            // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
-        }
-    } else {
-        // Gérer le cas où le rôle n'est pas défini dans la session
-        // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
-    }
+  if (isset($_SESSION["role"])) {
+      if ($_SESSION["role"] == 'admin' && isset($_SESSION["idadmin"])) {
+          $idsession = $_SESSION["idadmin"];
+      } elseif ($_SESSION["role"] == 'seller' && isset($_SESSION["idseller"])) {
+          $idsession = $_SESSION["idseller"];
+      } elseif ($_SESSION["role"] == 'buyer' && isset($_SESSION["idbuyer"])) {
+          $idsession = $_SESSION["idbuyer"];
+      } else {
+          // Gérer le cas où l'ID de session n'est pas défini
+          // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
+      }
+  } else {
+      // Gérer le cas où le rôle n'est pas défini dans la session
+      // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
+  }
 
-    // Récupération des détails de l'élément
-    $query = "SELECT * FROM item WHERE iditem = $iditem";
-    $resultat = mysqli_query($connexion, $query);
+  // Récupération des détails de l'élément
+  $query = "SELECT * FROM item WHERE iditem = $iditem";
+  $resultat = mysqli_query($connexion, $query);
 
-    if (!$resultat) {
-        die("La requête a échoué : " . mysqli_error($connexion));
-    }
+  if (!$resultat) {
+      die("La requête a échoué : " . mysqli_error($connexion));
+  }
 
-    // Affichage des détails de l'élément
-    if (mysqli_num_rows($resultat) > 0) {
-        $row = mysqli_fetch_assoc($resultat);
-        $name = $row['name'];
-        $price = $row['price'];
-        $photo = $row['photo'];
-        echo '<div class="item-img-div">';
-        echo "<center><img src='image/" . $row['photo'] . "'></center>";
-        echo "</div>";
-        echo '<div class="item-car-div">';
-        echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
-        echo '<p id="item-car">' . $row['description'] . "</p>";
-        echo '<div class="container2">';
-        echo '<div class="arrow-wrapper">';
-        echo    '<div id="increaseButton" class="arrow">&#x25B2;</div>';
-        echo    '<div id="decreaseButton" class="arrow">&#x25BC;</div>';
-        echo '</div>';
-        echo '<div class="number-wrapper">';
-        echo    '<input type="text" id="numberInput" class="number-input" value="1" readonly />';
-        echo '</div>';
-        echo '</div><br>';
-        echo '<p id="price">' . $row['price'] . " £</p>";
+  // Affichage des détails de l'élément
+  if (mysqli_num_rows($resultat) > 0) {
+      $row = mysqli_fetch_assoc($resultat);
+      $name = $row['name'];
+      $price = $row['price'];
+      $photo = $row['photo'];
+      $stock = $row['stock'];
+      echo '<div class="item-img-div">';
+      echo "<center><img src='image/" . $row['photo'] . "'></center>";
+      echo "</div>";
+      echo '<div class="item-car-div">';
+      echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
+      echo '<p id="item-car">' . $row['description'] . "</p>";
+      echo '<div class="container2">';
+      echo '<div class="arrow-wrapper">';
+      echo    '<div id="increaseButton" class="arrow">&#x25B2;</div>';
+      echo    '<div id="decreaseButton" class="arrow">&#x25BC;</div>';
+      echo '</div>';
+      echo '<div class="number-wrapper">';
+      echo    '<input type="text" id="numberInput" class="number-input" value="1" readonly />';
+      echo '</div>';
+      echo '</div><br>';
+      echo '<p id="price">' . $row['price'] . " £</p>";
+      echo '<input type="hidden" id="stockInput" value="' . $row['stock'] . '" />';
 
-        // Vérifier si l'ID de session est défini avant d'afficher le bouton "Add to basket"
-        if ($idsession !== null) {
-            echo "<a href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession  . "&quantity=".$quantity. "'><button>Add to basket</button></a>";
-        } else {
-            echo "Log in to add this item to your basket.";
-        }
+      // Vérifier si l'ID de session est défini avant d'afficher le bouton "Add to basket"
+      if ($idsession !== null) {
+          echo "<a id='addToBasketButton' href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession . "'><button>Add to basket</button></a>";
+      } else {
+          echo "Log in to add this item to your basket.";
+      }
 
-        echo '</div>';
-    } else {
-        echo "L'élément n'a pas été trouvé.";
-    }
+      echo '</div>';
+      echo '<script>
+          document.addEventListener("DOMContentLoaded", function() {
+              var numberInput = document.getElementById("numberInput");
+              var addToBasketButton = document.getElementById("addToBasketButton");
+
+              addToBasketButton.addEventListener("click", function() {
+                  var quantity = numberInput.value;
+                  addToBasketButton.href += "&quantity=" + quantity;
+              });
+          });
+        </script>';
+  } else {
+      echo "L'élément n'a pas été trouvé.";
+  }
 } else {
-    echo "L'ID de l'élément n'a pas été spécifié dans l'URL.";
+  echo "L'ID de l'élément n'a pas été spécifié dans l'URL.";
 }
 
 ?>
