@@ -21,6 +21,16 @@
   <div class="headnav">
 <!--Header-->
 
+<script>
+    function showAlert() {
+      alert("Your tropical farm order has been registered and will be processed in the next few days.");
+      //window.location.href = "http://localhost:80/Tropical-Farm/index.php";
+      //http://localhost/Tropical-Farm/index.php";
+
+    }
+</script>
+
+
 <?php
 
 session_start();
@@ -176,7 +186,7 @@ $imageURL = "image/" . $_SESSION["photo"];
                 <p>Postcode :<br>
                 <input type="text" name="postcode" id="postcode" value=<?php echo $_SESSION["postcode"]?>></p>
                 <p>Phone number :<br>
-                <input type="text" value=<?php echo $_SESSION["phone"]?>></p>
+                <input maxlength="10" pattern="[0-9]{10}" type="text" value=<?php echo $_SESSION["phone"]?>></p>
             </div></center>
 <br>
             <div class="step">
@@ -199,15 +209,16 @@ $imageURL = "image/" . $_SESSION["photo"];
                 <p>Name on card :<br>
                 <input type="text" value=<?php echo $_SESSION["name"]?>></p>
                 <p>Card number :<br>
-                <input type="text" name="cardnumber" id="cardnumber" value=<?php echo $_SESSION["cardnumber"]?>><br>
-                <p>Month of expiration :<br>
-                <input type="text" name="month" id="month" value=<?php echo $_SESSION["expirationmonth"]?>><br>
-                <p>Year of expiration :<br>
-                <input type="text" name="year" id="year" value=<?php echo $_SESSION["expirationyear"]?>><br>
-                <p>Security Code (CVV:CVC) :<br>
-                <input type="text" name="cvc" id="cvc" value=<?php echo $_SESSION["cvc"]?>></p>
+                <input type="text" maxlength="16" pattern="[0-9]{16}" name="cardnumber" id="cardnumber" value=<?php echo $_SESSION["cardnumber"]?>><br>
+                <p>Month of expiration (--) :<br>
+                <input type="text" maxlength="2" pattern="[0-9]{2}" name="month" id="month" value=<?php echo $_SESSION["expirationmonth"]?>><br>
+                <p>Year of expiration (----) :<br>
+                <input type="text" maxlength="4" pattern="[0-9]{4}" name="year" id="year" value=<?php echo $_SESSION["expirationyear"]?>><br>
+                <p>Security Code (CVV) :<br>
+                <input type="text" maxlength="3" pattern="[0-9]{3}" name="cvc" id="cvc" value=<?php echo $_SESSION["cvc"]?>></p>
             </div>
-        <button onclick="">Buy it now</button></center>
+        <a href="http://localhost:80/Tropical-Farm/index.php"><button onclick="showAlert()">Buy it now</button></center></a>
+        
     </div></form>
 </div>
 

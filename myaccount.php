@@ -168,7 +168,7 @@ if (!$connexion) {
     }
     ?>
         
-    <form action="traitment_account.php"  method="POST">
+    <form action="traitement_account2.php"  method="POST">
         <label for="name">Name :</label>
         <input type="text" name="name" id="name" value="<?php echo $name; ?>"><br><br>
         <label for="street">Street :</label>
@@ -183,19 +183,19 @@ if (!$connexion) {
         <input type="text" name="postcode" id="postcode" value="<?php echo $row['postcode']; ?>"><br><br>
         <label for="card">Card :</label>
         <input type="text" name="card" id="card" value="<?php echo $row['card']; ?>"><br><br>
-        <label for="cardnumber">Card numbers :</label>
+        <label for="cardnumber">Card numbers maxlength="16" pattern="[0-9]{16}" :</label>
         <input type="password" name="cardnumber" id="cardnumber" value="<?php echo $row['cardnumber']; ?>">
         <center><button type="button" class="boo" onclick="afficherMotDePasse()">👀</button><br><br></center>
 
-        <label for="cvc">CVC :</label>
-        <input type="password" name="cvc" id="cvc" value="<?php echo $row['cvc']; ?>"><br>
+        <label for="cvc">CVV :</label>
+        <input type="password" maxlength="3" pattern="[0-9]{3}" name="cvc" id="cvc" value="<?php echo $row['cvc']; ?>"><br>
         <center><button type="button" class="boo" onclick="afficherMotDePasse2()">👀</button><br><br></center>
 
-        <label for="expiration">Month of expiration :</label>
-        <input type="text" name="month" id="month" value="<?php echo $row['monthexpiration']; ?>"><br><br>
+        <label for="expiration">Month of expiration (--) :</label>
+        <input type="text" maxlength="2" pattern="[0-9]{2}" name="month" id="month" value="<?php echo $row['monthexpiration']; ?>"><br><br>
 
-        <label for="expiration2">Year of expiration :</label>
-        <input type="text" name="year" id="year" value="<?php echo $row['yearexpiration']; ?>"><br><br>
+        <label for="expiration2">Year of expiration (----) :</label>
+        <input type="text" maxlength="4" pattern="[0-9]{4}" name="year" id="year" value="<?php echo $row['yearexpiration']; ?>"><br><br>
 
         <center><input class="bo" type="submit" value="Modified"></center><br><br>
     </form>
