@@ -157,39 +157,60 @@ if (isset($_GET['iditem'])) {
       echo "Vous n'avez pas les autorisations nécessaires pour ajouter cet élément au panier.";
       exit;
   }
-  
-  // Insérer l'ID de session, l'ID de l'élément et la quantité dans la table basket
-  $query = "INSERT INTO basket (id_seller, id_buyer, id_admin, id_item, quantity) VALUES (";
-  if ($role == 'admin') {
-      $query .= "NULL, NULL, $idsession, $iditem, $quantity)";
-  } elseif ($role == 'seller') {
-      $query .= "$idsession, NULL, NULL, $iditem, $quantity)";
-  } elseif ($role == 'buyer') {
-      $query .= "NULL, $idsession, NULL, $iditem, $quantity)";
+
+  $queryStock = "SELECT stock FROM item WHERE iditem = $iditem";
+  $resultStock = mysqli_query($connexion, $queryStock);
+
+  if (!$resultStock) {
+    die("La requête a échoué : " . mysqli_error($connexion));
   }
 
-  $resultat = mysqli_query($connexion, $query);
+  $rowStock = mysqli_fetch_assoc($resultStock);
+  $stock = intval($rowStock['stock']);
 
-  if (!$resultat) {
-      die("La requête a échoué : " . mysqli_error($connexion));
+  // Récupérer le totalQuantity pour l'élément
+  $queryTotalQuantity = "SELECT SUM(quantity) AS totalQuantity FROM basket WHERE id_item = $iditem";
+  $resultTotalQuantity = mysqli_query($connexion, $queryTotalQuantity);
+
+  if (!$resultTotalQuantity) {
+    die("La requête a échoué : " . mysqli_error($connexion));
   }
 
-  header("Location: basket.php?added=true");
-  exit;
-} 
+  $rowTotalQuantity = mysqli_fetch_assoc($resultTotalQuantity);
+  $totalQuantity = intval($rowTotalQuantity['totalQuantity']);
 
-if (!isset($_SESSION['role'])) {
-  echo "Veuillez vous connecter pour afficher le contenu du panier.";
-  exit;
+  // Calculer la quantité totale, y compris la quantité ajoutée
+  $totalQuantityInDatabase = $totalQuantity + $quantity;
+
+  // Vérifier si la totalQuantity dans le panier atteint le stock de l'élément
+  if ($totalQuantityInDatabase > $stock) {
+    $error_message = "The quantity in the basket exceeds the stock of this item.";
+    echo '<script>alert("' . $error_message . '");</script>';
+    echo '<script>window.location.href = "basket.php";</script>';
+    exit;
 }
 
-if (isset($_SESSION['role']) && isset($_GET['added']) && $_GET['added'] === 'true') {
-  echo "L'élément a été ajouté au panier avec succès.";
-  // Redirection vers la page du panier sans la variable GET
-  header("Location: basket.php");
-  exit;
-}
+else {
+    // Insérer l'ID de session, l'ID de l'élément et la quantité dans la table basket
+    $query = "INSERT INTO basket (id_seller, id_buyer, id_admin, id_item, quantity) VALUES (";
+    if ($role == 'admin') {
+        $query .= "NULL, NULL, $idsession, $iditem, $quantity)";
+    } elseif ($role == 'seller') {
+        $query .= "$idsession, NULL, NULL, $iditem, $quantity)";
+    } elseif ($role == 'buyer') {
+        $query .= "NULL, $idsession, NULL, $iditem, $quantity)";
+    }
 
+    $resultat = mysqli_query($connexion, $query);
+
+    if (!$resultat) {
+        die("La requête a échoué : " . mysqli_error($connexion));
+    }
+
+    header("Location: basket.php?added=true");
+    exit;
+}
+}
 
 // Récupérer l'ID de session en fonction du rôle de l'utilisateur
 $idsession = null;
@@ -276,42 +297,57 @@ if (mysqli_num_rows($resultat) > 0) {
         echo '<div class="item-details">';
         echo '<h5>' . $rowItem['name'] . '</h5><br>';
 
-        // Vérifier si le type d'élément a une quantité totale enregistrée
+        // Calculer la quantité totale pour l'élément en tenant compte du stock
         $totalQuantity = min($quantityTotals[$type], $rowItem['stock']);
         echo '<p><b>Total Quantity: ' . $totalQuantity . '</b></p>';
-        echo '<p><b>' . $rowItem['price'] . "£</b></p>";
-        echo '<div>';
-        echo '<form method="post" action="basket.php">';
-        echo '<input type="hidden" name="item_id" value="' . $iditem . '">';
-        echo '<button type="submit" class="basketa" name="delete_item">Delete this item</button>';
-        echo '</form>';
-        echo '</div>';
+
+        // Afficher le stock de l'élément
+        echo '<p><b>Stock: ' . $rowItem['stock'] . '</b></p>';
+
+        echo '<p><b>Price: ' . $rowItem['price'] . ' £</b></p>';
+
+        // Vérifier si la totalQuantity dans le panier atteint le stock de l'élément
+        if ($totalQuantity == $rowItem['stock']) {
+          $error_message = "The quantity in the basket reaches the stock of this item.";
+          echo '<p style="color: red;"><b>' . $error_message . '</b></p>';
+        } 
+          // Afficher le bouton de suppression seulement si le stock n'est pas épuisé
+          echo '<div>';
+          echo '<form method="post" action="basket.php">';
+          echo '<input type="hidden" name="item_id" value="' . $iditem . '">';
+          echo '<button type="submit" class="basketa" name="delete_item">Delete this item</button>';
+          echo '</form>';
+          echo '</div>';
+        
+
         echo '</div>';
         echo '</div>';
 
         // Ajouter le type d'élément au tableau des types déjà affichés
         $typesAffiches[] = $type;
-
-        // Calculer le prix total pour cet élément
-        $totalItemPrice = $price * $quantity;
-
-        // Ajouter le prix total au prix total général
-        $totalPrice += $totalItemPrice;
       }
+
+      // Calculer le prix total pour cet élément
+      $totalItemPrice = $price * $quantity;
+
+      // Ajouter le prix total au prix total général
+      $totalPrice += $totalItemPrice;
     } else {
       echo "Les détails de l'élément avec ID $iditem n'ont pas été trouvés.";
     }
   }
 
-  
-  
-  echo "<div class='total-price'><b>Total price: $totalPrice £</b></div>";
+  // Afficher le prix total en dehors de la boucle while
+  echo "<div class='total-price'><b>Total price : $totalPrice £</b></div>";
 }
 
 ?>
 
+
 <br>
-<a href="http://localhost:80/Tropical-Farm/Buy.php" class="basketa"><center>Proceed to payment</center><a><br><br>
+<?php if (mysqli_num_rows($resultat) > 0) { ?>
+  <a href="http://localhost:80/Tropical-Farm/Buy.php?totalPrice=<?php echo $totalPrice; ?>" class="basketa"><center>Proceed to payment</center></a><br><br>
+<?php } ?>
 
 <!--Footer-->
 

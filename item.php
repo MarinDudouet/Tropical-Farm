@@ -226,35 +226,37 @@ if (isset($_GET['iditem'])) {
 
   // Affichage des détails de l'élément
   if (mysqli_num_rows($resultat) > 0) {
-      $row = mysqli_fetch_assoc($resultat);
-      $name = $row['name'];
-      $price = $row['price'];
-      $photo = $row['photo'];
-      $stock = $row['stock'];
-      echo '<div class="item-img-div">';
-      echo "<center><img src='image/" . $row['photo'] . "'></center>";
-      echo "</div>";
-      echo '<div class="item-car-div">';
-      echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
-      echo '<p id="item-car">' . $row['description'] . "</p>";
-      echo '<div class="container2">';
-      echo '<div class="arrow-wrapper">';
-      echo    '<div id="increaseButton" class="arrow">&#x25B2;</div>';
-      echo    '<div id="decreaseButton" class="arrow">&#x25BC;</div>';
-      echo '</div>';
-      echo '<div class="number-wrapper">';
-      echo    '<input type="text" id="numberInput" class="number-input" value="1" readonly />';
-      echo '</div>';
-      echo '</div><br>';
-      echo '<p id="price">' . $row['price'] . " £</p>";
-      echo '<input type="hidden" id="stockInput" value="' . $row['stock'] . '" />';
+    $row = mysqli_fetch_assoc($resultat);
+    $name = $row['name'];
+    $price = $row['price'];
+    $photo = $row['photo'];
+    $stock = $row['stock'];
 
-      // Vérifier si l'ID de session est défini avant d'afficher le bouton "Add to basket"
-      if ($idsession !== null) {
-          echo "<a id='addToBasketButton' href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession . "'><button>Add to basket</button></a>";
-      } else {
-          echo "Log in to add this item to your basket.";
-      }
+    echo '<div class="item-img-div">';
+    echo "<center><img src='image/" . $row['photo'] . "'></center>";
+    echo "</div>";
+    echo '<div class="item-car-div">';
+    echo '<h3 id="item-name">' . $row['name'] . "</h3><br>";
+    echo '<p id="item-car">' . $row['description'] . "</p>";
+    echo '<div class="container2">';
+    echo '<div class="arrow-wrapper">';
+    echo '<div id="increaseButton" class="arrow">&#x25B2;</div>';
+    echo '<div id="decreaseButton" class="arrow">&#x25BC;</div>';
+    echo '</div>';
+    echo '<div class="number-wrapper">';
+    echo '<input type="text" id="numberInput" class="number-input" value="1" readonly />';
+    echo '</div>';
+    echo '</div><br>';
+    echo '<p id="stock">Stock : ' . $row['stock'] . '</p>'; // Ajout du stock
+    echo '<p id="price">' . $row['price'] . " £</p>";
+    echo '<input type="hidden" id="stockInput" value="' . $row['stock'] . '" />';
+
+    // Vérifier si l'ID de session est défini avant d'afficher le bouton "Add to basket"
+    if ($idsession !== null) {
+        echo "<a id='addToBasketButton' href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] . "&idsession=" . $idsession . "'><button>Add to basket</button></a>";
+    } else {
+        echo "Log in to add this item to your basket.";
+    }
 
       echo '</div>';
       echo '<script>
