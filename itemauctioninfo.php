@@ -22,26 +22,62 @@
   <audio autostart="true" loop controls src="foret.mp3"></audio>
 
 <script>
-  function submitAuction() {
-  var auctionPrice = document.getElementById("auctionPrice").value;
+  function submitAuction(itemId) {
+    var auctionPrice = document.getElementById("auctionPrice").value;
+    var auctionForm = document.getElementById("auctionForm" + itemId);
 
   // Create objet XMLHttpRequest
   var xhr = new XMLHttpRequest();
 
   xhr.onreadystatechange = function() {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-
-        console.log("The bid has been registered !");
-      } else {
-        console.error("Error : " + xhr.status);
-      }
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.status === 200) {
+      console.log("The bid has been registered !");
+      auctionForm.style.display = "none"; // Cacher le formulaire après soumission
+    } else {
+      console.error("Error : " + xhr.status);
     }
-  };
+  }
+};
+
 
   // prepare the send of info
   var data = new FormData();
   data.append("auctionPrice", auctionPrice);
+  data.append("itemId", itemId);
+
+  xhr.open("POST", "insert_auction.php"); 
+  xhr.send(data);
+}
+
+
+function submitAuction2(itemId) {
+    var auctionPrice = document.getElementById("auctionPrice2").value;
+    var auctionForm = document.getElementById("auctionForm2" + itemId);
+
+  // Create objet XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  var url = "insert_auction2.php?itemId=" + itemId + "&auctionPrice=" + auctionPrice;
+  xhr.open("POST", url);
+  xhr.send();
+
+  xhr.onreadystatechange = function() {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.status === 200) {
+      console.log("The bid has been registered !");
+      auctionForm.style.display = "none"; // Cacher le formulaire après soumission
+    } else {
+      console.error("Error : " + xhr.status);
+    }
+  }
+};
+
+
+  // prepare the send of info
+  var data = new FormData();
+  data.append("auctionPrice", auctionPrice);
+  data.append("itemId", itemId);
 
   xhr.open("POST", "insert_auction.php"); 
   xhr.send(data);
@@ -144,30 +180,37 @@ if (!$connexion) {
     die("error : " . mysqli_connect_error());
 }
 
+if (isset($_GET['iditem'])) {
+  $iditem = $_GET['iditem'];}
+
+if (isset($_GET['iditem'])) {
+  $iditem = $_GET['iditem'];}
+
 // get data
 $condition = "auction is not null";
+$condition2 = "iditem = $iditem";
 
 if (isset($_GET['filter'])) {
   $filter = $_GET['filter'];
 
 if($filter == 'asc'){
-  $query = "SELECT * FROM item WHERE $condition ORDER BY price ASC";
+  $query = "SELECT * FROM item WHERE $condition and $condition2  ORDER BY price ASC";
   $resultat = mysqli_query($connexion, $query);
 }
 
 elseif($filter == 'desc'){
-  $query = "SELECT * FROM item WHERE $condition ORDER BY price DESC";
+  $query = "SELECT * FROM item WHERE $condition and $condition2 ORDER BY price DESC";
   $resultat = mysqli_query($connexion, $query);
 }
 
 elseif($filter == 'null'){
-  $query = "SELECT * FROM item WHERE $condition";
+  $query = "SELECT * FROM item WHERE $condition and $condition2";
   $resultat = mysqli_query($connexion, $query);
 }
 }
 
 else{
-  $query = "SELECT * FROM item WHERE $condition";
+  $query = "SELECT * FROM item WHERE $condition and $condition2";
   $resultat = mysqli_query($connexion, $query);
 }
 
@@ -179,6 +222,7 @@ if (!$resultat) {
 while ($row = mysqli_fetch_assoc($resultat)) {
 
   $iditem = $row['iditem'];
+  $_SESSION['iditemauction']=$iditem;
   $name = $row['name'];
   echo '<div class="item">';
   if(isset($row["sell"])){
@@ -187,11 +231,41 @@ while ($row = mysqli_fetch_assoc($resultat)) {
     echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
   echo "<center><h5><b>" . $row['name'] . "</b></h5>";
   echo "<p> Initial price : " .$row['price'] . "  £</p></center>";
-  echo '<p>  <input type="number" id="auctionPrice" placeholder="Enter your max price">
-              <button type="button" onclick="submitAuction()">Submit bid</button>';
+  echo '<div id="auctionForm' . $iditem . '">';
+
+  $queryfirst = "SELECT * FROM auction WHERE state='firstbid' and id_item='$iditem' order by id_auction desc limit 1";
+  $resultatfirst = mysqli_query($connexion, $queryfirst);
+
+  if ($resultatfirst) {
+    $rowfirst = mysqli_fetch_assoc($resultatfirst);
+  
+    if (mysqli_num_rows($resultatfirst) === 0 || $rowfirst['state'] != 'firstbid') {
+      echo '<p>  <input type="number" id="auctionPrice" placeholder="Enter your max bid">';
+      echo '<input type="button" onclick="submitAuction(' . $iditem . ')">Submit bid</p>';
+
+    }
+
+  }
+
+
+  // seconde bid
+
+    $querysecond = "SELECT * FROM auction WHERE state='firstbid' and id_item='$iditem' order by id_auction desc limit 1";
+    $resultatsecond = mysqli_query($connexion, $querysecond);
+
+    if (mysqli_num_rows($resultatsecond) > 0) {
+    $rowsecond = mysqli_fetch_assoc($resultatsecond);
+
+    if($rowfirst['state']=='firstbid'){
+      echo "<p><center> Your max bid : " .$rowfirst['price'] . "  £</p></center>";
+      echo '</div>';
+      echo '<div id="auctionForm2' . $iditem . '">';
+      echo '<p>  <center><input type="number" id="auctionPrice2" placeholder="Enter your second bid">';
+      echo '<input type="button" onclick="submitAuction2(' . $iditem . ')" value="Submit"></p></center>';}}
+
+  echo '</div>';
   echo "</div>";
   
-
 }
 
 ?>

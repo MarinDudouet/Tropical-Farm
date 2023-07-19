@@ -8,6 +8,8 @@ $baseDeDonnees = "tropicalfarm";
 
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 $iditemauction = $_SESSION['iditemauction'];
+$idbuyer = $_SESSION['idbuyer'];
+
 
 if (!$connexion) {
     die("connexion error : " . mysqli_connect_error());
@@ -19,7 +21,7 @@ $auctionIDitem = $_POST['itemID'];
 
 
 // insert into database
-$query = "INSERT INTO auction (id_item,price,state) VALUES ('$iditemauction','$auctionPrice','firstbid')";
+$query = "INSERT INTO auction (id_item,id_buyer,price,state) VALUES ('$iditemauction','$idbuyer','$auctionPrice','secondbid')";
 
 $resultat = mysqli_query($connexion, $query);
 
