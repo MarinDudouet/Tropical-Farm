@@ -121,10 +121,10 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("Fail connexion to database : " . mysqli_connect_error());
 }
 
-// Récupération des données de la base de données
+// Get data from database
 $condition1 = "category = 'reptiles'";
 $condition2 = "second_category = 'amphibians'";
 
@@ -152,7 +152,7 @@ else{
 }
 
 if (!$resultat) {
-    die("La requête a échoué : " . mysqli_error($connexion));
+    die("Error : " . mysqli_error($connexion));
 }
 
 while ($row = mysqli_fetch_assoc($resultat)) {

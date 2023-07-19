@@ -106,7 +106,7 @@ if (isset($_GET['iditem'])) {
     $iditem = $_GET['iditem'];
 } 
 
-// Connexion à la base de données
+// Connexion to database
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -115,20 +115,20 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("error : " . mysqli_connect_error());
 }
 
-// Vérifier si l'ID de l'élément a été envoyé dans l'URL
+// chekc the id
 if (isset($_GET['iditem'])) {
     $iditem = $_GET['iditem'];
 
-    // Vérifier si l'utilisateur est connecté
+    // check the connexion from user
     if (!isset($_SESSION['role'])) {
-        echo "Veuillez vous connecter pour effectuer cette action.";
+        echo "Please login";
         exit;
     }
 
-    // Récupérer l'ID de session en fonction du rôle de l'utilisateur
+    // Get id from user
     $idsession = null;
     $role = $_SESSION['role'];
 
@@ -139,11 +139,11 @@ if (isset($_GET['iditem'])) {
     } elseif ($role == 'buyer' && isset($_SESSION['idbuyer'])) {
         $idsession = $_SESSION['idbuyer'];
     } else {
-        echo "Vous n'avez pas les autorisations nécessaires pour ajouter cet élément au panier.";
+        echo "You do not have the necessary authorisations to add this item to the basket.";
         exit;
     }
 
-    // Insérer l'ID de session et l'ID de l'élément dans la table basket
+    // Insert the session ID and the element ID in the basket table
     $query = "INSERT INTO auction (id_seller, id_buyer, id_admin, id_item) VALUES (";
     if ($role == 'admin') {
         $query .= "NULL, NULL, $idsession, $iditem)";
@@ -156,7 +156,7 @@ if (isset($_GET['iditem'])) {
     $resultat = mysqli_query($connexion, $query);
 
     if (!$resultat) {
-        die("La requête" .$query. " a échoué : " . mysqli_error($connexion));
+        die("error : " . mysqli_error($connexion));
     }
 
     header("Location: itemauctioninfo.php?added=true");
@@ -164,19 +164,19 @@ if (isset($_GET['iditem'])) {
 } 
 
 if (!isset($_SESSION['role'])) {
-  echo "Veuillez vous connecter pour afficher l'auction'";
+  echo "Please login to see the auction'";
   exit;
 }
 
 if (isset($_SESSION['role']) && isset($_GET['added']) && $_GET['added'] === 'true') {
-  echo "L'élément a été ajouté au panier avec succès.";
-  // Redirection vers la page du panier sans la variable GET
+  echo "The item has been successfully added to the basket.";
+  // Redirection to the basket page without the GET variable
   header("Location: itemauctioninfo.php");
   exit;
 }
 
 
-// Récupérer l'ID de session en fonction du rôle de l'utilisateur
+// Recover the session ID based on the user's role
 $idsession = null;
 $role = $_SESSION['role'];
 
@@ -187,11 +187,11 @@ if ($role == 'admin' && isset($_SESSION['idadmin'])) {
 } elseif ($role == 'buyer' && isset($_SESSION['idbuyer'])) {
   $idsession = $_SESSION['idbuyer'];
 } else {
-  echo "Vous n'avez pas les autorisations nécessaires pour afficher le contenu du panier.";
+  echo "You do not have the necessary authorisations to display the contents of the basket.";
   exit;
 }
 
-// Récupérer les éléments du panier en fonction de l'ID du vendeur, de l'acheteur et de l'administrateur
+// Retrieve basket items based on seller, buyer and administrator IDs
 $query = "SELECT * FROM auction WHERE ";
 if ($role == 'admin') {
   $query .= "id_admin = $idsession";
@@ -204,17 +204,17 @@ if ($role == 'admin') {
 $resultat = mysqli_query($connexion, $query);
 
 if (!$resultat) {
-  die("La requête a échoué" . $query . ": " . mysqli_error($connexion));
+  die("error " . $query . ": " . mysqli_error($connexion));
 }
 
 
-// Affichage des éléments du panier
+// Display item
 if (mysqli_num_rows($resultat) > 0) {
   while ($row = mysqli_fetch_assoc($resultat)) {
       $iditem = $row['id_item'];
     
 
-      // Récupération des détails de l'élément
+      // Get info
       $queryItem = "SELECT * FROM item WHERE iditem = $iditem";
       $resultatItem = mysqli_query($connexion, $queryItem);
 
@@ -224,7 +224,7 @@ if (mysqli_num_rows($resultat) > 0) {
           die("La requête a échoué" . $query . ": " . mysqli_error($connexion));
       }
 
-      // Affichage des détails de l'élément
+      // Display info
       if (mysqli_num_rows($resultatItem) > 0) {
           $rowItem = mysqli_fetch_assoc($resultatItem);
           $name = $rowItem['name'];
@@ -249,11 +249,11 @@ if (mysqli_num_rows($resultat) > 0) {
 
           
       } else {
-          echo "Les détails de l'élément avec ID $iditem n'ont pas été trouvés.";
+          echo "Info from item not found";
       }
   }
 } else {
-  echo "Le panier est vide.";
+  echo "The basket is empty";
 }
 ?>
 

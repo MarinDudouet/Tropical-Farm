@@ -40,7 +40,7 @@ $serveur = "localhost";
     $pass = "";
     
 
-    //On se connecte à la BDD
+    //Connexion to database
         $dbco = new PDO("mysql:host=$serveur;dbname=$dbname",$user,$pass);
         $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -52,7 +52,7 @@ $query = "SELECT * FROM buyer WHERE username = :username AND password = :passwor
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
-        // Connexion réussie
+        // Connexion ok
         $row = $stmt->fetch();
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];
@@ -76,7 +76,7 @@ $query = "SELECT * FROM buyer WHERE username = :username AND password = :passwor
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
-        // Connexion réussie
+        // Connexion ok
         $row = $stmt->fetch();
         $_SESSION["name"]=$row['name'];
         $_SESSION["street"]=$row['street'];
@@ -196,7 +196,7 @@ $imageURL = "image/" . $_SESSION["photo"];
             <div class="info">
                 <p>Type of card :<br>
                 <?php
-                  $selectedOption = $_SESSION["typecard"]; // Supposons que vous avez la valeur de l'option sélectionnée
+                  $selectedOption = $_SESSION["typecard"]; 
 
                   $option1 = "visa";
                   $option2 = "master";

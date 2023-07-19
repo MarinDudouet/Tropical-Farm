@@ -15,7 +15,7 @@ session_start();
 
     
     try{
-        //On se connecte à la BDD
+        //connexion to BDD
         $dbco = new PDO("mysql:host=$serveur;dbname=$dbname",$user,$pass);
         $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -23,7 +23,7 @@ session_start();
 
         if ($_POST['account']=='seller') {
        
-        //On insère les données reçues
+        //insert data
         $sth = $dbco->prepare("
         INSERT INTO seller(username, password,photo,background)
         VALUES(:username, :password, :photo, :background)");
@@ -38,7 +38,7 @@ session_start();
         
         else {
        
-            //On insère les données reçues
+            //insert data
             $sth = $dbco->prepare("
                 INSERT INTO buyer(username, password,photo,background)
                 VALUES(:username, :password, :photo, :background)");
@@ -50,11 +50,10 @@ session_start();
             $sth->execute();
             }
 
-        //On renvoie l'utilisateur vers la page de remerciement
         header("Location: http://localhost:80/Tropical-Farm/login.php");
 
 
         }
     catch(PDOException $e){
-        echo 'Impossible de traiter les données. Erreur : '.$e->getMessage();
+        echo 'error: '.$e->getMessage();
     }

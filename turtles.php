@@ -112,7 +112,7 @@ $imageURL = "image/" . $_SESSION["photo"];
 
 <div class="container">
 <?php
-// Connexion à la base de données
+// Connexion to database
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -121,10 +121,10 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("error : " . mysqli_connect_error());
 }
 
-// Récupération des données de la base de données
+// get data from database
 $condition1 = "category = 'reptiles'";
 $condition2 = "second_category = 'turtles'";
 
@@ -152,7 +152,7 @@ else{
 }
 
 if (!$resultat) {
-    die("La requête a échoué : " . mysqli_error($connexion));
+    die("error : " . mysqli_error($connexion));
 }
 
 while ($row = mysqli_fetch_assoc($resultat)) {

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var stockInput = document.getElementById('stockInput');
     var stock = parseInt(stockInput.value);
 
-    // Fonction pour augmenter le nombre
+    // Rise number
     increaseButton.addEventListener('click', function() {
         var currentQuantity = parseInt(numberInput.value);
         if (currentQuantity < stock) {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Fonction pour diminuer le nombre
+    // Decrease number
     decreaseButton.addEventListener('click', function() {
         var currentQuantity = parseInt(numberInput.value);
         if (currentQuantity > 1) {
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var selectedQuantity = parseInt(numberInput.value);
 
         if (selectedQuantity > stock) {
-            e.preventDefault(); // Empêche l'action par défaut du lien
+            e.preventDefault(); 
             return;
         }
 
@@ -72,29 +72,24 @@ document.addEventListener('DOMContentLoaded', function() {
   function submitAuction() {
   var auctionPrice = document.getElementById("auctionPrice").value;
 
-  // Créer une instance de l'objet XMLHttpRequest
+  //Create objet XMLHttpRequest
   var xhr = new XMLHttpRequest();
 
-  // Définir la fonction de rappel pour la réponse AJAX
   xhr.onreadystatechange = function() {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       if (xhr.status === 200) {
-        // La requête AJAX a été traitée avec succès
-        // Faire quelque chose en réponse à la réussite de l'insertion
-        console.log("L'enchère a été enregistrée avec succès !");
+        console.log("Bid is a success !");
       } else {
-        // La requête AJAX a échoué
-        console.error("Erreur lors de l'enregistrement de l'enchère : " + xhr.status);
+        console.error("error in the bid : " + xhr.status);
       }
     }
   };
 
-  // Préparer les données à envoyer
+  // Prepare data for sending
   var data = new FormData();
   data.append("auctionPrice", auctionPrice);
 
-  // Envoyer la requête AJAX POST
-  xhr.open("POST", "insert_auction.php");  // Remplacez "insert_auction.php" par le fichier PHP qui traitera l'insertion en base de données
+  xhr.open("POST", "insert_auction.php");  
   xhr.send(data);
 }
 
@@ -181,7 +176,7 @@ $imageURL = "image/" . $_SESSION["photo"];
 
 <?php
 
-// Connexion à la base de données
+// Connexion to databse
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -190,14 +185,14 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("error : " . mysqli_connect_error());
 }
 
-// Vérifier si l'ID de l'élément a été envoyé dans l'URL
+// check the id in the url
 if (isset($_GET['iditem'])) {
   $iditem = $_GET['iditem'];
 
-  // Récupérer l'ID de session en fonction du rôle de l'utilisateur
+  // get the id
   $idsession = null;
 
   if (isset($_SESSION["role"])) {
@@ -208,23 +203,19 @@ if (isset($_GET['iditem'])) {
       } elseif ($_SESSION["role"] == 'buyer' && isset($_SESSION["idbuyer"])) {
           $idsession = $_SESSION["idbuyer"];
       } else {
-          // Gérer le cas où l'ID de session n'est pas défini
-          // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
       }
   } else {
-      // Gérer le cas où le rôle n'est pas défini dans la session
-      // Vous pouvez afficher un message d'erreur ou rediriger l'utilisateur vers une page appropriée.
   }
 
-  // Récupération des détails de l'élément
+  // get item from id
   $query = "SELECT * FROM item WHERE iditem = $iditem";
   $resultat = mysqli_query($connexion, $query);
 
   if (!$resultat) {
-      die("La requête a échoué : " . mysqli_error($connexion));
+      die("error : " . mysqli_error($connexion));
   }
 
-  // Affichage des détails de l'élément
+  // Display info
   if (mysqli_num_rows($resultat) > 0) {
       $row = mysqli_fetch_assoc($resultat);
       $name = $row['name'];
@@ -249,7 +240,7 @@ if (isset($_GET['iditem'])) {
       echo '<p id="price">' . $row['price'] . " £</p>";
       echo '<input type="hidden" id="stockInput" value="' . $row['stock'] . '" />';
 
-      // Vérifier si l'ID de session est défini avant d'afficher le bouton "Add to basket"
+      // Check the ID before "Add to basket"
       if ($idsession !== null) {
           echo "<a id='addToBasketButton' href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession . "'><button>Add to basket</button></a>";
       } else {
@@ -269,10 +260,10 @@ if (isset($_GET['iditem'])) {
           });
         </script>';
   } else {
-      echo "L'élément n'a pas été trouvé.";
+      echo "Item not found";
   }
 } else {
-  echo "L'ID de l'élément n'a pas été spécifié dans l'URL.";
+  echo "Id not found in the url";
 }
 
 ?>

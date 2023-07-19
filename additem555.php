@@ -16,12 +16,12 @@
     $trade = $_POST["trade"];
 
     try{
-        //On se connecte à la BDD
+        //connexion to database
         $dbco = new PDO("mysql:host=$serveur;dbname=$dbname",$user,$pass);
         $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-                //On insère les données reçues
+        //Insert data
         $sth = $dbco->prepare("
             INSERT INTO item(name, photo, category, second_category, description, price, stock, sell, auction, trade)
             VALUES(:name, :photo, :category, :second_category, :description, :price, :stock, :sell, :auction, :trade)");
@@ -38,7 +38,7 @@
 
         $sth->execute();
 
-        //On renvoie l'utilisateur vers la page de remerciement
+        //Redirection into the same page
         header("Location: http://localhost:80/Tropical-Farm/additem.php");
 
   }

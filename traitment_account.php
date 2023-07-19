@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Connexion à la base de données
+// Connexion to database
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -39,6 +39,6 @@ $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees)
       header('Location: http://localhost:80/Tropical-Farm/index.php');
       
 
-    // Fermeture de la connexion à la base de données
+    // close connexion to databse
     mysqli_close($connexion);
     ?>

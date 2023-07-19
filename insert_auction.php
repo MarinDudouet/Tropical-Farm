@@ -1,5 +1,5 @@
 <?php
-// Connexion à la base de données
+// Connexion to database
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -8,25 +8,25 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("connexion error : " . mysqli_connect_error());
 }
 
-// Récupération de la valeur de l'enchère
+// get bid value
 $auctionPrice = $_POST['auctionPrice'];
 
-// Requête d'insertion avec les colonnes spécifiées
+// insert into database
 $query = "INSERT INTO auction (price) VALUES ('$auctionPrice')";
 
 $resultat = mysqli_query($connexion, $query);
 
 if ($resultat) {
-    // L'insertion a réussi
-    echo "L'enchère a été enregistrée avec succès !";
+    // success
+    echo "Bid has been insert into database !";
 } else {
-    // L'insertion a échoué
-    echo "Erreur lors de l'enregistrement de l'enchère : " . mysqli_error($connexion);
+    // error
+   echo "error : " . mysqli_error($connexion);
 }
 
-// Fermer la connexion à la base de données
+// close connexion to database
 mysqli_close($connexion);
 ?>
