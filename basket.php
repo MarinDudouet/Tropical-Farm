@@ -245,6 +245,8 @@ while ($rowTotal = mysqli_fetch_assoc($resultTotals)) {
 
 // Affichage des éléments du panier
 if (mysqli_num_rows($resultat) > 0) {
+  $totalPrice = 0; // Variable pour stocker le prix total général
+
   while ($row = mysqli_fetch_assoc($resultat)) {
     $iditem = $row['id_item'];
     $quantity = $row['quantity']; // Récupérer la quantité
@@ -293,14 +295,36 @@ if (mysqli_num_rows($resultat) > 0) {
 
         // Ajouter le type d'élément au tableau des types déjà affichés
         $typesAffiches[] = $type;
+
+        // Calculer le prix total pour cet élément
+        $totalItemPrice = $price * $quantity;
+
+        // Ajouter le prix total au prix total général
+        $totalPrice += $totalItemPrice;
       }
     } else {
       echo "Les détails de l'élément avec ID $iditem n'ont pas été trouvés.";
     }
   }
-} else {
-  echo "Le panier est vide.";
-}
+
+  // Afficher le prix total général
+  echo "<style>
+  .total-price {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    top: 50%;
+    right: 800px;
+    transform: translateY(-50%);
+  }
+      </style>";
+
+echo "<p class='total-price'>Total price : $totalPrice £</p>";
+} 
+
+
 
 ?>
 

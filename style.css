@@ -607,6 +607,17 @@ nav {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
+.total-price {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
 
 /*Admin Home page*/
 
