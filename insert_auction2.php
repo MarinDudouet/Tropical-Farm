@@ -9,6 +9,8 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 $iditemauction = $_SESSION['iditemauction'];
 $idbuyer = $_SESSION['idbuyer'];
+$idadmin = $_SESSION['idadmin'];
+$idseller = $_SESSION['idseller'];
 
 
 if (!$connexion) {
@@ -19,9 +21,20 @@ if (!$connexion) {
 $auctionPrice = $_POST['auctionPrice'];
 $auctionIDitem = $_POST['itemID'];
 
-
+if(isset($_SESSION['idseller'])){
 // insert into database
-$query = "INSERT INTO auction (id_item,id_buyer,price,state) VALUES ('$iditemauction','$idbuyer','$auctionPrice','secondbid')";
+$query = "INSERT INTO auction (id_item,id_seller,price,state) VALUES ('$iditemauction','$idseller','$auctionPrice','secondbid')";
+}
+
+else if(isset($_SESSION['idadmin'])){
+    // insert into database
+    $query = "INSERT INTO auction (id_item,id_admin,price,state) VALUES ('$iditemauction','$idadmin','$auctionPrice','secondbid')";
+    }
+
+else if(isset($_SESSION['idbuyer'])){
+    // insert into database
+    $query = "INSERT INTO auction (id_item,id_buyer,price,state) VALUES ('$iditemauction','$idbuyer','$auctionPrice','secondbid')";
+    }
 
 $resultat = mysqli_query($connexion, $query);
 
