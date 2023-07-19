@@ -129,7 +129,7 @@ else{
 <div class="container">
 
 <?php
-// Connexion à la base de données
+// Connexion to database
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -138,21 +138,21 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("error : " . mysqli_connect_error());
 }
     $user = $_SESSION["username"];
     $password = $_SESSION["password"];
 
-    // Récupération des détails de l'élément
+    // get info from item
     $query = "SELECT * FROM buyer WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
 
     $resultat = mysqli_query($connexion, $query);
 
     if (!$resultat) {
-        die("La requête a échoué : " . mysqli_error($connexion));
+        die("error : " . mysqli_error($connexion));
     }
 
-    // Affichage des détails de l'élément
+    // display item
     if (mysqli_num_rows($resultat) > 0) {
         $row = mysqli_fetch_assoc($resultat);
         $name = $row['name'];
@@ -164,7 +164,7 @@ if (!$connexion) {
         echo '<div class="item-car-div-persoPage">';
         echo '<h3>' . $row['name'] . "</h3><br>";
     } else {
-        echo "L'élément n'a pas été trouvé.";
+        echo "item not found";
     }
     ?>
         
@@ -181,9 +181,9 @@ if (!$connexion) {
         <input type="text" name="state" id="state" value="<?php echo $row['state']; ?>"><br><br>
         <label for="postcode">Postcode :</label>
         <input type="text" name="postcode" id="postcode" value="<?php echo $row['postcode']; ?>"><br><br>
-        <label for="card">Card :</label>
+        <label for="card">Card (visa or master):</label>
         <input type="text" name="card" id="card" value="<?php echo $row['card']; ?>"><br><br>
-        <label for="cardnumber">Card numbers maxlength="16" pattern="[0-9]{16}" :</label>
+        <label for="cardnumber" maxlength="16" pattern="[0-9]{16}">Card numbers :</label>
         <input type="password" name="cardnumber" id="cardnumber" value="<?php echo $row['cardnumber']; ?>">
         <center><button type="button" class="boo" onclick="afficherMotDePasse()">👀</button><br><br></center>
 
@@ -204,7 +204,7 @@ if (!$connexion) {
 
 <?php     
 
-    // Fermeture de la connexion à la base de données
+    // close connexion to databse
     mysqli_close($connexion);
     ?>
 

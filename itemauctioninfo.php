@@ -20,6 +20,69 @@
 <body>
 
   <audio autostart="true" loop controls src="foret.mp3"></audio>
+
+<script>
+  function submitAuction(itemId) {
+    var auctionPrice = document.getElementById("auctionPrice").value;
+    var auctionForm = document.getElementById("auctionForm" + itemId);
+
+  // Create objet XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  xhr.onreadystatechange = function() {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.status === 200) {
+      console.log("The bid has been registered !");
+      auctionForm.style.display = "none"; // Cacher le formulaire après soumission
+    } else {
+      console.error("Error : " + xhr.status);
+    }
+  }
+};
+
+
+  // prepare the send of info
+  var data = new FormData();
+  data.append("auctionPrice", auctionPrice);
+  data.append("itemId", itemId);
+
+  xhr.open("POST", "insert_auction.php"); 
+  xhr.send(data);
+}
+
+
+function submitAuction2(itemId) {
+    var auctionPrice = document.getElementById("auctionPrice2").value;
+    var auctionForm = document.getElementById("auctionForm2" + itemId);
+
+  // Create objet XMLHttpRequest
+  var xhr = new XMLHttpRequest();
+
+  var url = "insert_auction2.php?itemId=" + itemId + "&auctionPrice=" + auctionPrice;
+  xhr.open("POST", url);
+  xhr.send();
+
+  xhr.onreadystatechange = function() {
+  if (xhr.readyState === XMLHttpRequest.DONE) {
+    if (xhr.status === 200) {
+      console.log("The bid has been registered !");
+      auctionForm.style.display = "none"; // Cacher le formulaire après soumission
+    } else {
+      console.error("Error : " + xhr.status);
+    }
+  }
+};
+
+
+  // prepare the send of info
+  var data = new FormData();
+  data.append("auctionPrice", auctionPrice);
+  data.append("itemId", itemId);
+
+  xhr.open("POST", "insert_auction.php"); 
+  xhr.send(data);
+}
+</script>
   
 
 <div class="headnav">
@@ -99,14 +162,13 @@ $imageURL = "image/" . $_SESSION["photo"];
 
 <br><br><br><br><br>
 
-<!-- Basket -->
+<!--Item-->
+
+
+<div class="container">
+
 <?php
-
-if (isset($_GET['iditem'])) {
-    $iditem = $_GET['iditem'];
-} 
-
-// Connexion à la base de données
+// Connexion to database
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -115,150 +177,99 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("error : " . mysqli_connect_error());
 }
 
-// Vérifier si l'ID de l'élément a été envoyé dans l'URL
 if (isset($_GET['iditem'])) {
-    $iditem = $_GET['iditem'];
+  $iditem = $_GET['iditem'];}
 
-    // Vérifier si l'utilisateur est connecté
-    if (!isset($_SESSION['role'])) {
-        echo "Veuillez vous connecter pour effectuer cette action.";
-        exit;
-    }
+if (isset($_GET['iditem'])) {
+  $iditem = $_GET['iditem'];}
 
-    // Récupérer l'ID de session en fonction du rôle de l'utilisateur
-    $idsession = null;
-    $role = $_SESSION['role'];
+// get data
+$condition = "auction is not null";
+$condition2 = "iditem = $iditem";
 
-    if ($role == 'admin' && isset($_SESSION['idadmin'])) {
-        $idsession = $_SESSION['idadmin'];
-    } elseif ($role == 'seller' && isset($_SESSION['idseller'])) {
-        $idsession = $_SESSION['idseller'];
-    } elseif ($role == 'buyer' && isset($_SESSION['idbuyer'])) {
-        $idsession = $_SESSION['idbuyer'];
-    } else {
-        echo "Vous n'avez pas les autorisations nécessaires pour ajouter cet élément au panier.";
-        exit;
-    }
+if (isset($_GET['filter'])) {
+  $filter = $_GET['filter'];
 
-    // Insérer l'ID de session et l'ID de l'élément dans la table basket
-    $query = "INSERT INTO auction (id_seller, id_buyer, id_admin, id_item) VALUES (";
-    if ($role == 'admin') {
-        $query .= "NULL, NULL, $idsession, $iditem)";
-    } elseif ($role == 'seller') {
-        $query .= "$idsession, NULL, NULL, $iditem)";
-    } elseif ($role == 'buyer') {
-        $query .= "NULL, $idsession, NULL, $iditem)";
-    }
-
-    $resultat = mysqli_query($connexion, $query);
-
-    if (!$resultat) {
-        die("La requête" .$query. " a échoué : " . mysqli_error($connexion));
-    }
-
-    header("Location: itemauctioninfo.php?added=true");
-    exit;
-} 
-
-if (!isset($_SESSION['role'])) {
-  echo "Veuillez vous connecter pour afficher l'auction'";
-  exit;
+if($filter == 'asc'){
+  $query = "SELECT * FROM item WHERE $condition and $condition2  ORDER BY price ASC";
+  $resultat = mysqli_query($connexion, $query);
 }
 
-if (isset($_SESSION['role']) && isset($_GET['added']) && $_GET['added'] === 'true') {
-  echo "L'élément a été ajouté au panier avec succès.";
-  // Redirection vers la page du panier sans la variable GET
-  header("Location: itemauctioninfo.php");
-  exit;
+elseif($filter == 'desc'){
+  $query = "SELECT * FROM item WHERE $condition and $condition2 ORDER BY price DESC";
+  $resultat = mysqli_query($connexion, $query);
 }
 
-
-// Récupérer l'ID de session en fonction du rôle de l'utilisateur
-$idsession = null;
-$role = $_SESSION['role'];
-
-if ($role == 'admin' && isset($_SESSION['idadmin'])) {
-  $idsession = $_SESSION['idadmin'];
-} elseif ($role == 'seller' && isset($_SESSION['idseller'])) {
-  $idsession = $_SESSION['idseller'];
-} elseif ($role == 'buyer' && isset($_SESSION['idbuyer'])) {
-  $idsession = $_SESSION['idbuyer'];
-} else {
-  echo "Vous n'avez pas les autorisations nécessaires pour afficher le contenu du panier.";
-  exit;
+elseif($filter == 'null'){
+  $query = "SELECT * FROM item WHERE $condition and $condition2";
+  $resultat = mysqli_query($connexion, $query);
+}
 }
 
-// Récupérer les éléments du panier en fonction de l'ID du vendeur, de l'acheteur et de l'administrateur
-$query = "SELECT * FROM auction WHERE ";
-if ($role == 'admin') {
-  $query .= "id_admin = $idsession";
-} elseif ($role == 'seller') {
-  $query .= "id_seller = $idsession";
-} elseif ($role == 'buyer') {
-  $query .= "id_buyer = $idsession";
+else{
+  $query = "SELECT * FROM item WHERE $condition and $condition2";
+  $resultat = mysqli_query($connexion, $query);
 }
-
-$resultat = mysqli_query($connexion, $query);
 
 if (!$resultat) {
-  die("La requête a échoué" . $query . ": " . mysqli_error($connexion));
+    die("error : " . mysqli_error($connexion));
 }
 
 
-// Affichage des éléments du panier
-if (mysqli_num_rows($resultat) > 0) {
-  while ($row = mysqli_fetch_assoc($resultat)) {
-      $iditem = $row['id_item'];
-    
+while ($row = mysqli_fetch_assoc($resultat)) {
 
-      // Récupération des détails de l'élément
-      $queryItem = "SELECT * FROM item WHERE iditem = $iditem";
-      $resultatItem = mysqli_query($connexion, $queryItem);
+  $iditem = $row['iditem'];
+  $_SESSION['iditemauction']=$iditem;
+  $name = $row['name'];
+  echo '<div class="item">';
+  if(isset($row["sell"])){
+    echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
+  else if(isset($row["auction"])){
+    echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
+  echo "<center><h5><b>" . $row['name'] . "</b></h5>";
+  echo "<p> Initial price : " .$row['price'] . "  £</p></center>";
+  echo '<div id="auctionForm' . $iditem . '">';
 
+  $queryfirst = "SELECT * FROM auction WHERE state='firstbid' and id_item='$iditem' order by id_auction desc limit 1";
+  $resultatfirst = mysqli_query($connexion, $queryfirst);
 
+  if ($resultatfirst) {
+    $rowfirst = mysqli_fetch_assoc($resultatfirst);
+  
+    if (mysqli_num_rows($resultatfirst) === 0 || $rowfirst['state'] != 'firstbid') {
+      echo '<p>  <input type="number" id="auctionPrice" placeholder="Enter your max bid">';
+      echo '<input type="button" onclick="submitAuction(' . $iditem . ')">Submit bid</p>';
 
-      if (!$resultatItem) {
-          die("La requête a échoué" . $query . ": " . mysqli_error($connexion));
-      }
+    }
 
-      // Affichage des détails de l'élément
-      if (mysqli_num_rows($resultatItem) > 0) {
-          $rowItem = mysqli_fetch_assoc($resultatItem);
-          $name = $rowItem['name'];
-          $price = $rowItem['price'];
-          $photo = $rowItem['photo'];
-
-          $queryAu = "SELECT * FROM auction WHERE id_item = $iditem";
-          $resultatAuction = mysqli_query($connexion, $queryAu);
-          $rowAuc = mysqli_fetch_assoc($resultatAuction);
-
-          echo '<div class="containerhome">';
-          echo '<div class="left-div">';
-          echo "<img src='image/" . $rowItem['photo'] . "'>";
-          echo '<h5>' . $rowItem['name'] . "</h5><br>";
-          echo '<p><b> Initial Price : ' . $rowItem['price'] . "£</b></p>";
-          echo '<p><b> Your max price : ' . $rowAuc["price"] . "£</b></p>";
-          echo '</div>';
-          echo '<div class="right-div">';
-          echo '<p><b> Your first bid : ' . $rowItem['price']+1 . "£</b></p>";
-          echo '</div>';
-          echo '</div>';
-
-          
-      } else {
-          echo "Les détails de l'élément avec ID $iditem n'ont pas été trouvés.";
-      }
   }
-} else {
-  echo "Le panier est vide.";
-}
-?>
 
-<br>
-<a href="http://localhost:80/Tropical-Farm/Buy.php" class="basketa"><center>Proceed to payment</center><a><br><br>
+
+  // seconde bid
+
+    $querysecond = "SELECT * FROM auction WHERE state='firstbid' and id_item='$iditem' order by id_auction desc limit 1";
+    $resultatsecond = mysqli_query($connexion, $querysecond);
+
+    if (mysqli_num_rows($resultatsecond) > 0) {
+    $rowsecond = mysqli_fetch_assoc($resultatsecond);
+
+    if($rowfirst['state']=='firstbid'){
+      echo "<p><center> Your max bid : " .$rowfirst['price'] . "  £</p></center>";
+      echo '</div>';
+      echo '<div id="auctionForm2' . $iditem . '">';
+      echo '<p>  <center><input type="number" id="auctionPrice2" placeholder="Enter your second bid">';
+      echo '<input type="button" onclick="submitAuction2(' . $iditem . ')" value="Submit"></p></center>';}}
+
+  echo '</div>';
+  echo "</div>";
+  
+}
+
+?>
+</div>
 
 <!--Footer-->
 

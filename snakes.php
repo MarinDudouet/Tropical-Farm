@@ -115,7 +115,7 @@ $imageURL = "image/" . $_SESSION["photo"];
 <div class="container">
 
 <?php
-// Connexion à la base de données
+// Connexion to database
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -124,12 +124,13 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("error : " . mysqli_connect_error());
 }
 
-// Récupération des données de la base de données
+// get data
 $condition1 = "category = 'reptiles'";
 $condition2 = "second_category = 'snakes'";
+$condition3 = "auction is null";
 
 if (isset($_GET['filter'])) {
   $filter = $_GET['filter'];
@@ -156,7 +157,7 @@ else{
 }
 
 if (!$resultat) {
-    die("La requête a échoué : " . mysqli_error($connexion));
+    die("error : " . mysqli_error($connexion));
 }
 
 
@@ -168,9 +169,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
   if(isset($row["sell"])){
     echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
   else if(isset($row["auction"])){
-    echo "<a href='http://localhost:80/Tropical-Farm/itemauction.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
-  else{
-    echo "<a href='http://localhost:80/Tropical-Farm/itembestoffer.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
+    echo "<a href='http://localhost:80/Tropical-Farm/item.php?iditem=$iditem'><img src= image/". $row['photo'] ." alt='Image' /><br></a>";}
   echo "<center><h5><b>" . $row['name'] . "</b></h5>";
   echo "<p>" .$row['price'] . "  £</p></center>";
   echo "</div>";

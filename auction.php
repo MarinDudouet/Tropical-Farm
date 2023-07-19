@@ -114,7 +114,7 @@ $imageURL = "image/" . $_SESSION["photo"];
 <div class="container">
 
 <?php
-// Connexion à la base de données
+// Connexion to database
 $serveur = "localhost";
 $utilisateur = "root";
 $motDePasse = "";
@@ -123,10 +123,10 @@ $baseDeDonnees = "tropicalfarm";
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
 if (!$connexion) {
-    die("La connexion à la base de données a échoué : " . mysqli_connect_error());
+    die("Error : " . mysqli_connect_error());
 }
 
-// Récupération des données de la base de données
+// Get data from database
 $condition1 = "auction IS NOT  NULL";
 
 if (isset($_GET['filter'])) {

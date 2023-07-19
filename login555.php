@@ -11,7 +11,7 @@ session_start();
     $password = $_POST["password"];
     
     try{
-        //On se connecte à la BDD
+        //Connexion to bdd
         $dbco = new PDO("mysql:host=$serveur;dbname=$dbname",$user,$pass);
         $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -24,7 +24,7 @@ session_start();
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
-        // Connexion réussie
+        // Connexion ok
         
         $row = $stmt->fetch();
         $_SESSION["idseller"]=$row['idseller'];
@@ -58,7 +58,7 @@ session_start();
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
-        // Connexion réussie
+        // Connexion ok
         $row = $stmt->fetch();
         $_SESSION["idbuyer"]=$row['idbuyer'];
         $_SESSION["username"]=$row["username"];
@@ -91,7 +91,7 @@ session_start();
         $stmt->execute();
         
         if ($stmt->rowCount() > 0) {
-        // Connexion réussie
+        // Connexion ok
         $row = $stmt->fetch();
         $_SESSION["idadmin"]=$row['idadmin'];
         $_SESSION["username"]=$row["username"];
@@ -117,13 +117,13 @@ session_start();
         } 
 
         else {
-            // Identifiants invalides
+            // Identifiants wrong
             header('Location: http://localhost:80/Tropical-Farm/loginerror.php');
             exit();
             }
 
 }
     catch(PDOException $e){
-        echo 'Impossible de traiter les données. Erreur : '.$e->getMessage();
+        echo 'Error : '.$e->getMessage();
     }
 ?>
