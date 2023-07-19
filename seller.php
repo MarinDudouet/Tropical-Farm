@@ -62,9 +62,6 @@ $imageURL = "image/" . $_SESSION["photo"];
       <a href="http://localhost:80/Tropical-Farm/auctionseller.php">Auction</a>
     </li>
     <li>
-      <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Best offer</a>
-    </li>
-    <li>
         <a href="http://localhost:80/Tropical-Farm/index.php">Home page</a>
     </li>
   </ul>
@@ -131,32 +128,6 @@ $imageURL = "image/" . $_SESSION["photo"];
 </div>
 <br>
 
-<h3>&nbsp; How to use best offer ?</h3><br>
-
-<div class="containerseller">
-<div class="step">
-    <p>1. Add your item</p> 
-</div>
-<div class="info">
-    <img src="image/new-product.png" width="100px" height="100px">
-</div>
-
-<div class="step">
-    <p>2. Accept or decline the offers :</p> 
-</div>
-<div class="info">
-    <img src="image/yes.png" width="100px" height="100px">
-</div>
-
-<div class="step">
-    <p>3. Make a deal</p> 
-</div>
-<div class="info">
-    <img src="image/cost.png" width="100px" height="100px">
-</div>
-<a href="http://localhost:80/Tropical-Farm/tradeseller.php"><center>See my trade</center></a><br>
-
-</div>
 <br>
 <!--Footer-->
 

@@ -14,7 +14,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
+  
   <style>
+
     .hidden {
       display: none;
     }
@@ -36,6 +38,7 @@
   </script>
   
   <script>
+    
     function afficherOptions() {
       var valeurBoutonRadio = document.querySelector('input[name="category"]:checked').value;
       var optionsSupplementaires1 = document.getElementById('optionsSupplementaires1');
@@ -104,9 +107,6 @@ $imageURL = "image/" . $_SESSION["photo"];
         </li>
         <li>
           <a href="http://localhost:80/Tropical-Farm/auctionseller.php">Auction</a>
-        </li>
-        <li>
-          <a href="http://localhost:80/Tropical-Farm/tradeseller.php">Best offer</a>
         </li>
         <?php if(isset($_SESSION["role"]) && ($_SESSION["role"]=='seller' || $_SESSION["role"]=='admin')){ echo '
         <li>

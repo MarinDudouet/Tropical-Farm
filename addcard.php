@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     $serveur = "localhost";
     $dbname = "tropicalfarm";
     $user = "root";
@@ -14,12 +16,12 @@
     $trade = $_POST["trade"];
     
     try{
-        //On se connecte à la BDD
+        //Connexion to database
         $dbco = new PDO("mysql:host=$serveur;dbname=$dbname",$user,$pass);
         $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-                //On insère les données reçues
+        //Insert value in databse
         $sth = $dbco->prepare("
             INSERT INTO item(name, category, description, price, stock, sell, auction, trade)
             VALUES(:name, :category, :description, :price, :stock, :sell, :auction, :trade)");
