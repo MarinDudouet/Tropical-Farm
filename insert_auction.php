@@ -14,7 +14,7 @@ if (!$connexion) {
 // Récupération de la valeur de l'enchère
 $auctionPrice = $_POST['auctionPrice'];
 
-// Requête d'insertion
+// Requête d'insertion avec les colonnes spécifiées
 $query = "INSERT INTO auction (price) VALUES ('$auctionPrice')";
 
 $resultat = mysqli_query($connexion, $query);

@@ -179,6 +179,9 @@ if (isset($_GET['iditem'])) {
     $query = "SELECT * FROM item WHERE iditem = $iditem";
     $resultat = mysqli_query($connexion, $query);
 
+    $query2 = "SELECT * FROM auction WHERE id_item = $iditem";
+    $resultat2 = mysqli_query($connexion, $query2);
+
     if (!$resultat) {
         die("La requête a échoué : " . mysqli_error($connexion));
     }
@@ -186,6 +189,8 @@ if (isset($_GET['iditem'])) {
     // Affichage des détails de l'élément
     if (mysqli_num_rows($resultat) > 0) {
         $row = mysqli_fetch_assoc($resultat);
+        $rowAuc = mysqli_fetch_assoc($resultat2);
+
         $name = $row['name'];
         $price = $row['price'];
         $photo = $row['photo'];
@@ -217,6 +222,8 @@ if (isset($_GET['iditem'])) {
 } else {
     echo "L'ID de l'élément n'a pas été spécifié dans l'URL.";
 }
+
+
 
 ?>
 

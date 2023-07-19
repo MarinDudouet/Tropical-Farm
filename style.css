@@ -675,3 +675,39 @@ nav {
   background-color: rgb(244, 240, 240);
   left: 50%;
 }
+
+/*Auction*/
+
+.containerauction{
+  display: flex;
+}
+
+.priceauction {
+  flex-basis: 45%;
+  height: auto;
+  background-color: rgb(216, 212, 212);
+  color: rgb(18, 52, 29);
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.annonceauction {
+  flex-basis: 55%;
+  padding: 10px;
+  display: inline-block;
+}
+
+.annonceauction img {
+  border: 15px solid;
+  border-radius: 10px;
+  border-color: rgb(244, 240, 240);
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
