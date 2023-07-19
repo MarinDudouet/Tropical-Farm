@@ -240,18 +240,18 @@ if (isset($_GET['iditem'])) {
       echo '</div><br>';
       echo '<p id="price">' . $row['price'] . " £</p>";
       echo '<input type="hidden" id="stockInput" value="' . $row['stock'] . '" />';
-      
 
       // Check the ID before "Add to basket"
       if ($idsession !== null) {
         if($row["sell"]!= null ){
           echo "<a id='addToBasketButton' href='http://localhost:80/Tropical-Farm/basket.php?iditem=" . $row['iditem'] ."&idsession=". $idsession . "'><button>Add to basket</button></a>";}
         if($row["auction"]!= null ){  
-          echo "<a href='http://localhost:80/Tropical-Farm/itemauctioninfo.php?iditem=" . $row['iditem'] ."&idbuyer=". $_SESSION["idadmin"] /*."&idseller=". $_SESSION["idseller"] ."&idadmin=". $_SESSION["idadmin"] */."'><button>Buy by auction</button></a>";}
+          echo "<a href='http://localhost:80/Tropical-Farm/itemauctioninfo.php?iditem=" . $row['iditem'] ."'><button>Buy by auction</button></a>";}
 
       } else {
           echo "Log in to do this action";
       }
+
 
       echo '</div>';
       echo '<script>
