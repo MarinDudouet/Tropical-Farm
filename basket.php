@@ -114,49 +114,68 @@ if (!$connexion) {
     die("La connexion à la base de données a échoué : " . mysqli_connect_error());
 }
 
+// Vérifier si le formulaire de suppression a été soumis
+if (isset($_POST['delete_item'])) {
+  // Récupérer l'ID de l'élément à supprimer
+  $item_id = $_POST['item_id'];
+
+  // Supprimer tous les éléments du même type dans la table "basket"
+  $query = "DELETE FROM basket WHERE id_item = $item_id";
+  $resultat = mysqli_query($connexion, $query);
+
+  if (!$resultat) {
+      die("La requête de suppression a échoué : " . mysqli_error($connexion));
+  }
+
+  // Recharger la page pour mettre à jour le panier après la suppression
+  header("Location: basket.php");
+  exit;
+}
+
 // Vérifier si l'ID de l'élément a été envoyé dans l'URL
 if (isset($_GET['iditem'])) {
-    $iditem = $_GET['iditem'];
+  $iditem = $_GET['iditem'];
 
-    // Vérifier si l'utilisateur est connecté
-    if (!isset($_SESSION['role'])) {
-        echo "Veuillez vous connecter pour ajouter cet élément au panier.";
-        exit;
-    }
+  // Vérifier si l'utilisateur est connecté
+  if (!isset($_SESSION['role'])) {
+      echo "Veuillez vous connecter pour ajouter cet élément au panier.";
+      exit;
+  }
 
-    // Récupérer l'ID de session en fonction du rôle de l'utilisateur
-    $idsession = null;
-    $role = $_SESSION['role'];
+  // Récupérer l'ID de session en fonction du rôle de l'utilisateur
+  $idsession = null;
+  $role = $_SESSION['role'];
+  $quantity = intval($_GET['quantity']);
 
-    if ($role == 'admin' && isset($_SESSION['idadmin'])) {
-        $idsession = $_SESSION['idadmin'];
-    } elseif ($role == 'seller' && isset($_SESSION['idseller'])) {
-        $idsession = $_SESSION['idseller'];
-    } elseif ($role == 'buyer' && isset($_SESSION['idbuyer'])) {
-        $idsession = $_SESSION['idbuyer'];
-    } else {
-        echo "Vous n'avez pas les autorisations nécessaires pour ajouter cet élément au panier.";
-        exit;
-    }
+  if ($role == 'admin' && isset($_SESSION['idadmin'])) {
+      $idsession = $_SESSION['idadmin'];
+  } elseif ($role == 'seller' && isset($_SESSION['idseller'])) {
+      $idsession = $_SESSION['idseller'];
+  } elseif ($role == 'buyer' && isset($_SESSION['idbuyer'])) {
+      $idsession = $_SESSION['idbuyer'];
+  } else {
+      echo "Vous n'avez pas les autorisations nécessaires pour ajouter cet élément au panier.";
+      exit;
+  }
+  
+  // Insérer l'ID de session, l'ID de l'élément et la quantité dans la table basket
+  $query = "INSERT INTO basket (id_seller, id_buyer, id_admin, id_item, quantity) VALUES (";
+  if ($role == 'admin') {
+      $query .= "NULL, NULL, $idsession, $iditem, $quantity)";
+  } elseif ($role == 'seller') {
+      $query .= "$idsession, NULL, NULL, $iditem, $quantity)";
+  } elseif ($role == 'buyer') {
+      $query .= "NULL, $idsession, NULL, $iditem, $quantity)";
+  }
 
-    // Insérer l'ID de session et l'ID de l'élément dans la table basket
-    $query = "INSERT INTO basket (id_seller, id_buyer, id_admin, id_item) VALUES (";
-    if ($role == 'admin') {
-        $query .= "NULL, NULL, $idsession, $iditem)";
-    } elseif ($role == 'seller') {
-        $query .= "$idsession, NULL, NULL, $iditem)";
-    } elseif ($role == 'buyer') {
-        $query .= "NULL, $idsession, NULL, $iditem)";
-    }
+  $resultat = mysqli_query($connexion, $query);
 
-    $resultat = mysqli_query($connexion, $query);
+  if (!$resultat) {
+      die("La requête a échoué : " . mysqli_error($connexion));
+  }
 
-    if (!$resultat) {
-        die("La requête a échoué : " . mysqli_error($connexion));
-    }
-
-    header("Location: basket.php?added=true");
-    exit;
+  header("Location: basket.php?added=true");
+  exit;
 } 
 
 if (!isset($_SESSION['role'])) {
@@ -203,44 +222,110 @@ if (!$resultat) {
   die("La requête a échoué : " . mysqli_error($connexion));
 }
 
+$typesAffiches = array();
+// ...
+
+// Récupérer les totaux de quantités pour chaque type d'élément
+$queryTotals = "SELECT id_item, SUM(quantity) AS totalQuantity FROM basket GROUP BY id_item";
+$resultTotals = mysqli_query($connexion, $queryTotals);
+
+if (!$resultTotals) {
+  die("La requête a échoué : " . mysqli_error($connexion));
+}
+
+$quantityTotals = array();
+
+// Stocker les totaux de quantités dans le tableau $quantityTotals
+while ($rowTotal = mysqli_fetch_assoc($resultTotals)) {
+  $iditemTotal = $rowTotal['id_item'];
+  $totalQuantity = $rowTotal['totalQuantity'];
+
+  $quantityTotals[$iditemTotal] = $totalQuantity;
+}
+
 // Affichage des éléments du panier
 if (mysqli_num_rows($resultat) > 0) {
+  $totalPrice = 0; // Variable pour stocker le prix total général
+
   while ($row = mysqli_fetch_assoc($resultat)) {
-      $iditem = $row['id_item'];
+    $iditem = $row['id_item'];
+    $quantity = $row['quantity']; // Récupérer la quantité
 
-      // Récupération des détails de l'élément
-      $queryItem = "SELECT * FROM item WHERE iditem = $iditem";
-      $resultatItem = mysqli_query($connexion, $queryItem);
+    // Récupération des détails de l'élément
+    $queryItem = "SELECT * FROM item WHERE iditem = $iditem";
+    $resultatItem = mysqli_query($connexion, $queryItem);
 
-      if (!$resultatItem) {
-          die("La requête a échoué : " . mysqli_error($connexion));
+    if (!$resultatItem) {
+      die("La requête a échoué : " . mysqli_error($connexion));
+    }
+
+    // Affichage des détails de l'élément
+    if (mysqli_num_rows($resultatItem) > 0) {
+      $rowItem = mysqli_fetch_assoc($resultatItem);
+      $name = $rowItem['name'];
+      $price = $rowItem['price'];
+      $photo = $rowItem['photo'];
+      $type = $rowItem['iditem']; // Utiliser iditem comme type
+
+      // Vérifier si le type d'élément a déjà été affiché
+      if (!in_array($type, $typesAffiches)) {
+        echo '<div class="basket">';
+        echo '<div>';
+        echo "<img src='image/" . $rowItem['photo'] . "'>";
+        echo '</div>';
+        echo '<div class="item-details">';
+        echo '<h5>' . $rowItem['name'] . '</h5><br>';
+
+        // Vérifier si le type d'élément a une quantité totale enregistrée
+        if (isset($quantityTotals[$type])) {
+          echo '<p><b>Total Quantity: ' . $quantityTotals[$type] . '</b></p>';
+        } else {
+          echo '<p><b>Total Quantity: 0</b></p>';
+        }
+
+        echo '<p><b>' . $rowItem['price'] . "£</b></p>";
+        echo '<div>';
+        echo '<form method="post" action="basket.php">';
+        echo '<input type="hidden" name="item_id" value="' . $iditem . '">';
+        echo '<button type="submit" class="basketa" name="delete_item">Delete this item</button>';
+        echo '</form>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+
+        // Ajouter le type d'élément au tableau des types déjà affichés
+        $typesAffiches[] = $type;
+
+        // Calculer le prix total pour cet élément
+        $totalItemPrice = $price * $quantity;
+
+        // Ajouter le prix total au prix total général
+        $totalPrice += $totalItemPrice;
       }
-
-      // Affichage des détails de l'élément
-      if (mysqli_num_rows($resultatItem) > 0) {
-          $rowItem = mysqli_fetch_assoc($resultatItem);
-          $name = $rowItem['name'];
-          $price = $rowItem['price'];
-          $photo = $rowItem['photo'];
-
-          echo '<div class="basket">';
-          echo '<div>';
-          echo "<img src='image/" . $rowItem['photo'] . "'>";
-          echo '</div>';
-          echo '<div class="item-details">';
-          echo '<h5>' . $rowItem['name'] . "</h5><br>";
-          echo '<p><b>' . $rowItem['price'] . "£</b></p>";
-          echo '<button class="basketa">Delete this item</button>';
-          echo '</div>';
-          echo '</div>';
-          
-      } else {
-          echo "Les détails de l'élément avec ID $iditem n'ont pas été trouvés.";
-      }
+    } else {
+      echo "Les détails de l'élément avec ID $iditem n'ont pas été trouvés.";
+    }
   }
-} else {
-  echo "Le panier est vide.";
-}
+
+  // Afficher le prix total général
+  echo "<style>
+  .total-price {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    top: 50%;
+    right: 800px;
+    transform: translateY(-50%);
+  }
+      </style>";
+
+echo "<p class='total-price'>Total price : $totalPrice £</p>";
+} 
+
+
+
 ?>
 
 <br>
