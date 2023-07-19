@@ -277,12 +277,8 @@ if (mysqli_num_rows($resultat) > 0) {
         echo '<h5>' . $rowItem['name'] . '</h5><br>';
 
         // Vérifier si le type d'élément a une quantité totale enregistrée
-        if (isset($quantityTotals[$type])) {
-          echo '<p><b>Total Quantity: ' . $quantityTotals[$type] . '</b></p>';
-        } else {
-          echo '<p><b>Total Quantity: 0</b></p>';
-        }
-
+        $totalQuantity = min($quantityTotals[$type], $rowItem['stock']);
+        echo '<p><b>Total Quantity: ' . $totalQuantity . '</b></p>';
         echo '<p><b>' . $rowItem['price'] . "£</b></p>";
         echo '<div>';
         echo '<form method="post" action="basket.php">';
@@ -307,24 +303,10 @@ if (mysqli_num_rows($resultat) > 0) {
     }
   }
 
-  // Afficher le prix total général
-  echo "<style>
-  .total-price {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    display: inline-block;
-    top: 50%;
-    right: 800px;
-    transform: translateY(-50%);
-  }
-      </style>";
-
-echo "<p class='total-price'>Total price : $totalPrice £</p>";
-} 
-
-
+  
+  
+  echo "<div class='total-price'><b>Total price: $totalPrice £</b></div>";
+}
 
 ?>
 
