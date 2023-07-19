@@ -158,7 +158,8 @@ if (isset($_GET['iditem'])) {
       exit;
   }
   
-// Insert the session ID, element ID and quantity in the basket table  $query = "INSERT INTO basket (id_seller, id_buyer, id_admin, id_item, quantity) VALUES (";
+// Insert the session ID, element ID and quantity in the basket table  
+$query = "INSERT INTO basket (id_seller, id_buyer, id_admin, id_item, quantity) VALUES (";
   if ($role == 'admin') {
       $query .= "NULL, NULL, $idsession, $iditem, $quantity)";
   } elseif ($role == 'seller') {
