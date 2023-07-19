@@ -328,19 +328,16 @@ if (mysqli_num_rows($resultat) > 0) {
 
         // Calculate the total price for this item
         $totalItemPrice = $price * $quantity;
-      // Calculer le prix total pour cet élément
-      $totalItemPrice = $price * $quantity;
 
         // Add the total price to the grand total price
         $totalPrice += $totalItemPrice;
       }
-    } else {
-      echo "The details of the element with ID $iditem were not found.";
-    }
+    } 
+      // Afficher le prix total en dehors de la boucle while
+  echo "<div class='total-price'><b>Total price : $totalPrice £</b></div>";
   }
 
-  // Afficher le prix total en dehors de la boucle while
-  echo "<div class='total-price'><b>Total price : $totalPrice £</b></div>";
+
 
 
 ?>
