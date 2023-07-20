@@ -296,7 +296,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
     $rowfirst = mysqli_fetch_assoc($resultatfirst);
   
     if (mysqli_num_rows($resultatfirst) == 0 || $rowfirst['state'] != 'firstbid') {
-      echo '<p>  <input type="number" id="auctionPrice" placeholder="Enter your max bid">';
+      echo '<p>  <input type="number" id="auctionPrice" placeholder="Enter your max bid" min="$row["price"]">';
       echo '<button type="button" onclick="submitAuction(' . $iditem . ')">Submit bid</button></p>';
 
     }
@@ -316,7 +316,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
     if (mysqli_num_rows($resultat2) == 0 || $rowfirst['state'] != 'firstbid') {
       if(isset($rowfirst["price"])){            
         echo '<div id="auctionForm2' . $iditem . '">';
-        echo '<p>  <input type="number" id="auctionPrice2" placeholder="Enter your second bid">';
+        echo '<p>  <input type="number" id="auctionPrice2" placeholder="Enter your second bid" min="$rowfirst["price"]>';
         echo '<button type="button" onclick="submitAuction2(' . $iditem . ')">Submit bid</button></p>';
         echo '</div>';
 
@@ -347,7 +347,7 @@ while ($row = mysqli_fetch_assoc($resultat)) {
 
           echo '<div id="auctionForm3' . $iditem . '">';
           echo '<p>  <input type="number" id="auctionPrice3" placeholder="Enter your third bid">';
-          echo '<button type="button" onclick="submitAuction3(' . $iditem . ')">Submit bid</button></p>';
+          echo '<button type="button" onclick="submitAuction3(' . $iditem . ')" min="$row2["price"]>Submit bid</button></p>';
           echo '</div>';
         }
 
@@ -371,7 +371,7 @@ if ($resultat3) {
     if(isset($row3["price"])){
 
       echo '<div id="auctionForm4' . $iditem . '">';
-      echo '<p>  <input type="number" id="auctionPrice4" placeholder="Enter your fourth bid">';
+      echo '<p>  <input type="number" id="auctionPrice4" placeholder="Enter your fourth bid" min="$row3["price"]>';
       echo '<button type="button" onclick="submitAuction4(' . $iditem . ')">Submit bid</button></p>';
       echo '</div>';
 
