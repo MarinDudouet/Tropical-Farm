@@ -158,9 +158,9 @@ $imageURL = "image/" . $_SESSION["photo"];
           </div>
           <input type="text" name="description" placeholder="Description of the item" required><br><br>
           <input type="text" name="price" placeholder="Price" required><br><br>
-          <input type="text" name="stock" placeholder="Number item" required><br><br>
           <input type="checkbox" name="sell" value="sell"> Sell &nbsp
-          <input type="checkbox" name="auction" value="auction"> Auction &nbsp <br>
+          <input type="checkbox" name="auction" value="auction"> Auction &nbsp 
+          <input type="checkbox" name="trade" value="trade"> Trade <br><br>
           <input class="item-submit" type="submit" value="Add Item">
           <input class="item-submit"  type="reset" value="Reset Values">
           </form>

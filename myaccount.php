@@ -181,6 +181,8 @@ if (!$connexion) {
         <input type="text" name="state" id="state" value="<?php echo $row['state']; ?>"><br><br>
         <label for="postcode">Postcode :</label>
         <input type="text" name="postcode" id="postcode" value="<?php echo $row['postcode']; ?>"><br><br>
+        <label for="phone">Phone number :</label>
+        <input type="text" name="phone" id="phone" value="<?php echo $row['phone']; ?>"><br><br>
         <label for="card">Card (visa or master):</label>
         <input type="text" name="card" id="card" value="<?php echo $row['card']; ?>"><br><br>
         <label for="cardnumber" maxlength="16" pattern="[0-9]{16}">Card numbers :</label>

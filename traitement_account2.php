@@ -22,15 +22,17 @@ $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees)
         $newMonth = $_POST['month'];
         $newYear = $_POST['year'];
         $newCVC = $_POST['cvc'];
+        $newphone = $_POST['phone'];
+
       
-        $updateQuery = "UPDATE buyer SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
+        $updateQuery = "UPDATE buyer SET name = '$newName', phone = '$newphone', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
 
         if(!isset($updateQuery)){
-            $updateQuery = "UPDATE seller SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
+            $updateQuery = "UPDATE seller SET name = '$newName', phone = '$newphone', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
           }
   
           if(!isset($updateQuery)){
-            $updateQuery = "UPDATE admin SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
+            $updateQuery = "UPDATE admin SET name = '$newName', phone = '$newphone', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '" . $_SESSION["username"] . "'" . " AND password = '" . $_SESSION["password"] ."'";
           }
           
         mysqli_query($connexion, $updateQuery);

@@ -78,6 +78,7 @@ session_start();
         $_SESSION["cvc"]=$row['cvc'];
         $_SESSION["photo"]=$row['photo'];
         $_SESSION["background"]=$row['background'];
+        
         header('Location: http://localhost:80/Tropical-Farm/index.php');
         exit();
         } 

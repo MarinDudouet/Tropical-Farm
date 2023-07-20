@@ -9,14 +9,14 @@ $baseDeDonnees = "tropicalfarm";
 
 $connexion = mysqli_connect($serveur, $utilisateur, $motDePasse, $baseDeDonnees);
 
-// Vérification de la connexion à la base de données
+// Vérification connexion
 if (!$connexion) {
     die("Erreur de connexion à la base de données: " . mysqli_connect_error());
 }
 
-// Mise à jour des données dans la base de données
+// Maj data in databse
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupérer les données de l'utilisateur
+    // get info from data
     $newName = $_POST['name'];
     $newStreet = $_POST['street'];
     $newFlat = $_POST['flat'];
