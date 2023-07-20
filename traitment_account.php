@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newMonth = $_POST['month'];
     $newYear = $_POST['year'];
     $newCVC = $_POST['cvc'];
+    $newphone = $_POST['phone'];
 
     $username = $_SESSION["username"];
     $password = $_SESSION["password"];
@@ -35,11 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Vérification du rôle de l'utilisateur
     if ($role == "buyer") {
-        $updateQuery = "UPDATE buyer SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '$username' AND password = '$password'";
+        $updateQuery = "UPDATE buyer SET name = '$newName',phone = '$newphone', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '$username' AND password = '$password'";
     } elseif ($role == "seller") {
-        $updateQuery = "UPDATE seller SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '$username' AND password = '$password'";
+        $updateQuery = "UPDATE seller SET name = '$newName',phone = '$newphone', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '$username' AND password = '$password'";
     } elseif ($role == "admin") {
-        $updateQuery = "UPDATE admin SET name = '$newName', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '$username' AND password = '$password'";
+        $updateQuery = "UPDATE admin SET name = '$newName',phone = '$newphone', street = '$newStreet', flat = '$newFlat', city = '$newCity', state = '$newState', postcode = '$newPostcode', card = '$newCard', cardnumber = '$newCardnumber', monthexpiration = '$newMonth', yearexpiration = '$newYear', cvc = '$newCVC' WHERE username = '$username' AND password = '$password'";
     }
 
     // Exécution de la requête de mise à jour
