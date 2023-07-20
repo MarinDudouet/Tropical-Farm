@@ -36,6 +36,11 @@ if(!isset($_SESSION["photo"])){
 else{
 $imageURL = "image/" . $_SESSION["photo"];
 }
+if (!isset($_SESSION["role"])) {
+  // redirecction to login.php if role not attribuate 
+  header("Location: login.php");
+  exit;
+}
 ?>
 
       <?php if(isset($_SESSION["role"])){ echo '<header style="background-color: ' . $_SESSION["background"] . ';">'; } 

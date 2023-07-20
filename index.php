@@ -37,6 +37,7 @@ else{
   $imageURL = "image/" . $_SESSION["photo"];
 
 }
+
 ?>
 
       <?php if(isset($_SESSION["role"])){ echo '<header style="background-color: ' . $_SESSION["background"] . ';">'; } 
