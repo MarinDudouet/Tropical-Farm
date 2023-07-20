@@ -5,7 +5,7 @@ $dbname = "tropicalfarm";
 $user = "root";
 $pass = "";
 
-// On se connecte à la BDD
+// connexion to database
 $dbco = new PDO("mysql:host=$serveur;dbname=$dbname", $user, $pass);
 $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -16,7 +16,7 @@ $stmt->bindParam(':password', $_SESSION['password']);
 $stmt->execute();
 
 if ($stmt->rowCount() > 0) {
-    // Connexion réussie
+    // Connexion ok
     $row = $stmt->fetch();
     $_SESSION["name"] = $row['name'];
     $_SESSION["street"] = $row['street'];
@@ -32,7 +32,7 @@ if ($stmt->rowCount() > 0) {
     $_SESSION["cvc"] = $row['cvc'];
 }
 
-// Fermeture de la connexion à la base de données
+// close connexion to database
 $dbco = null;
 ?>
 
@@ -65,7 +65,7 @@ $dbco = null;
 }
 
 .item-recap {
-    /* Styles pour la partie de récapitulation des articles */
+    /* Styles for item */
 }
 
 .info-buyer {
@@ -146,12 +146,12 @@ input[type="radio"] {
 
 <script>
 function confirmPurchase() {
-  // Afficher une alerte avec un message de confirmation
+  // display confirm alert
   if (confirm("thank you for your order")) {
-    // Si l'utilisateur confirme, effectuer la redirection
+    //redirection
     window.location.href = "traitment_account.php";
   } else {
-    // Si l'utilisateur annule, empêcher la redirection
+    // if cancel, no redirection
     return false;
   }
 }
@@ -196,7 +196,7 @@ $stmt->bindParam(':password', $password);
 $stmt->execute();
 
 if ($stmt->rowCount() > 0) {
-    // Connexion réussie
+    // Connexion ok
     $row = $stmt->fetch();
     $_SESSION["name"]=$row['name'];
     $_SESSION["street"]=$row['street'];
@@ -221,7 +221,7 @@ $stmt->bindParam(':password', $password);
 $stmt->execute();
 
 if ($stmt->rowCount() > 0) {
-    // Connexion réussie
+    // Connexion ok
     $row = $stmt->fetch();
     $_SESSION["name"]=$row['name'];
     $_SESSION["street"]=$row['street'];
@@ -314,8 +314,7 @@ $imageURL = "image/" . $_SESSION["photo"];
 if (isset($_GET['totalPrice'])) {
     $totalPrice = $_GET['totalPrice'];
 } else {
-    // Gérer le cas où le total price n'est pas présent dans l'URL
-    // Par exemple, rediriger l'utilisateur vers la page basket.php avec un message d'erreur
+    // when price not in the url -> redirection
     header("Location: basket.php?error=1");
     exit;
 }
@@ -323,7 +322,7 @@ if (isset($_GET['totalPrice'])) {
 
     <div class="container">
         <div class="item-recap">
-            <!-- Récapitulation des articles -->
+            <!-- recap of item -->
         </div>
         <div class="info-buyer">
             <form action="traitment_account.php" method="POST">

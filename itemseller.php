@@ -1,41 +1,39 @@
 <?php
 session_start();
 
-// Vérifiez si l'ID de l'item est présent dans l'URL
+// check if id in url
 if (isset($_GET["iditem"]) && !empty($_GET["iditem"])) {
     $iditem = $_GET["iditem"];
 }
 
-// Vérifiez si l'utilisateur est connecté en tant que vendeur
+// check is user is connected
 if (isset($_SESSION["role"]) && $_SESSION["role"] === "seller") {
-    // Vos informations de connexion à la base de données
     $serveur = "localhost";
     $dbname = "tropicalfarm";
     $user = "root";
     $pass = "";
 
     try {
-        // Connexion à la base de données
+        // Connexion ok
         $dbco = new PDO("mysql:host=$serveur;dbname=$dbname", $user, $pass);
         $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Vérifiez si l'action de suppression a été soumise
 if (isset($_POST['delete_item'])) {
     try {
-        // Récupérer l'ID de l'article à supprimer à partir du formulaire
+        // get id to item to delete
         $item_id = $_POST['item_id'];
 
-        // Connexion à la base de données
+        // Connexion ok
         $dbco = new PDO("mysql:host=$serveur;dbname=$dbname", $user, $pass);
         $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Supprimer l'article de la base de données
+        // delete item
         $query = "DELETE FROM item WHERE iditem = :item_id";
         $stmt = $dbco->prepare($query);
         $stmt->bindParam(':item_id', $item_id, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Rediriger vers la même page après la suppression
+        // Redirection to the same page
         header("Location: itemseller.php");
         exit;
     } catch (PDOException $e) {
@@ -43,13 +41,13 @@ if (isset($_POST['delete_item'])) {
     }
 }
 
-        // Récupérer les items ajoutés par l'utilisateur connecté
+        // get back item 
         $idseller = $_SESSION["idseller"];
         $sth = $dbco->prepare("SELECT * FROM item WHERE idseller = :idseller");
         $sth->bindParam(':idseller', $idseller, PDO::PARAM_INT);
         $sth->execute();
 
-        // Stocker les informations de tous les items dans un tableau
+        // keep info in database
         $allItems = $sth->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo 'Impossible de récupérer les items. Erreur : ' . $e->getMessage();
@@ -144,7 +142,7 @@ $imageURL = "image/" . $_SESSION["photo"];
                 echo '<p><b>Stock: ' . $item['stock'] . '</b></p>';
                 echo '<p><b> ' . $item['price'] . ' £</b></p>';
                 
-                // Vérifier si "iditem" est défini dans le tableau $item avant de l'utiliser
+                // check if "iditem" define $item before use it
                 if (isset($item['iditem'])) {
                     echo '<form method="post" action="itemseller.php">';
                     echo '<input type="hidden" name="item_id" value="' . $item['iditem'] . '">';

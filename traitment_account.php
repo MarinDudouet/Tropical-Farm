@@ -100,4 +100,7 @@ while ($rowTotal = mysqli_fetch_assoc($resultTotals)) {
     // Redirection vers la page d'accueil
     header('Location: http://localhost:80/Tropical-Farm/index.php');
 }
+
+header('Location: http://localhost:80/Tropical-Farm/index.php');
+
 ?>
