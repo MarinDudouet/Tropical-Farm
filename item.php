@@ -238,6 +238,7 @@ if (isset($_GET['iditem'])) {
       echo    '<input type="text" id="numberInput" class="number-input" value="1" readonly />';
       echo '</div>';
       echo '</div><br>';
+      echo '<p><b>Stock: ' . $row['stock'] . '</b></p>';
       echo '<p id="price">' . $row['price'] . " £</p>";
       echo '<input type="hidden" id="stockInput" value="' . $row['stock'] . '" />';
 

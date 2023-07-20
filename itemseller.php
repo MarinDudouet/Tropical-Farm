@@ -1,3 +1,38 @@
+<?php
+session_start();
+
+// Vérifiez si l'ID de l'item est présent dans l'URL
+if (isset($_GET["iditem"]) && !empty($_GET["iditem"])) {
+    $iditem = $_GET["iditem"];
+}
+
+// Vérifiez si l'utilisateur est connecté en tant que vendeur
+if (isset($_SESSION["role"]) && $_SESSION["role"] === "seller") {
+    // Vos informations de connexion à la base de données
+    $serveur = "localhost";
+    $dbname = "tropicalfarm";
+    $user = "root";
+    $pass = "";
+
+    try {
+        // Connexion à la base de données
+        $dbco = new PDO("mysql:host=$serveur;dbname=$dbname", $user, $pass);
+        $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Récupérer les items ajoutés par l'utilisateur connecté
+        $idseller = $_SESSION["idseller"];
+        $sth = $dbco->prepare("SELECT * FROM item WHERE idseller = :idseller");
+        $sth->bindParam(':idseller', $idseller, PDO::PARAM_INT);
+        $sth->execute();
+
+        // Stocker les informations de tous les items dans un tableau
+        $allItems = $sth->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo 'Impossible de récupérer les items. Erreur : ' . $e->getMessage();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -23,8 +58,6 @@
 <!--Header-->
 
 <?php
-
-session_start();
 
 if(!isset($_SESSION["photo"])){
   $imageURL = "image/user.png";
@@ -67,14 +100,37 @@ $imageURL = "image/" . $_SESSION["photo"];
 <br><br><br><br><br><br>
 
 <!--Item-->
-
 <div class="container">
-  <div class="item">
+
+<div class="item">
       <a href="http://localhost:80/Tropical-Farm/additem.php"><img src="image/pictures.png"></a><br>
-      <center><h5>Name of the item</h5>
-      <p>Price</p></center>
+      <center><h5><b>Name of the item</b></h5>
+      <p><b>Stock</b></p>
+      <p><b>Price</b></p></center>
   </div>
+
+<?php if (!empty($allItems)) { ?>
+    
+
+        <?php foreach ($allItems as $item) { ?>
+            <div class="item">
+                <a href="#"><img src="image/<?php echo $item['photo']; ?>"></a><br>
+                <center>
+                    <?php
+                    echo '<h5><b> ' . $item['name'] . '</b></h5>';
+                    echo '<p><b>Stock: ' . $item['stock'] . '</b></p>';
+                    echo '<p><b> ' . $item['price'] . ' £</b></p>';
+                    ?>
+                </center>
+            </div>
+        <?php } ?>
+    
+<?php } ?>
+
 </div>
+
+
+
 
 <!--Footer-->
 
