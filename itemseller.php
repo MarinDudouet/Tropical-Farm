@@ -19,6 +19,30 @@ if (isset($_SESSION["role"]) && $_SESSION["role"] === "seller") {
         $dbco = new PDO("mysql:host=$serveur;dbname=$dbname", $user, $pass);
         $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+// Vérifiez si l'action de suppression a été soumise
+if (isset($_POST['delete_item'])) {
+    try {
+        // Récupérer l'ID de l'article à supprimer à partir du formulaire
+        $item_id = $_POST['item_id'];
+
+        // Connexion à la base de données
+        $dbco = new PDO("mysql:host=$serveur;dbname=$dbname", $user, $pass);
+        $dbco->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Supprimer l'article de la base de données
+        $query = "DELETE FROM item WHERE iditem = :item_id";
+        $stmt = $dbco->prepare($query);
+        $stmt->bindParam(':item_id', $item_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Rediriger vers la même page après la suppression
+        header("Location: itemseller.php");
+        exit;
+    } catch (PDOException $e) {
+        die("Error in the suppression : " . $e->getMessage());
+    }
+}
+
         // Récupérer les items ajoutés par l'utilisateur connecté
         $idseller = $_SESSION["idseller"];
         $sth = $dbco->prepare("SELECT * FROM item WHERE idseller = :idseller");
@@ -32,6 +56,7 @@ if (isset($_SESSION["role"]) && $_SESSION["role"] === "seller") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -109,22 +134,27 @@ $imageURL = "image/" . $_SESSION["photo"];
       <p><b>Price</b></p></center>
   </div>
 
-<?php if (!empty($allItems)) { ?>
-    
-
-        <?php foreach ($allItems as $item) { ?>
-            <div class="item">
-                <a href="#"><img src="image/<?php echo $item['photo']; ?>"></a><br>
-                <center>
-                    <?php
-                    echo '<h5><b> ' . $item['name'] . '</b></h5>';
-                    echo '<p><b>Stock: ' . $item['stock'] . '</b></p>';
-                    echo '<p><b> ' . $item['price'] . ' £</b></p>';
-                    ?>
-                </center>
-            </div>
-        <?php } ?>
-    
+  <?php if (!empty($allItems)) { ?>
+    <?php foreach ($allItems as $item) { ?>
+        <div class="item">
+            <a href="#"><img src="image/<?php echo $item['photo']; ?>"></a><br>
+            <center>
+                <?php
+                echo '<h5><b> ' . $item['name'] . '</b></h5>';
+                echo '<p><b>Stock: ' . $item['stock'] . '</b></p>';
+                echo '<p><b> ' . $item['price'] . ' £</b></p>';
+                
+                // Vérifier si "iditem" est défini dans le tableau $item avant de l'utiliser
+                if (isset($item['iditem'])) {
+                    echo '<form method="post" action="itemseller.php">';
+                    echo '<input type="hidden" name="item_id" value="' . $item['iditem'] . '">';
+                    echo '<button type="submit" name="delete_item">Delete this item</button>';
+                    echo '</form>';
+                }
+                ?>
+            </center>
+        </div>
+    <?php } ?>
 <?php } ?>
 
 </div>
