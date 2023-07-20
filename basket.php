@@ -217,7 +217,8 @@ else {
 }
 }
 
-// Retrieve the session ID based on the user's role$idsession = null;
+// Retrieve the session ID based on the user's role
+$idsession = null;
 $role = $_SESSION['role'];
 
 if ($role == 'admin' && isset($_SESSION['idadmin'])) {
